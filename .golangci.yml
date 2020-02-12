@@ -1,0 +1,10 @@
+---
+run:
+  # TODO, when I have the time, remove this
+  skip-files: ".*_test.go"
+linters:
+  enable-all: true
+  disable:
+    - gochecknoglobals  # OK in our use case
+    - gomnd  # just noise
+    - wsl  # not worth it going over every file now, TODO though.
