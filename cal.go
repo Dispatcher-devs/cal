@@ -3,6 +3,7 @@
 package cal
 
 import (
+	"fmt"
 	"math"
 	"time"
 )
@@ -108,6 +109,7 @@ type Calendar struct {
 // and work days of Monday through Friday.
 func NewCalendar() *Calendar {
 	c := &Calendar{}
+
 	for i := range c.holidays {
 		c.holidays[i] = make([]Holiday, 0, 2)
 	}
@@ -117,6 +119,47 @@ func NewCalendar() *Calendar {
 	c.workday[time.Thursday] = true
 	c.workday[time.Friday] = true
 	return c
+}
+
+// NewCalendarFromCountryCode returns the holiday calendar associated to the
+// country designed by the given uppercase ISO 3166-1 alpha-2 country code.
+func NewCalendarFromCountryCode(code string) (*Calendar, error) {
+	c := NewCalendar()
+	c.Observed = ObservedExact
+
+	if obs, ok := map[string]ObservedRule{
+		// TODO: Complete this list when the knowledge is there.
+		"US": ObservedNearest,
+		"CA": ObservedNearest,
+	}[code]; ok {
+		c.Observed = obs
+	}
+
+	fn, ok := map[string]func(*Calendar){
+		"AT": AddAustrianHolidays,
+		"AU": AddAustralianHolidays,
+		"BE": AddBelgiumHolidays,
+		"CA": AddCanadianHolidays,
+		"DE": AddGermanHolidays,
+		"DK": AddDanishHolidays,
+		"ES": AddSpainHolidays,
+		"FR": AddFranceHolidays,
+		"GB": AddBritishHolidays,
+		"IT": AddItalianHolidays,
+		"NL": AddDutchHolidays,
+		"NO": AddNorwegianHolidays,
+		"NZ": AddNewZealandHoliday,
+		"PL": AddPolandHolidays,
+		"SE": AddSwedishHolidays,
+		"US": AddUsHolidays,
+	}[code]
+	if !ok {
+		return nil, fmt.Errorf("no calendar exists for country %s", code)
+	}
+
+	fn(c)
+
+	return c, nil
 }
 
 // AddHoliday adds a holiday to the calendar's list.

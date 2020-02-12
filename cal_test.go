@@ -797,3 +797,19 @@ func TestCalendar_WorkdaysNrInRangeAustralia(t *testing.T) {
 		})
 	}
 }
+
+func TestNewCalendarFromCountryCode(t *testing.T) {
+	_, err := NewCalendarFromCountryCode("ZZ")
+	if err == nil {
+		t.Error("expected error for invalid country code ZZ")
+	}
+
+	cal, err := NewCalendarFromCountryCode("FR")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !cal.IsHoliday(time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)) {
+		t.Error("expected a holiday")
+	}
+}
