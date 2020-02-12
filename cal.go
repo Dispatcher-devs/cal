@@ -43,9 +43,9 @@ func IsWeekdayN(date time.Time, day time.Weekday, n int) bool {
 			break
 		}
 	}
+
 	return lastCount == n && last.Month() == date.Month() &&
 		last.Day() == date.Day()
-
 }
 
 // MonthStart reports the starting day of the month in t. The time portion is
@@ -167,20 +167,29 @@ func (c *Calendar) IsWorkday(date time.Time) bool {
 		return true
 	}
 
-	if (c.Observed == ObservedMonday || c.Observed == ObservedMondayTuesday) && day == time.Monday {
+	if (c.Observed == ObservedMonday || c.Observed == ObservedMondayTuesday) &&
+		day == time.Monday {
 		sun := date.AddDate(0, 0, -1)
 		sat := date.AddDate(0, 0, -2)
 		return !c.IsHoliday(sat) && !c.IsHoliday(sun)
-	} else if c.Observed == ObservedMondayTuesday && day == time.Tuesday {
+	}
+
+	if c.Observed == ObservedMondayTuesday && day == time.Tuesday {
 		mon := date.AddDate(0, 0, -1)
 		sun := date.AddDate(0, 0, -2)
 		sat := date.AddDate(0, 0, -3)
-		return !(c.IsHoliday(sat) && c.IsHoliday(sun)) && !(c.IsHoliday(sat) && c.IsHoliday(mon)) && !(c.IsHoliday(sun) && c.IsHoliday(mon))
-	} else if c.Observed == ObservedNearest {
+		return !(c.IsHoliday(sat) && c.IsHoliday(sun)) &&
+			!(c.IsHoliday(sat) && c.IsHoliday(mon)) &&
+			!(c.IsHoliday(sun) && c.IsHoliday(mon))
+	}
+
+	if c.Observed == ObservedNearest {
 		if day == time.Friday {
 			sat := date.AddDate(0, 0, 1)
 			return !c.IsHoliday(sat)
-		} else if day == time.Monday {
+		}
+
+		if day == time.Monday {
 			sun := date.AddDate(0, 0, -1)
 			return !c.IsHoliday(sun)
 		}
@@ -326,9 +335,9 @@ func (c *Calendar) AddSkipNonWorkdays(start time.Time, d time.Duration) time.Tim
 			s = s.Add(day)
 		}
 
-		if d >= day {
+		if d >= day { // nolint:gocritic
 			s = s.Add(day)
-			d = d - day
+			d -= day
 		} else if d > 0 {
 			s = s.Add(d)
 			d = 0
@@ -348,9 +357,9 @@ func (c *Calendar) SubSkipNonWorkdays(start time.Time, d time.Duration) time.Tim
 			s = s.Add(day)
 		}
 
-		if d >= day*-1 {
+		if d >= day*-1 { // nolint:gocritic
 			s = s.Add(day)
-			d = d + day
+			d += day
 		} else if d > 0 {
 			s = s.Add(-d)
 			d = 0

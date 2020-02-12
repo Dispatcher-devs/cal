@@ -12,10 +12,13 @@ type ObservedRule int
 
 // ObservedRule are the specific ObservedRules
 const (
-	ObservedNearest       ObservedRule = iota // nearest weekday (Friday or Monday)
-	ObservedExact                             // the exact day only
-	ObservedMonday                            // Monday always
-	ObservedMondayTuesday                     // As above, but also accounts for Christmas Day being on a weekend (which pushes Boxing Day to Tuesday)
+	ObservedNearest ObservedRule = iota // nearest weekday (Friday or Monday)
+	ObservedExact                       // the exact day only
+	ObservedMonday                      // Monday always
+
+	// As above, but also accounts for Christmas Day being on a weekend (which
+	// pushes Boxing Day to Tuesday)
+	ObservedMondayTuesday
 )
 
 // HolidayFn calculates the occurrence of a holiday for the given year.
@@ -68,7 +71,6 @@ func NewHolidayFunc(fn HolidayFn) Holiday {
 // matches determines whether the given date is the one referred to by the
 // Holiday.
 func (h *Holiday) matches(date time.Time) bool {
-
 	if h.Func != nil && (date.Year() != h.lastYear || date.Location() != h.lastLoc) {
 		h.Month, h.Day = h.Func(date.Year(), date.Location())
 		h.lastYear = date.Year()
@@ -91,5 +93,6 @@ func (h *Holiday) matches(date time.Time) bool {
 	} else if h.Offset > 0 {
 		return date.YearDay() == h.Offset
 	}
+
 	return false
 }

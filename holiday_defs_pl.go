@@ -53,7 +53,6 @@ func calculatePentecostDay(year int, loc *time.Location) (time.Month, int) {
 }
 
 func calculateCorpusChristiDay(year int, loc *time.Location) (time.Month, int) {
-
 	easter := calculateEaster(year, loc)
 	// 60 days after Easter Sunday
 	em := easter.AddDate(0, 0, +60)

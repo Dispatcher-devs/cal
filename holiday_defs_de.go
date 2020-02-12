@@ -44,7 +44,7 @@ func AddGermanHolidays(c *Calendar) {
 }
 
 // AddGermanyStateHolidays adds german state holidays to the calendar
-func AddGermanyStateHolidays(c *Calendar, state string) {
+func AddGermanyStateHolidays(c *Calendar, state string) { // nolint:funlen
 	switch state {
 	case "BB": // Brandenburg
 		c.AddHoliday(
