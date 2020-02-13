@@ -25,6 +25,10 @@ const (
 // This is useful for holidays like Easter that depend on complex rules.
 type HolidayFn func(year int, loc *time.Location) (month time.Month, day int)
 
+// HolidayFactory creates a holiday for the given year letting you use the
+// regular Holiday/Cal facilities to define holidays that had yearly variations.
+type HolidayFactory func(year int, loc *time.Location) Holiday
+
 // Holiday holds information about the yearly occurrence of a holiday.
 //
 // A valid Holiday consists of one of the following:
@@ -40,6 +44,7 @@ type Holiday struct {
 	Offset  int
 	Year    int
 	Func    HolidayFn
+	Factory HolidayFactory
 
 	// last values used to calculate month and day with Func
 	lastYear int
@@ -68,9 +73,22 @@ func NewHolidayFunc(fn HolidayFn) Holiday {
 	return Holiday{Func: fn}
 }
 
+// NewHolidayFactory creates a new holiday instance that uses a function to
+// create the holiday for a given year.
+func NewHolidayFactory(fn HolidayFactory) Holiday {
+	return Holiday{Factory: fn}
+}
+
 // matches determines whether the given date is the one referred to by the
 // Holiday.
 func (h *Holiday) matches(date time.Time) bool {
+	if h.Factory != nil {
+		generated := h.Factory(date.Year(), date.Location())
+		h.lastYear = date.Year()
+		h.lastLoc = date.Location()
+		return generated.matches(date)
+	}
+
 	if h.Func != nil && (date.Year() != h.lastYear || date.Location() != h.lastLoc) {
 		h.Month, h.Day = h.Func(date.Year(), date.Location())
 		h.lastYear = date.Year()

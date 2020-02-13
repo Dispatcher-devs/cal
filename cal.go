@@ -135,6 +135,7 @@ func NewCalendarFromCountryCode(code string) (*Calendar, error) {
 		c.Observed = obs
 	}
 
+	// TODO: Consistency on func names.
 	fn, ok := map[string]func(*Calendar){
 		"AT": AddAustrianHolidays,
 		"AU": AddAustralianHolidays,
