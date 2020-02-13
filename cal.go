@@ -129,8 +129,9 @@ func NewCalendarFromCountryCode(code string) (*Calendar, error) {
 
 	if obs, ok := map[string]ObservedRule{
 		// TODO: Complete this list when the knowledge is there.
-		"US": ObservedNearest,
 		"CA": ObservedNearest,
+		"GB": ObservedNearest,
+		"US": ObservedNearest,
 	}[code]; ok {
 		c.Observed = obs
 	}

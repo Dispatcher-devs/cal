@@ -1,15 +1,16 @@
 package cal
 
 import (
-	"reflect"
 	"testing"
 	"time"
 )
 
 func TestAustralianHolidays(t *testing.T) {
-	c := NewCalendar()
-	c.Observed = ObservedExact
-	AddAustralianHolidays(c)
+	c, err := NewCalendarFromCountryCode("AU")
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	loc, err := time.LoadLocation("Australia/Sydney")
 	if err != nil {
 		t.Fatal(err)
@@ -17,7 +18,7 @@ func TestAustralianHolidays(t *testing.T) {
 	currentTime := time.Now()
 	year := currentTime.Year()
 
-	tests := []testStruct{
+	assertHolidays(t, c, []testStruct{
 		{time.Date(year, time.January, 1, 0, 0, 0, 0, loc), true, "New year"},
 		{time.Date(2017, time.January, 2, 0, 0, 0, 0, loc), true, "New year Sunday"},
 		{time.Date(year, time.January, 2, 0, 0, 0, 0, loc), false, "New year Sunday invalid"},
@@ -34,13 +35,5 @@ func TestAustralianHolidays(t *testing.T) {
 		{time.Date(2020, time.June, 8, 0, 0, 0, 0, loc), true, "Queen's birth Day"},
 		{time.Date(2019, time.October, 7, 0, 0, 0, 0, loc), true, "Labour Day"},
 		{time.Date(2018, time.October, 1, 0, 0, 0, 0, loc), true, "Labour Day"},
-	}
-
-	for _, tc := range tests {
-		t.Run(tc.name, func(t *testing.T) {
-			if got := c.IsHoliday(tc.t); !reflect.DeepEqual(got, tc.want) {
-				t.Errorf("Calendar.AddSkipNonWorkdays() = %v, want %v", got, tc.want)
-			}
-		})
-	}
+	})
 }

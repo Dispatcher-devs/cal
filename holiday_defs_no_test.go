@@ -6,11 +6,12 @@ import (
 )
 
 func TestNorwegianHolidays(t *testing.T) {
-	c := NewCalendar()
-	c.Observed = ObservedExact
-	AddNorwegianHolidays(c)
+	c, err := NewCalendarFromCountryCode("NO")
+	if err != nil {
+		t.Fatal(err)
+	}
 
-	tests := []testStruct{
+	assertHolidays(t, c, []testStruct{
 		{time.Date(2018, 1, 1, 12, 0, 0, 0, time.UTC), true, "Nyttårsdag"},
 		{time.Date(2018, 3, 29, 12, 0, 0, 0, time.UTC), true, "Skjærtorsdag"},
 		{time.Date(2018, 3, 30, 12, 0, 0, 0, time.UTC), true, "Langfredag"},
@@ -39,14 +40,7 @@ func TestNorwegianHolidays(t *testing.T) {
 
 		// Negative test
 		{time.Date(2018, 10, 31, 12, 0, 0, 0, time.UTC), false, "Halloween"},
-	}
-
-	for _, test := range tests {
-		got := c.IsHoliday(test.t)
-		if got != test.want {
-			t.Errorf("got: %t for %s; want: %t (%s)", got, test.name, test.want, test.t)
-		}
-	}
+	})
 }
 
 func TestNorwegianHalfDays(t *testing.T) {
@@ -54,17 +48,10 @@ func TestNorwegianHalfDays(t *testing.T) {
 	c.Observed = ObservedExact
 	AddNorwegianHalfDays(c)
 
-	tests := []testStruct{
+	assertHolidays(t, c, []testStruct{
 		{time.Date(2018, 12, 24, 12, 0, 0, 0, time.UTC), true, "Julaften"},
 		{time.Date(2018, 12, 31, 12, 0, 0, 0, time.UTC), true, "Nyttårsaften"},
 		{time.Date(2019, 12, 24, 12, 0, 0, 0, time.UTC), true, "Julaften"},
 		{time.Date(2019, 12, 31, 12, 0, 0, 0, time.UTC), true, "Nyttårsaften"},
-	}
-
-	for _, test := range tests {
-		got := c.IsHoliday(test.t)
-		if got != test.want {
-			t.Errorf("got: %t for %s; want: %t (%s)", got, test.name, test.want, test.t)
-		}
-	}
+	})
 }

@@ -11,20 +11,13 @@ func TestCanadianHolidays(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	tests := []testStruct{
+	assertHolidays(t, c, []testStruct{
 		{time.Date(2020, time.January, 1, 12, 0, 0, 0, time.UTC), true, "New Years"},
 		{time.Date(2020, time.April, 10, 12, 0, 0, 0, time.UTC), true, "Good Friday"},
 		{time.Date(2020, time.July, 1, 12, 0, 0, 0, time.UTC), true, "Canada Day"},
 		{time.Date(2020, time.September, 7, 12, 0, 0, 0, time.UTC), true, "Labour Day"},
 		{time.Date(2020, time.December, 25, 12, 0, 0, 0, time.UTC), true, "Christmas"},
-	}
-
-	for _, test := range tests {
-		got := c.IsHoliday(test.t)
-		if got != test.want {
-			t.Errorf("got: %t for %s; want: %t (%s)", got, test.name, test.want, test.t)
-		}
-	}
+	})
 }
 
 func TestCanadianStateHolidays(t *testing.T) {
@@ -35,71 +28,71 @@ func TestCanadianStateHolidays(t *testing.T) {
 		{
 			"AB",
 			[]testStruct{
-				{time.Date(2020, time.February, 17, 12, 0, 0, 0, time.UTC), true, "Family   Day"},
-				{time.Date(2020, time.May, 18, 12, 0, 0, 0, time.UTC), true, "Victoria Day"},
-				{time.Date(2020, time.August, 3, 12, 0, 0, 0, time.UTC), true, "Heritage Day"},
+				{time.Date(2020, time.February, 17, 12, 0, 0, 0, time.UTC), true, "AB Family Day"},
+				{time.Date(2020, time.May, 18, 12, 0, 0, 0, time.UTC), true, "AB Victoria Day"},
+				{time.Date(2020, time.August, 3, 12, 0, 0, 0, time.UTC), true, "AB Heritage Day"},
 			},
 		},
 		{
 			"BC",
 			[]testStruct{
-				{time.Date(2012, time.February, 13, 12, 0, 0, 0, time.UTC), false, "First Family day"},
-				{time.Date(2012, time.February, 20, 12, 0, 0, 0, time.UTC), false, "Family day"},
-				{time.Date(2013, time.February, 11, 12, 0, 0, 0, time.UTC), true, "Family day"},
-				{time.Date(2018, time.February, 12, 12, 0, 0, 0, time.UTC), true, "Family day"},
-				{time.Date(2020, time.February, 17, 12, 0, 0, 0, time.UTC), true, "Family day"},
+				{time.Date(2012, time.February, 13, 12, 0, 0, 0, time.UTC), false, "BC First Family day"},
+				{time.Date(2012, time.February, 20, 12, 0, 0, 0, time.UTC), false, "BC Family day"},
+				{time.Date(2013, time.February, 11, 12, 0, 0, 0, time.UTC), true, "BC Family day"},
+				{time.Date(2018, time.February, 12, 12, 0, 0, 0, time.UTC), true, "BC Family day"},
+				{time.Date(2020, time.February, 17, 12, 0, 0, 0, time.UTC), true, "BC Family day"},
 
-				{time.Date(2019, time.August, 5, 12, 0, 0, 0, time.UTC), true, "Civic Holiday"},
-				{time.Date(2020, time.August, 3, 12, 0, 0, 0, time.UTC), true, "Civic Holiday"},
+				{time.Date(2019, time.August, 5, 12, 0, 0, 0, time.UTC), true, "BC Civic Holiday"},
+				{time.Date(2020, time.August, 3, 12, 0, 0, 0, time.UTC), true, "BC Civic Holiday"},
 			},
 		},
 		{
 			"MB",
 			[]testStruct{
-				{time.Date(2020, time.February, 17, 12, 0, 0, 0, time.UTC), true, "Louis Riel"},
+				{time.Date(2020, time.February, 17, 12, 0, 0, 0, time.UTC), true, "MB Louis Riel"},
 			},
 		},
 		{
 			"NL",
 			[]testStruct{
-				{time.Date(2020, time.March, 17, 12, 0, 0, 0, time.UTC), true, "Saint Patrick's Day"},
-				{time.Date(2020, time.April, 23, 12, 0, 0, 0, time.UTC), true, "Saint George's Day"},
-				{time.Date(2020, time.July, 12, 12, 0, 0, 0, time.UTC), true, "Orangemen's Day"},
+				{time.Date(2020, time.March, 17, 12, 0, 0, 0, time.UTC), true, "NL Saint Patrick's Day"},
+				{time.Date(2020, time.April, 23, 12, 0, 0, 0, time.UTC), true, "NL Saint George's Day"},
+				{time.Date(2020, time.July, 12, 12, 0, 0, 0, time.UTC), true, "NL Orangemen's Day"},
 			},
 		},
 		{
 			"NT",
 			[]testStruct{
-				{time.Date(2020, time.June, 21, 12, 0, 0, 0, time.UTC), true, "Aboriginal Day"},
+				{time.Date(2020, time.June, 21, 12, 0, 0, 0, time.UTC), true, "NT Aboriginal Day"},
 			},
 		},
 		{
 			"NS",
 			[]testStruct{
-				{time.Date(2020, time.February, 17, 12, 0, 0, 0, time.UTC), true, "Heritage Day"},
+				{time.Date(2020, time.February, 17, 12, 0, 0, 0, time.UTC), true, "NS Heritage Day"},
 			},
 		},
 		{
 			"PE",
 			[]testStruct{
-				{time.Date(2020, time.April, 13, 12, 0, 0, 0, time.UTC), true, "Easter Monday"},
-				{time.Date(2020, time.August, 21, 12, 0, 0, 0, time.UTC), true, "Gold Cup Parade"},
-				{time.Date(2020, time.February, 17, 12, 0, 0, 0, time.UTC), true, "Islander Day"},
+				{time.Date(2020, time.April, 13, 12, 0, 0, 0, time.UTC), true, "PE Easter Monday"},
+				{time.Date(2020, time.August, 21, 12, 0, 0, 0, time.UTC), true, "PE Gold Cup Parade"},
+				{time.Date(2020, time.February, 17, 12, 0, 0, 0, time.UTC), true, "PE Islander Day"},
 			},
 		},
 		{
 			"QC",
 			[]testStruct{
-				{time.Date(2023, time.June, 24, 12, 0, 0, 0, time.UTC), true, "National holiday"},
-				{time.Date(2020, time.August, 1, 12, 0, 0, 0, time.UTC), false, "no Civic Holiday"},
-				{time.Date(2020, time.May, 18, 12, 0, 0, 0, time.UTC), true, "Patriot's Day"},
+				{time.Date(2023, time.June, 24, 12, 0, 0, 0, time.UTC), true, "QC National holiday"},
+				{time.Date(2020, time.August, 1, 12, 0, 0, 0, time.UTC), false, "QC no Civic Holiday"},
+				{time.Date(2020, time.May, 18, 12, 0, 0, 0, time.UTC), true, "QC Patriot's Day"},
 			},
 		},
 		{
 			"YT",
 			[]testStruct{
-				{time.Date(2020, time.August, 17, 12, 0, 0, 0, time.UTC), true, "Discovery Day"},
-				{time.Date(2020, time.June, 24, 12, 0, 0, 0, time.UTC), true, "Saint Jean Baptiste"},
+				{time.Date(2020, time.August, 17, 12, 0, 0, 0, time.UTC), true, "YT Discovery Day"},
+				{time.Date(2020, time.June, 24, 12, 0, 0, 0, time.UTC), true, "YT Saint Jean Baptiste"},
 			},
 		},
 	}
@@ -114,11 +107,6 @@ func TestCanadianStateHolidays(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		for _, day := range test.tests {
-			got := c.IsHoliday(day.t)
-			if got != day.want {
-				t.Errorf("state: %s got: %t for %s; want: %t (%s)", test.state, got, day.name, day.want, day.t)
-			}
-		}
+		assertHolidays(t, c, test.tests)
 	}
 }

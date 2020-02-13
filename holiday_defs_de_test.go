@@ -5,18 +5,13 @@ import (
 	"time"
 )
 
-type testStruct struct {
-	t    time.Time
-	want bool
-	name string
-}
-
 func TestGermanHolidays(t *testing.T) {
-	c := NewCalendar()
-	c.Observed = ObservedExact
-	AddGermanHolidays(c)
+	c, err := NewCalendarFromCountryCode("DE")
+	if err != nil {
+		t.Fatal(err)
+	}
 
-	tests := []testStruct{
+	assertHolidays(t, c, []testStruct{
 		{time.Date(2016, 1, 1, 12, 0, 0, 0, time.UTC), true, "Neujahr"},
 		{time.Date(2016, 3, 25, 12, 0, 0, 0, time.UTC), true, "Karfreitag"},
 		{time.Date(2016, 3, 28, 12, 0, 0, 0, time.UTC), true, "Ostermontag"},
@@ -30,14 +25,7 @@ func TestGermanHolidays(t *testing.T) {
 		{time.Date(2016, 12, 26, 12, 0, 0, 0, time.UTC), true, "2. Weihnachtstag"},
 
 		{time.Date(2017, 1, 1, 12, 0, 0, 0, time.UTC), true, "Neujahr"},
-	}
-
-	for _, test := range tests {
-		got := c.IsHoliday(test.t)
-		if got != test.want {
-			t.Errorf("got: %t for %s; want: %t (%s)", got, test.name, test.want, test.t)
-		}
-	}
+	})
 }
 
 func TestAddGermanyStateHolidays(t *testing.T) {
@@ -48,80 +36,80 @@ func TestAddGermanyStateHolidays(t *testing.T) {
 		{
 			"BB",
 			[]testStruct{
-				{time.Date(2017, 4, 16, 12, 0, 0, 0, time.UTC), true, "Ostersonntag"},
-				{time.Date(2017, 6, 4, 12, 0, 0, 0, time.UTC), true, "Pfingstsonntag"},
-				{time.Date(2017, 10, 31, 12, 0, 0, 0, time.UTC), true, "Reformationstag"},
+				{time.Date(2017, 4, 16, 12, 0, 0, 0, time.UTC), true, "DE Ostersonntag"},
+				{time.Date(2017, 6, 4, 12, 0, 0, 0, time.UTC), true, "DE Pfingstsonntag"},
+				{time.Date(2017, 10, 31, 12, 0, 0, 0, time.UTC), true, "DE Reformationstag"},
 			},
 		},
 		{
 			"BW",
 			[]testStruct{
-				{time.Date(2017, 1, 6, 12, 0, 0, 0, time.UTC), true, "Heilige Drei Könige"},
-				{time.Date(2017, 6, 15, 12, 0, 0, 0, time.UTC), true, "Fronleichnam"},
-				{time.Date(2017, 11, 1, 12, 0, 0, 0, time.UTC), true, "Allerheiligen"},
+				{time.Date(2017, 1, 6, 12, 0, 0, 0, time.UTC), true, "BW Heilige Drei Könige"},
+				{time.Date(2017, 6, 15, 12, 0, 0, 0, time.UTC), true, "BW Fronleichnam"},
+				{time.Date(2017, 11, 1, 12, 0, 0, 0, time.UTC), true, "BW Allerheiligen"},
 			},
 		},
 		{
 			"BY",
 			[]testStruct{
-				{time.Date(2017, 1, 6, 12, 0, 0, 0, time.UTC), true, "Heilige Drei Könige"},
-				{time.Date(2017, 6, 15, 12, 0, 0, 0, time.UTC), true, "Fronleichnam"},
-				{time.Date(2017, 8, 15, 12, 0, 0, 0, time.UTC), true, "Mariä Himmelfahrt"},
-				{time.Date(2017, 11, 1, 12, 0, 0, 0, time.UTC), true, "Allerheiligen"},
+				{time.Date(2017, 1, 6, 12, 0, 0, 0, time.UTC), true, "BY Heilige Drei Könige"},
+				{time.Date(2017, 6, 15, 12, 0, 0, 0, time.UTC), true, "BY Fronleichnam"},
+				{time.Date(2017, 8, 15, 12, 0, 0, 0, time.UTC), true, "BY Mariä Himmelfahrt"},
+				{time.Date(2017, 11, 1, 12, 0, 0, 0, time.UTC), true, "BY Allerheiligen"},
 			},
 		},
 		{
 			"HE",
 			[]testStruct{
-				{time.Date(2017, 6, 15, 12, 0, 0, 0, time.UTC), true, "Fronleichnam"},
+				{time.Date(2017, 6, 15, 12, 0, 0, 0, time.UTC), true, "HE Fronleichnam"},
 			},
 		},
 		{
 			"MV",
 			[]testStruct{
-				{time.Date(2017, 10, 31, 12, 0, 0, 0, time.UTC), true, "Reformationstag"},
+				{time.Date(2017, 10, 31, 12, 0, 0, 0, time.UTC), true, "MV Reformationstag"},
 			},
 		},
 		{
 			"NW",
 			[]testStruct{
-				{time.Date(2017, 6, 15, 12, 0, 0, 0, time.UTC), true, "Fronleichnam"},
-				{time.Date(2017, 11, 1, 12, 0, 0, 0, time.UTC), true, "Allerheiligen"},
+				{time.Date(2017, 6, 15, 12, 0, 0, 0, time.UTC), true, "NW Fronleichnam"},
+				{time.Date(2017, 11, 1, 12, 0, 0, 0, time.UTC), true, "NW Allerheiligen"},
 			},
 		},
 		{
 			"RP",
 			[]testStruct{
-				{time.Date(2017, 6, 15, 12, 0, 0, 0, time.UTC), true, "Fronleichnam"},
-				{time.Date(2017, 11, 1, 12, 0, 0, 0, time.UTC), true, "Allerheiligen"},
+				{time.Date(2017, 6, 15, 12, 0, 0, 0, time.UTC), true, "RP Fronleichnam"},
+				{time.Date(2017, 11, 1, 12, 0, 0, 0, time.UTC), true, "RP Allerheiligen"},
 			},
 		},
 		{
 			"SA",
 			[]testStruct{
-				{time.Date(2017, 10, 31, 12, 0, 0, 0, time.UTC), true, "Reformationstag"},
-				{time.Date(2017, 11, 22, 12, 0, 0, 0, time.UTC), true, "Buß- und Bettag"},
+				{time.Date(2017, 10, 31, 12, 0, 0, 0, time.UTC), true, "SA Reformationstag"},
+				{time.Date(2017, 11, 22, 12, 0, 0, 0, time.UTC), true, "SA Buß- und Bettag"},
 			},
 		},
 		{
 			"SL",
 			[]testStruct{
-				{time.Date(2017, 6, 15, 12, 0, 0, 0, time.UTC), true, "Fronleichnam"},
-				{time.Date(2017, 8, 15, 12, 0, 0, 0, time.UTC), true, "Mariä Himmelfahrt"},
-				{time.Date(2017, 11, 1, 12, 0, 0, 0, time.UTC), true, "Allerheiligen"},
+				{time.Date(2017, 6, 15, 12, 0, 0, 0, time.UTC), true, "SL Fronleichnam"},
+				{time.Date(2017, 8, 15, 12, 0, 0, 0, time.UTC), true, "SL Mariä Himmelfahrt"},
+				{time.Date(2017, 11, 1, 12, 0, 0, 0, time.UTC), true, "SL Allerheiligen"},
 			},
 		},
 		{
 			"ST",
 			[]testStruct{
-				{time.Date(2017, 1, 6, 12, 0, 0, 0, time.UTC), true, "Heilige Drei Könige"},
-				{time.Date(2017, 10, 31, 12, 0, 0, 0, time.UTC), true, "Reformationstag"},
+				{time.Date(2017, 1, 6, 12, 0, 0, 0, time.UTC), true, "ST Heilige Drei Könige"},
+				{time.Date(2017, 10, 31, 12, 0, 0, 0, time.UTC), true, "ST Reformationstag"},
 			},
 		},
 		{
 			"TH",
 			[]testStruct{
-				{time.Date(2017, 10, 31, 12, 0, 0, 0, time.UTC), true, "Reformationstag"},
+				{time.Date(2017, 10, 31, 12, 0, 0, 0, time.UTC), true, "TH Reformationstag"},
 			},
 		},
 	}
@@ -131,11 +119,6 @@ func TestAddGermanyStateHolidays(t *testing.T) {
 		c.Observed = ObservedExact
 		AddGermanyStateHolidays(c, test.state)
 
-		for _, day := range test.tests {
-			got := c.IsHoliday(day.t)
-			if got != day.want {
-				t.Errorf("state: %s got: %t for %s; want: %t (%s)", test.state, got, day.name, day.want, day.t)
-			}
-		}
+		assertHolidays(t, c, test.tests)
 	}
 }

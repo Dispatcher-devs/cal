@@ -7,6 +7,23 @@ import (
 	"time"
 )
 
+type testStruct struct {
+	t    time.Time
+	want bool
+	name string
+}
+
+func assertHolidays(t *testing.T, c *Calendar, tests []testStruct) {
+	t.Helper()
+
+	for _, day := range tests {
+		got := c.IsHoliday(day.t)
+		if got != day.want {
+			t.Errorf("expected %t, got: %t for %s (%s)", day.want, got, day.name, day.t)
+		}
+	}
+}
+
 func TestCalculateEaster(t *testing.T) {
 	tests := []struct {
 		t    time.Time
