@@ -37,3 +37,21 @@ func TestFranceHolidays(t *testing.T) {
 		{time.Date(2018, 12, 25, 12, 0, 0, 0, time.UTC), true, "Noël"},
 	})
 }
+
+func TestElsassHolidays(t *testing.T) {
+	for _, dep := range []string{"67", "68", "57", "75"} {
+		expected := dep != "75"
+
+		c, err := NewCalendarFromCountryCode("FR")
+		if err != nil {
+			t.Error(err)
+			continue
+		}
+		AddFranceDepartmentHolidays(c, dep)
+
+		assertHolidays(t, c, []testStruct{
+			{time.Date(2019, time.April, 19, 0, 0, 0, 0, time.UTC), expected, "Vendredi Saint"},
+			{time.Date(2020, time.December, 26, 0, 0, 0, 0, time.UTC), expected, "Saint Étienne"},
+		})
+	}
+}
