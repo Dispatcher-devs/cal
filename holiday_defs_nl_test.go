@@ -6,7 +6,7 @@ import (
 )
 
 func TestDutchHolidays(t *testing.T) {
-	c, err := NewCalendarFromCountryCode("NL")
+	c, err := newCalendarFromCountryCode("NL")
 	if err != nil {
 		t.Fatal(err)
 	}

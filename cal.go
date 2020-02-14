@@ -5,6 +5,7 @@ package cal
 import (
 	"fmt"
 	"math"
+	"strings"
 	"time"
 )
 
@@ -107,7 +108,7 @@ type Calendar struct {
 
 // NewCalendar creates a new Calendar with no holidays defined
 // and work days of Monday through Friday.
-func NewCalendar() *Calendar {
+func newCalendar() *Calendar {
 	c := &Calendar{}
 
 	for i := range c.holidays {
@@ -121,11 +122,10 @@ func NewCalendar() *Calendar {
 	return c
 }
 
-// NewCalendarFromCountryCode returns the holiday calendar associated to the
-// country designed by the given uppercase ISO 3166-1 alpha-2 country code.
-func NewCalendarFromCountryCode(code string) (*Calendar, error) {
-	c := NewCalendar()
-	c.Observed = ObservedExact
+// newCalendarFromCountryCode returns the holiday calendar associated to the
+// country designated by the given uppercase ISO 3166-1 alpha-2 country code.
+func newCalendarFromCountryCode(code string) (*Calendar, error) {
+	c := newCalendar()
 
 	if obs, ok := map[string]ObservedRule{
 		// TODO: Complete this list when the knowledge is there.
@@ -138,28 +138,59 @@ func NewCalendarFromCountryCode(code string) (*Calendar, error) {
 
 	// TODO: Consistency on func names.
 	fn, ok := map[string]func(*Calendar){
-		"AT": AddAustrianHolidays,
-		"AU": AddAustralianHolidays,
-		"BE": AddBelgiumHolidays,
-		"CA": AddCanadianHolidays,
-		"DE": AddGermanHolidays,
-		"DK": AddDanishHolidays,
-		"ES": AddSpainHolidays,
-		"FR": AddFranceHolidays,
-		"GB": AddBritishHolidays,
-		"IT": AddItalianHolidays,
-		"NL": AddDutchHolidays,
-		"NO": AddNorwegianHolidays,
-		"NZ": AddNewZealandHoliday,
-		"PL": AddPolandHolidays,
-		"SE": AddSwedishHolidays,
-		"US": AddUsHolidays,
+		"AT": addAustrianHolidays,
+		"AU": addAustralianHolidays,
+		"BE": addBelgiumHolidays,
+		"CA": addCanadianHolidays,
+		"DE": addGermanHolidays,
+		"DK": addDanishHolidays,
+		"ES": addSpainHolidays,
+		"FR": addFranceHolidays,
+		"GB": addBritishHolidays,
+		"IT": addItalianHolidays,
+		"NL": addDutchHolidays,
+		"NO": addNorwegianHolidays,
+		"NZ": addNewZealandHoliday,
+		"PL": addPolandHolidays,
+		"SE": addSwedishHolidays,
+		"US": addUSHolidays,
 	}[code]
 	if !ok {
 		return nil, fmt.Errorf("no calendar exists for country %s", code)
 	}
 
 	fn(c)
+
+	return c, nil
+}
+
+// NewLocalCalendar creates a Calendar from an ISO-3166-1 Alpha 2 or ISO-3166-2.
+func NewLocalCalendar(code string) (*Calendar, error) {
+	parts := strings.SplitN(code, "-", 2)
+	if len(parts) < 1 {
+		return nil, fmt.Errorf("%s is not a valid ISO-3166-1 Alpha 2 or ISO-3166-2 code", code)
+	}
+
+	c, err := newCalendarFromCountryCode(parts[0])
+	if err != nil {
+		return nil, err
+	}
+	if len(parts) < 2 {
+		return c, nil
+	}
+
+	fn, ok := map[string]func(*Calendar, string) error{
+		"CA": addCanadaProvinceHolidays,
+		"DE": addGermanyStateHolidays,
+		"FR": addFranceDepartmentHolidays,
+	}[parts[0]]
+	if !ok {
+		return c, nil
+	}
+
+	if err := fn(c, code); err != nil {
+		return nil, err
+	}
 
 	return c, nil
 }

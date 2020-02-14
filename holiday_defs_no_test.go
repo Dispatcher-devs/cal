@@ -6,7 +6,7 @@ import (
 )
 
 func TestNorwegianHolidays(t *testing.T) {
-	c, err := NewCalendarFromCountryCode("NO")
+	c, err := newCalendarFromCountryCode("NO")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -44,7 +44,7 @@ func TestNorwegianHolidays(t *testing.T) {
 }
 
 func TestNorwegianHalfDays(t *testing.T) {
-	c := NewCalendar()
+	c := newCalendar()
 	c.Observed = ObservedExact
 	AddNorwegianHalfDays(c)
 

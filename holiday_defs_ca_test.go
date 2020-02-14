@@ -6,7 +6,7 @@ import (
 )
 
 func TestCanadianHolidays(t *testing.T) {
-	c, err := NewCalendarFromCountryCode("CA")
+	c, err := newCalendarFromCountryCode("CA")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -98,13 +98,10 @@ func TestCanadianStateHolidays(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		c, err := NewCalendarFromCountryCode("CA")
+		c, err := NewLocalCalendar("CA-" + test.state)
 		if err != nil {
-			t.Fatal(err)
-		}
-
-		if err := AddCanadianProvinceHolidays(c, test.state); err != nil {
-			t.Fatal(err)
+			t.Error(err)
+			continue
 		}
 
 		assertHolidays(t, c, test.tests)

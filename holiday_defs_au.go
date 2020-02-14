@@ -8,29 +8,29 @@ import (
 
 // Holidays in Australia
 var (
-	AUNewYear       = NewHolidayFunc(calculateNewYearOceania)
-	AUAustralianDay = NewHoliday(time.January, 26)
-	AUGoodFriday    = GoodFriday
-	AUChristmasDay  = NewHolidayFunc(calculateOcenaniaChristmasDay)
-	AUBoxingDays    = Christmas2
-	AUEasterMonday  = EasterMonday
-	AUAnzacDay      = NewHolidayFunc(calculateAnzacDay)
-	AUQueenBirthDay = NewHolidayFunc(calculateQueenBirthDay)
-	AULabourDay     = NewHolidayFunc(calculateAULabourDay)
+	auNewYear       = NewHolidayFunc(calculateNewYearOceania)
+	auAustralianDay = NewHoliday(time.January, 26)
+	auGoodFriday    = goodFriday
+	auChristmasDay  = NewHolidayFunc(calculateOcenaniaChristmasDay)
+	auBoxingDays    = christmas2
+	auEasterMonday  = easterMonday
+	auAnzacDay      = NewHolidayFunc(calculateAnzacDay)
+	auQueenBirthDay = NewHolidayFunc(calculateQueenBirthDay)
+	auLabourDay     = NewHolidayFunc(calculateAULabourDay)
 )
 
-// AddAustralianHolidays adds all Australian holidays
-func AddAustralianHolidays(c *Calendar) {
+// addAustralianHolidays adds all Australian holidays
+func addAustralianHolidays(c *Calendar) {
 	c.AddHoliday(
-		AUNewYear,
-		AUAustralianDay,
-		AUGoodFriday,
-		AUEasterMonday,
-		AUAnzacDay,
-		AUChristmasDay,
-		AUBoxingDays,
-		AUQueenBirthDay,
-		AULabourDay,
+		auNewYear,
+		auAustralianDay,
+		auGoodFriday,
+		auEasterMonday,
+		auAnzacDay,
+		auChristmasDay,
+		auBoxingDays,
+		auQueenBirthDay,
+		auLabourDay,
 	)
 }
 

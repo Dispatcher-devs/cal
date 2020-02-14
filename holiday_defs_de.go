@@ -2,128 +2,135 @@
 
 package cal
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 // Holidays in Germany
 var (
-	DENeujahr                  = NewYear
-	DEHeiligeDreiKoenige       = NewHoliday(time.January, 6)
-	DEInternationalerFrauentag = NewHoliday(time.March, 8)
-	DEKarFreitag               = GoodFriday
-	DEOstersonntag             = NewHolidayFunc(calculateOstersonntag)
-	DEOstermontag              = EasterMonday
-	DETagderArbeit             = NewHoliday(time.May, 1)
-	DEChristiHimmelfahrt       = NewHolidayFunc(calculateHimmelfahrt)
-	DEPfingstsonntag           = NewHolidayFunc(calculatePfingstSonntag)
-	DEPfingstmontag            = NewHolidayFunc(calculatePfingstMontag)
-	DEFronleichnam             = NewHolidayFunc(calculateFronleichnam)
-	DEMariaHimmelfahrt         = NewHoliday(time.August, 15)
-	DEWeltkindertag            = NewHoliday(time.September, 20)
-	DETagderDeutschenEinheit   = NewHoliday(time.October, 3)
-	DEReformationstag          = NewHoliday(time.October, 31)
-	DEReformationstag2017      = NewHolidayExact(time.October, 31, 2017)
-	DEAllerheiligen            = NewHoliday(time.November, 1)
-	DEBußUndBettag             = NewHolidayFunc(calculateBußUndBettag)
-	DEErsterWeihnachtstag      = Christmas
-	DEZweiterWeihnachtstag     = Christmas2
+	deNeujahr                  = newYear
+	deHeiligeDreiKoenige       = NewHoliday(time.January, 6)
+	deInternationalerFrauentag = NewHoliday(time.March, 8)
+	deKarFreitag               = goodFriday
+	deOstersonntag             = NewHolidayFunc(calculateOstersonntag)
+	deOstermontag              = easterMonday
+	deTagderArbeit             = NewHoliday(time.May, 1)
+	deChristiHimmelfahrt       = NewHolidayFunc(calculateHimmelfahrt)
+	dePfingstsonntag           = NewHolidayFunc(calculatePfingstSonntag)
+	dePfingstmontag            = NewHolidayFunc(calculatePfingstMontag)
+	deFronleichnam             = NewHolidayFunc(calculateFronleichnam)
+	deMariaHimmelfahrt         = NewHoliday(time.August, 15)
+	deWeltkindertag            = NewHoliday(time.September, 20)
+	deTagderDeutschenEinheit   = NewHoliday(time.October, 3)
+	deReformationstag          = NewHoliday(time.October, 31)
+	deReformationstag2017      = NewHolidayExact(time.October, 31, 2017)
+	deAllerheiligen            = NewHoliday(time.November, 1)
+	deBußUndBettag             = NewHolidayFunc(calculateBußUndBettag)
+	deErsterWeihnachtstag      = christmas
+	deZweiterWeihnachtstag     = christmas2
 )
 
-// AddGermanHolidays adds all German holidays to the Calendar
-func AddGermanHolidays(c *Calendar) {
+// addGermanHolidays adds all German holidays to the Calendar
+func addGermanHolidays(c *Calendar) {
 	c.AddHoliday(
-		DENeujahr,
-		DEKarFreitag,
-		DEOstermontag,
-		DETagderArbeit,
-		DEChristiHimmelfahrt,
-		DEPfingstmontag,
-		DETagderDeutschenEinheit,
-		DEErsterWeihnachtstag,
-		DEZweiterWeihnachtstag,
+		deNeujahr,
+		deKarFreitag,
+		deOstermontag,
+		deTagderArbeit,
+		deChristiHimmelfahrt,
+		dePfingstmontag,
+		deTagderDeutschenEinheit,
+		deErsterWeihnachtstag,
+		deZweiterWeihnachtstag,
 	)
 }
 
-// AddGermanyStateHolidays adds german state holidays to the calendar
-func AddGermanyStateHolidays(c *Calendar, state string) { // nolint:funlen
+// addGermanyStateHolidays adds german state holidays to the calendar
+func addGermanyStateHolidays(c *Calendar, state string) error { // nolint:funlen
 	switch state {
-	case "BB": // Brandenburg
+	case "DE-BB": // Brandenburg
 		c.AddHoliday(
-			DEOstersonntag,
-			DEPfingstsonntag,
-			DEReformationstag,
+			deOstersonntag,
+			dePfingstsonntag,
+			deReformationstag,
 		)
-	case "BE": // Berlin
+	case "DE-BE": // Berlin
 		c.AddHoliday(
-			DEInternationalerFrauentag,
-			DEReformationstag2017,
+			deInternationalerFrauentag,
+			deReformationstag2017,
 		)
-	case "BW": // Baden-Württemberg
+	case "DE-BW": // Baden-Württemberg
 		c.AddHoliday(
-			DEHeiligeDreiKoenige,
-			DEFronleichnam,
-			DEAllerheiligen,
-			DEReformationstag2017,
+			deHeiligeDreiKoenige,
+			deFronleichnam,
+			deAllerheiligen,
+			deReformationstag2017,
 		)
-	case "BY": // Bayern
+	case "DE-BY": // Bayern
 		c.AddHoliday(
-			DEHeiligeDreiKoenige,
-			DEFronleichnam,
-			DEMariaHimmelfahrt,
-			DEAllerheiligen,
-			DEReformationstag2017,
+			deHeiligeDreiKoenige,
+			deFronleichnam,
+			deMariaHimmelfahrt,
+			deAllerheiligen,
+			deReformationstag2017,
 		)
-	case "HB": // Bremen
-		c.AddHoliday(DEReformationstag)
-	case "HE": // Hessen
+	case "DE-HB": // Bremen
+		c.AddHoliday(deReformationstag)
+	case "DE-HE": // Hessen
 		c.AddHoliday(
-			DEOstersonntag,
-			DEPfingstsonntag,
-			DEFronleichnam,
-			DEReformationstag2017,
+			deOstersonntag,
+			dePfingstsonntag,
+			deFronleichnam,
+			deReformationstag2017,
 		)
-	case "HH": // Hamburg
-		c.AddHoliday(DEReformationstag)
-	case "MV": // Mecklenburg-Vorpommern
-		c.AddHoliday(DEReformationstag)
-	case "NI": // Niedersachsen
-		c.AddHoliday(DEReformationstag)
-	case "NW": // Nordrhein-Westfalen
+	case "DE-HH": // Hamburg
+		c.AddHoliday(deReformationstag)
+	case "DE-MV": // Mecklenburg-Vorpommern
+		c.AddHoliday(deReformationstag)
+	case "DE-NI": // Niedersachsen
+		c.AddHoliday(deReformationstag)
+	case "DE-NW": // Nordrhein-Westfalen
 		c.AddHoliday(
-			DEFronleichnam,
-			DEAllerheiligen,
-			DEReformationstag2017,
+			deFronleichnam,
+			deAllerheiligen,
+			deReformationstag2017,
 		)
-	case "RP": // Rheinland-Pfalz
+	case "DE-RP": // Rheinland-Pfalz
 		c.AddHoliday(
-			DEFronleichnam,
-			DEAllerheiligen,
-			DEReformationstag2017,
+			deFronleichnam,
+			deAllerheiligen,
+			deReformationstag2017,
 		)
-	case "SN", "SA": // Sachsen (keep wrong "SA" code for compatibility)
+	case "DE-SN", "DE-SA": // Sachsen (keep wrong "SA" code for compatibility)
 		c.AddHoliday(
-			DEReformationstag,
-			DEBußUndBettag,
+			deReformationstag,
+			deBußUndBettag,
 		)
-	case "SH": // Schleswig-Holstein
-		c.AddHoliday(DEReformationstag)
-	case "SL": // Saarland
+	case "DE-SH": // Schleswig-Holstein
+		c.AddHoliday(deReformationstag)
+	case "DE-SL": // Saarland
 		c.AddHoliday(
-			DEFronleichnam,
-			DEMariaHimmelfahrt,
-			DEAllerheiligen,
-			DEReformationstag2017,
+			deFronleichnam,
+			deMariaHimmelfahrt,
+			deAllerheiligen,
+			deReformationstag2017,
 		)
-	case "ST": // Sachen-Anhalt
+	case "DE-ST": // Sachen-Anhalt
 		c.AddHoliday(
-			DEHeiligeDreiKoenige,
-			DEReformationstag,
+			deHeiligeDreiKoenige,
+			deReformationstag,
 		)
-	case "TH": // Thüringen
+	case "DE-TH": // Thüringen
 		c.AddHoliday(
-			DEWeltkindertag,
-			DEReformationstag,
+			deWeltkindertag,
+			deReformationstag,
 		)
+	default:
+		return fmt.Errorf("unknown Länder %s", state)
 	}
+
+	return nil
 }
 
 func calculateOstersonntag(year int, loc *time.Location) (time.Month, int) {

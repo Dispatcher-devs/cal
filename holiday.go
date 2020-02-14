@@ -12,8 +12,8 @@ type ObservedRule int
 
 // ObservedRule are the specific ObservedRules
 const (
-	ObservedNearest ObservedRule = iota // nearest weekday (Friday or Monday)
-	ObservedExact                       // the exact day only
+	ObservedExact   ObservedRule = iota // the exact day only, default value
+	ObservedNearest                     // nearest weekday (Friday or Monday)
 	ObservedMonday                      // Monday always
 
 	// As above, but also accounts for Christmas Day being on a weekend (which
@@ -32,11 +32,11 @@ type HolidayFactory func(year int, loc *time.Location) Holiday
 // Holiday holds information about the yearly occurrence of a holiday.
 //
 // A valid Holiday consists of one of the following:
-// - Month and Day (such as March 14 for Pi Day)
-// - Month, Weekday, and Offset (such as the second Monday of October for Columbus Day)
-// - Offset (such as the 183rd day of the year for the start of the second half)
-// - Month, Day, and Year (in case you want to specify holidays exactly for each year)
-// - Func (to calculate the holiday)
+//   - Month and Day (such as March 14 for Pi Day)
+//   - Month, Weekday, and Offset (such as the second Monday of October for Columbus Day)
+//   - Offset (such as the 183rd day of the year for the start of the second half)
+//   - Month, Day, and Year (in case you want to specify holidays exactly for each year)
+//   - Func (to calculate the holiday)
 type Holiday struct {
 	Month   time.Month
 	Weekday time.Weekday

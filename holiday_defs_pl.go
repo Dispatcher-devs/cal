@@ -6,37 +6,37 @@ import (
 
 // Poland holidays
 var (
-	PLNewYear                     = NewYear
-	PLThreeKings                  = NewHoliday(time.January, 6)
-	PLEasterMonday                = EasterMonday
-	PLEasterSunday                = NewHolidayFunc(calculateEasterSunday)
-	PLLabourDay                   = NewHoliday(time.May, 1)
-	PLNationalDay                 = NewHoliday(time.May, 3)
-	PLPentecostDay                = NewHolidayFunc(calculatePentecostDay)
-	PLCorpusChristi               = NewHolidayFunc(calculateCorpusChristiDay)
-	PLAssumptionBlessedVirginMary = NewHoliday(time.August, 15)
-	PLAllSaints                   = NewHoliday(time.November, 1)
-	PLNationalIndependenceDay     = NewHoliday(time.November, 11)
-	PLChristmasDayOne             = Christmas
-	PLChristmasDayTwo             = Christmas2
+	plNewYear                     = newYear
+	plThreeKings                  = NewHoliday(time.January, 6)
+	plEasterMonday                = easterMonday
+	plEasterSunday                = NewHolidayFunc(calculateEasterSunday)
+	plLabourDay                   = NewHoliday(time.May, 1)
+	plNationalDay                 = NewHoliday(time.May, 3)
+	plPentecostDay                = NewHolidayFunc(calculatePentecostDay)
+	plCorpusChristi               = NewHolidayFunc(calculateCorpusChristiDay)
+	plAssumptionBlessedVirginMary = NewHoliday(time.August, 15)
+	plAllSaints                   = NewHoliday(time.November, 1)
+	plNationalIndependenceDay     = NewHoliday(time.November, 11)
+	plChristmasDayOne             = christmas
+	plChristmasDayTwo             = christmas2
 )
 
-// AddPolandHolidays adds all Poland holidays to the Calendar
-func AddPolandHolidays(c *Calendar) {
+// addPolandHolidays adds all Poland holidays to the Calendar
+func addPolandHolidays(c *Calendar) {
 	c.AddHoliday(
-		PLNewYear,
-		PLThreeKings,
-		PLEasterMonday,
-		PLEasterSunday,
-		PLLabourDay,
-		PLNationalDay,
-		PLPentecostDay,
-		PLCorpusChristi,
-		PLAssumptionBlessedVirginMary,
-		PLAllSaints,
-		PLNationalIndependenceDay,
-		PLChristmasDayOne,
-		PLChristmasDayTwo,
+		plNewYear,
+		plThreeKings,
+		plEasterMonday,
+		plEasterSunday,
+		plLabourDay,
+		plNationalDay,
+		plPentecostDay,
+		plCorpusChristi,
+		plAssumptionBlessedVirginMary,
+		plAllSaints,
+		plNationalIndependenceDay,
+		plChristmasDayOne,
+		plChristmasDayTwo,
 	)
 }
 

@@ -6,7 +6,7 @@ import (
 )
 
 func TestFranceHolidays(t *testing.T) {
-	c, err := NewCalendarFromCountryCode("FR")
+	c, err := newCalendarFromCountryCode("FR")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -39,15 +39,14 @@ func TestFranceHolidays(t *testing.T) {
 }
 
 func TestElsassHolidays(t *testing.T) {
-	for _, dep := range []string{"67", "68", "57", "75"} {
-		expected := dep != "75"
+	for _, code := range []string{"FR-67", "FR-68", "FR-57", "FR-75"} {
+		expected := code != "FR-75"
 
-		c, err := NewCalendarFromCountryCode("FR")
+		c, err := NewLocalCalendar(code)
 		if err != nil {
 			t.Error(err)
 			continue
 		}
-		AddFranceDepartmentHolidays(c, dep)
 
 		assertHolidays(t, c, []testStruct{
 			{time.Date(2019, time.April, 19, 0, 0, 0, 0, time.UTC), expected, "Vendredi Saint"},

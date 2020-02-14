@@ -7,44 +7,45 @@ import "time"
 // Holidays in Norway
 // Reference https://no.wikipedia.org/wiki/Helligdager_i_Norge
 var (
-	NOFoersteNyttaarsdag   = NewYear
-	NOSkjaertorsdag        = NewHolidayFunc(calculateSkaertorsdag)
-	NOLangfredag           = GoodFriday
-	NOFoerstePaaskedag     = NewHolidayFunc(calculatePaskdagen)
-	NOAndrePaaskedag       = EasterMonday
-	NOArbeiderenesdag      = NewHoliday(time.May, 1)
-	NOGrunnlovsdag         = NewHoliday(time.May, 17)
-	NOKristihimmelfartsdag = NewHolidayFunc(calculateKristiHimmelfardsdag)
-	NOFoerstePinsedag      = NewHolidayFunc(calculatePingstdagen)
-	NOAndrePinsedag        = NewHolidayFunc(calculateAndenPinsedag)
-	NOFoersteJuledag       = Christmas
-	NOAndreJuledag         = Christmas2
+	noFoersteNyttaarsdag   = newYear
+	noSkjaertorsdag        = NewHolidayFunc(calculateSkaertorsdag)
+	noLangfredag           = goodFriday
+	noFoerstePaaskedag     = NewHolidayFunc(calculatePaskdagen)
+	noAndrePaaskedag       = easterMonday
+	noArbeiderenesdag      = NewHoliday(time.May, 1)
+	noGrunnlovsdag         = NewHoliday(time.May, 17)
+	noKristihimmelfartsdag = NewHolidayFunc(calculateKristiHimmelfardsdag)
+	noFoerstePinsedag      = NewHolidayFunc(calculatePingstdagen)
+	noAndrePinsedag        = NewHolidayFunc(calculateAndenPinsedag)
+	noFoersteJuledag       = christmas
+	noAndreJuledag         = christmas2
 	// Half days
-	NOJulaften      = NewHoliday(time.December, 24)
-	NONyttaarsaften = NewHoliday(time.December, 31)
+	noJulaften      = NewHoliday(time.December, 24)
+	noNyttaarsaften = NewHoliday(time.December, 31)
 )
 
-// AddNorwegianHolidays adds all Norwegian holidays to Calendar
-func AddNorwegianHolidays(c *Calendar) {
+// addNorwegianHolidays adds all Norwegian holidays to Calendar
+func addNorwegianHolidays(c *Calendar) {
 	c.AddHoliday(
-		NOFoersteNyttaarsdag,
-		NOSkjaertorsdag,
-		NOLangfredag,
-		NOFoerstePaaskedag,
-		NOAndrePaaskedag,
-		NOArbeiderenesdag,
-		NOGrunnlovsdag,
-		NOKristihimmelfartsdag,
-		NOFoerstePinsedag,
-		NOAndrePinsedag,
-		NOFoersteJuledag,
-		NOAndreJuledag,
+		noFoersteNyttaarsdag,
+		noSkjaertorsdag,
+		noLangfredag,
+		noFoerstePaaskedag,
+		noAndrePaaskedag,
+		noArbeiderenesdag,
+		noGrunnlovsdag,
+		noKristihimmelfartsdag,
+		noFoerstePinsedag,
+		noAndrePinsedag,
+		noFoersteJuledag,
+		noAndreJuledag,
 	)
 }
 
 // AddNorwegianHalfDays are note holidays, but often practiced as a half-business day.
 func AddNorwegianHalfDays(c *Calendar) {
-	c.AddHoliday(NOJulaften,
-		NONyttaarsaften,
+	c.AddHoliday(
+		noJulaften,
+		noNyttaarsaften,
 	)
 }

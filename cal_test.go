@@ -136,7 +136,7 @@ func TestJulianDate(t *testing.T) {
 }
 
 func TestWorkday(t *testing.T) {
-	c := NewCalendar()
+	c := newCalendar()
 	c.SetWorkday(time.Monday, false)
 	c.SetWorkday(time.Saturday, true)
 	c.AddHoliday(Holiday{Month: time.June, Day: 12})
@@ -163,7 +163,7 @@ func TestWorkday(t *testing.T) {
 }
 
 func TestWorkdayFunc(t *testing.T) {
-	c := NewCalendar()
+	c := newCalendar()
 	c.WorkdayFunc = func(date time.Time) bool {
 		return date.Weekday() == time.Monday ||
 			date.Weekday() == time.Tuesday ||
@@ -197,11 +197,11 @@ func TestWorkdayFunc(t *testing.T) {
 }
 
 func TestHoliday(t *testing.T) {
-	c := NewCalendar()
+	c := newCalendar()
 	c.AddHoliday(
-		USMemorial,
-		USIndependence,
-		USColumbus,
+		usMemorial,
+		usIndependence,
+		usColumbus,
 	)
 	c.AddHoliday(Holiday{Offset: 100})
 	c.AddHoliday(Holiday{Day: 24, Month: time.November, Year: 2016})
@@ -239,11 +239,12 @@ func TestHoliday(t *testing.T) {
 }
 
 func TestWorkdayNearest(t *testing.T) {
-	c := NewCalendar()
+	c := newCalendar()
+	c.Observed = ObservedNearest
 	c.AddHoliday(
-		USNewYear,
-		USIndependence,
-		USChristmas,
+		usNewYear,
+		usIndependence,
+		usChristmas,
 	)
 
 	tests := []struct {
@@ -268,12 +269,12 @@ func TestWorkdayNearest(t *testing.T) {
 }
 
 func TestWorkdayExact(t *testing.T) {
-	c := NewCalendar()
+	c := newCalendar()
 	c.Observed = ObservedExact
 	c.AddHoliday(
-		USNewYear,
-		USIndependence,
-		USChristmas,
+		usNewYear,
+		usIndependence,
+		usChristmas,
 	)
 	c.AddHoliday(Holiday{Day: 24, Month: time.November, Year: 2016})
 
@@ -301,12 +302,12 @@ func TestWorkdayExact(t *testing.T) {
 }
 
 func TestWorkdayMonday(t *testing.T) {
-	c := NewCalendar()
+	c := newCalendar()
 	c.Observed = ObservedMonday
 	c.AddHoliday(
-		USNewYear,
-		USIndependence,
-		USChristmas,
+		usNewYear,
+		usIndependence,
+		usChristmas,
 	)
 
 	tests := []struct {
@@ -332,11 +333,11 @@ func TestWorkdayMonday(t *testing.T) {
 }
 
 func TestWorkdayMondayTuesday(t *testing.T) {
-	c := NewCalendar()
+	c := newCalendar()
 	c.Observed = ObservedMondayTuesday
 	c.AddHoliday(
-		GBChristmasDay,
-		GBBoxingDay,
+		gbChristmasDay,
+		gbBoxingDay,
 	)
 
 	tests := []struct {
@@ -390,8 +391,8 @@ func TestWorkdayMondayTuesday(t *testing.T) {
 }
 
 func TestWorkdays(t *testing.T) {
-	c := NewCalendar()
-	c.AddHoliday(USNewYear, USMLK)
+	c := newCalendar()
+	c.AddHoliday(usNewYear, usMLK)
 
 	tests := []struct {
 		y    int
@@ -414,8 +415,8 @@ func TestWorkdays(t *testing.T) {
 }
 
 func TestWorkdaysRemain(t *testing.T) {
-	c := NewCalendar()
-	c.AddHoliday(USNewYear, USMLK)
+	c := newCalendar()
+	c.AddHoliday(usNewYear, usMLK)
 
 	tests := []struct {
 		t    time.Time
@@ -438,7 +439,7 @@ func TestWorkdaysRemain(t *testing.T) {
 }
 
 func TestWorkdaysRemainCustom(t *testing.T) {
-	c := NewCalendar()
+	c := newCalendar()
 	c.SetWorkday(time.Monday, false)
 	c.SetWorkday(time.Tuesday, false)
 	c.SetWorkday(time.Wednesday, false)
@@ -458,8 +459,8 @@ func TestWorkdaysRemainCustom(t *testing.T) {
 }
 
 func TestWorkdayN(t *testing.T) {
-	c := NewCalendar()
-	c.AddHoliday(USNewYear, USMLK)
+	c := newCalendar()
+	c.AddHoliday(usNewYear, usMLK)
 
 	tests := []struct {
 		y    int
@@ -485,8 +486,9 @@ func TestWorkdayN(t *testing.T) {
 }
 
 func TestWorkdaysFrom(t *testing.T) {
-	c := NewCalendar()
-	c.AddHoliday(USNewYear, USMLK)
+	c := newCalendar()
+	c.Observed = ObservedNearest
+	c.AddHoliday(usNewYear, usMLK)
 
 	tests := []struct {
 		d    time.Time
@@ -513,9 +515,9 @@ func TestWorkdaysFrom(t *testing.T) {
 }
 
 func TestCountWorkdays(t *testing.T) {
-	c := NewCalendar()
+	c := newCalendar()
 	c.Observed = ObservedExact
-	c.AddHoliday(USNewYear)
+	c.AddHoliday(usNewYear)
 
 	/*
 	      Dezember 2015
@@ -562,7 +564,7 @@ func TestCountWorkdays(t *testing.T) {
 }
 
 func TestAddSkipNonWorkdays(t *testing.T) {
-	c := NewCalendar()
+	c := newCalendar()
 
 	tests := []struct {
 		name  string
@@ -647,7 +649,7 @@ func TestAddSkipNonWorkdays(t *testing.T) {
 }
 
 func TestSubSkipNonWorkdays(t *testing.T) {
-	c := NewCalendar()
+	c := newCalendar()
 
 	tests := []struct {
 		name  string
@@ -732,8 +734,8 @@ func TestSubSkipNonWorkdays(t *testing.T) {
 }
 
 func TestCalendar_WorkdaysNrInRangeAustralia(t *testing.T) {
-	c := NewCalendar()
-	AddAustralianHolidays(c)
+	c := newCalendar()
+	addAustralianHolidays(c)
 	loc, err := time.LoadLocation("Australia/Sydney")
 	if err != nil {
 		t.Fatal(err)
@@ -799,17 +801,28 @@ func TestCalendar_WorkdaysNrInRangeAustralia(t *testing.T) {
 }
 
 func TestNewCalendarFromCountryCode(t *testing.T) {
-	_, err := NewCalendarFromCountryCode("ZZ")
-	if err == nil {
+	if _, err := newCalendarFromCountryCode("ZZ"); err == nil {
 		t.Error("expected error for invalid country code ZZ")
 	}
 
-	cal, err := NewCalendarFromCountryCode("FR")
+	cal, err := newCalendarFromCountryCode("FR")
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	if !cal.IsHoliday(time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)) {
 		t.Error("expected a holiday")
+	}
+}
+
+func TestNewLocalCalendar(t *testing.T) {
+	bad := []string{
+		"", "-", "F", "FR-", "FR-BAD", "ZZ", "\t",
+	}
+
+	for _, v := range bad {
+		if _, err := NewLocalCalendar(v); err == nil {
+			t.Errorf("expected error for invalid country code '%s'", v)
+		}
 	}
 }
