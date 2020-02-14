@@ -4,22 +4,22 @@ import "time"
 
 // European Central Bank Target2 holidays
 var (
-	ECBGoodFriday       = GoodFriday
-	ECBEasterMonday     = EasterMonday
-	ECBNewYearsDay      = NewYear
-	ECBLabourDay        = NewHoliday(time.May, 1)
-	ECBChristmasDay     = Christmas
-	ECBChristmasHoliday = Christmas2
+	ecbGoodFriday       = goodFriday
+	ecbEasterMonday     = easterMonday
+	ecbNewYearsDay      = newYear
+	ecbLabourDay        = NewHoliday(time.May, 1)
+	ecbChristmasDay     = christmas
+	ecbChristmasHoliday = christmas2
 )
 
-// AddEcbHolidays adds all ECB Target2 holidays to the calendar
-func AddEcbHolidays(c *Calendar) {
+// AddECBHolidays adds all ECB Target2 holidays to the calendar
+func AddECBHolidays(c *Calendar) {
 	c.AddHoliday(
-		ECBGoodFriday,
-		ECBEasterMonday,
-		ECBNewYearsDay,
-		ECBLabourDay,
-		ECBChristmasDay,
-		ECBChristmasHoliday,
+		ecbGoodFriday,
+		ecbEasterMonday,
+		ecbNewYearsDay,
+		ecbLabourDay,
+		ecbChristmasDay,
+		ecbChristmasHoliday,
 	)
 }

@@ -4,29 +4,29 @@ import "time"
 
 // Holidays in the Netherlands
 var (
-	NLNieuwjaar       = NewYear
-	NLGoedeVrijdag    = GoodFriday
-	NLPaasMaandag     = EasterMonday
-	NLKoningsDag      = NewHolidayFunc(calculateKoningsDag)
-	NLBevrijdingsDag  = NewHoliday(time.May, 5)
-	NLHemelvaart      = DEChristiHimmelfahrt
-	NLPinksterMaandag = DEPfingstmontag
-	NLEersteKerstdag  = Christmas
-	NLTweedeKerstdag  = Christmas2
+	nlNieuwjaar       = newYear
+	nlGoedeVrijdag    = goodFriday
+	nlPaasMaandag     = easterMonday
+	nlKoningsDag      = NewHolidayFunc(calculateKoningsDag)
+	nlBevrijdingsDag  = NewHoliday(time.May, 5)
+	nlHemelvaart      = deChristiHimmelfahrt
+	nlPinksterMaandag = dePfingstmontag
+	nlEersteKerstdag  = christmas
+	nlTweedeKerstdag  = christmas2
 )
 
-// AddDutchHolidays adds all Dutch holidays to the Calendar
-func AddDutchHolidays(c *Calendar) {
+// addDutchHolidays adds all Dutch holidays to the Calendar
+func addDutchHolidays(c *Calendar) {
 	c.AddHoliday(
-		NLNieuwjaar,
-		NLGoedeVrijdag,
-		NLPaasMaandag,
-		NLKoningsDag,
-		NLBevrijdingsDag,
-		NLHemelvaart,
-		NLPinksterMaandag,
-		NLEersteKerstdag,
-		NLTweedeKerstdag,
+		nlNieuwjaar,
+		nlGoedeVrijdag,
+		nlPaasMaandag,
+		nlKoningsDag,
+		nlBevrijdingsDag,
+		nlHemelvaart,
+		nlPinksterMaandag,
+		nlEersteKerstdag,
+		nlTweedeKerstdag,
 	)
 }
 

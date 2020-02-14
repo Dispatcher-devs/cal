@@ -1,5 +1,4 @@
 # cal: Go (golang) calendar library for dealing with holidays and work days
-
 This library augments the Go time package to provide easy handling of holidays
 and work days (business days).
 
@@ -17,25 +16,17 @@ package main
 import (
 	"time"
 
-	"github.com/rickar/cal"
+	"github.com/dispatcher-devs/cal"
 )
 
 func main() {
-	c := cal.NewCalendar()
-
-	// add holidays for the business
-	c.AddHoliday(
-		cal.USIndependence,
-		cal.USThanksgiving,
-		cal.USChristmas,
-	)
+	c, _ := cal.NewLocalCalendar("CA-QC")
 
 	// optionally change the default of a Mon - Fri work week
 	c.SetWorkday(time.Saturday, true)
 
 	// optionally change the holiday calculation behavior
-	// (the default is US-style where weekend holidays are
-	// observed on the closest weekday)
+	// (the default depends on the country)
 	c.Observed = cal.ObservedExact
 
 	t := time.Now()
@@ -61,3 +52,6 @@ func main() {
 	}
 }
 ```
+
+This library is based on the work of Rick Arnold in the
+[rickar/cal](https://github.com/rickar/cal) library.

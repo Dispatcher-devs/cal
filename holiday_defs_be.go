@@ -4,31 +4,31 @@ import "time"
 
 // Holidays in Belgium
 var (
-	BENieuwjaar                = NewYear
-	BEPaasmaandag              = EasterMonday
-	BEDagVanDeArbeid           = ECBLabourDay
-	BEOnzeLieveHeerHemelvaart  = NewHolidayFunc(calculateOnzeLieveHeerHemelvaart)
-	BEPinkstermaandag          = NewHolidayFunc(calculatePinkstermaandag)
-	BENationaleFeestdag        = NewHoliday(time.July, 21)
-	BEOnzeLieveVrouwHemelvaart = NewHoliday(time.August, 15)
-	BEAllerheiligen            = NewHoliday(time.November, 1)
-	BEWapenstilstand           = NewHoliday(time.November, 11)
-	BEKerstmis                 = Christmas
+	beNieuwjaar                = newYear
+	bePaasmaandag              = easterMonday
+	beDagVanDeArbeid           = ecbLabourDay
+	beOnzeLieveHeerHemelvaart  = NewHolidayFunc(calculateOnzeLieveHeerHemelvaart)
+	bePinkstermaandag          = NewHolidayFunc(calculatePinkstermaandag)
+	beNationaleFeestdag        = NewHoliday(time.July, 21)
+	beOnzeLieveVrouwHemelvaart = NewHoliday(time.August, 15)
+	beAllerheiligen            = NewHoliday(time.November, 1)
+	beWapenstilstand           = NewHoliday(time.November, 11)
+	beKerstmis                 = christmas
 )
 
-// AddBelgiumHolidays adds all Belgium holidays to the Calendar
-func AddBelgiumHolidays(c *Calendar) {
+// addBelgiumHolidays adds all Belgium holidays to the Calendar
+func addBelgiumHolidays(c *Calendar) {
 	c.AddHoliday(
-		BENieuwjaar,
-		BEPaasmaandag,
-		BEDagVanDeArbeid,
-		BEOnzeLieveHeerHemelvaart,
-		BEPinkstermaandag,
-		BENationaleFeestdag,
-		BEOnzeLieveVrouwHemelvaart,
-		BEAllerheiligen,
-		BEWapenstilstand,
-		BEKerstmis,
+		beNieuwjaar,
+		bePaasmaandag,
+		beDagVanDeArbeid,
+		beOnzeLieveHeerHemelvaart,
+		bePinkstermaandag,
+		beNationaleFeestdag,
+		beOnzeLieveVrouwHemelvaart,
+		beAllerheiligen,
+		beWapenstilstand,
+		beKerstmis,
 	)
 }
 

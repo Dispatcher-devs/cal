@@ -8,29 +8,29 @@ import (
 
 // Holidays in Australia
 var (
-	AUNewYear        = NewHolidayFunc(calculateNewYearOceania)
-	AUAustralianDay  = NewHoliday(time.January, 26)
-	AUGoodFriday     = GoodFriday
-	AUChristmasDay   = NewHolidayFunc(calculateOcenaniaChristmasDay)
-	AUBoxingDays     = Christmas2
-	AUEasterMonday   = EasterMonday
-	AUAnzacDay       = NewHolidayFunc(calculateAnzacDay)
-	AUQueenBirthDay = NewHolidayFunc(calculateQueenBirthDay)
-	AULabourDay      = NewHolidayFunc(calculateAULabourDay)
+	auNewYear       = NewHolidayFunc(calculateNewYearOceania)
+	auAustralianDay = NewHoliday(time.January, 26)
+	auGoodFriday    = goodFriday
+	auChristmasDay  = NewHolidayFunc(calculateOcenaniaChristmasDay)
+	auBoxingDays    = christmas2
+	auEasterMonday  = easterMonday
+	auAnzacDay      = NewHolidayFunc(calculateAnzacDay)
+	auQueenBirthDay = NewHolidayFunc(calculateQueenBirthDay)
+	auLabourDay     = NewHolidayFunc(calculateAULabourDay)
 )
 
-// AddAustralianHolidays adds all Australian holidays
-func AddAustralianHolidays(c *Calendar) {
+// addAustralianHolidays adds all Australian holidays
+func addAustralianHolidays(c *Calendar) {
 	c.AddHoliday(
-		AUNewYear,
-		AUAustralianDay,
-		AUGoodFriday,
-		AUEasterMonday,
-		AUAnzacDay,
-		AUChristmasDay,
-		AUBoxingDays,
-		AUQueenBirthDay,
-		AULabourDay,
+		auNewYear,
+		auAustralianDay,
+		auGoodFriday,
+		auEasterMonday,
+		auAnzacDay,
+		auChristmasDay,
+		auBoxingDays,
+		auQueenBirthDay,
+		auLabourDay,
 	)
 }
 
@@ -63,11 +63,13 @@ func closestMonday(date time.Time) time.Time {
 	return date
 }
 
-// Anzac Day is a national day of remembrance in Australia and New Zealand that broadly commemorates all Australians
-// and New Zealanders "who served and died in all wars, conflicts, and peacekeeping operations"
-// Observed on 25 April each year. Unlike most other Australian public holidays, If it falls on a weekend it is NOT moved
-// to the next available weekday, nor is there an additional public holiday held. However, if it clashes with Easter,
-// an additional public holiday is held for Easter.
+// Anzac Day is a national day of remembrance in Australia and New Zealand that
+// broadly commemorates all Australians and New Zealanders "who served and died
+// in all wars, conflicts, and peacekeeping operations"
+// Observed on 25 April each year. Unlike most other Australian public
+// holidays, If it falls on a weekend it is NOT moved to the next available
+// weekday, nor is there an additional public holiday held. However, if it
+// clashes with Easter, an additional public holiday is held for Easter.
 //
 // https://en.wikipedia.org/wiki/Anzac_Day
 // https://www.timeanddate.com/holidays/australia/anzac-day
@@ -131,44 +133,42 @@ func calculateQueenBirthDay(year int, loc *time.Location) (time.Month, int) {
 	if loc.String() == "Australia/West" || loc.String() == "Australia/Perth" {
 		d := time.Date(year, time.September, 30, 0, 0, 0, 0, loc)
 
-		wd := d.Weekday()
-		if wd == 0 {
+		switch d.Weekday() {
+		case 0:
 			d = d.AddDate(0, 0, -6)
-		} else if wd == 1 {
-		} else {
+		case 1:
+		default:
 			d = d.AddDate(0, 0, -(int(d.Weekday()) - 1))
 		}
 
 		return d.Month(), d.Day()
+	}
 
-	} else if loc.String() == "Australia/Queensland" {
+	if loc.String() == "Australia/Queensland" {
 		d := time.Date(year, time.October, 1, 0, 0, 0, 0, loc)
 
-		wd := d.Weekday()
-		if wd == 0 {
+		switch d.Weekday() {
+		case 0:
 			d = d.AddDate(0, 0, 1)
-		} else if wd == 1 {
-		} else {
+		case 1:
+		default:
 			d = d.AddDate(0, 0, 8-int(d.Weekday()))
 		}
 
 		return d.Month(), d.Day()
-
-	} else {
-		d := time.Date(year, time.June, 1, 0, 0, 0, 0, loc)
-
-		wd := d.Weekday()
-		if wd == 0 {
-			d = d.AddDate(0, 0, 8)
-		} else if wd == 1 {
-			d = d.AddDate(0, 0, 8-int(d.Weekday()))
-		} else {
-			d = d.AddDate(0, 0, (8-int(d.Weekday()))+7)
-		}
-
-		return d.Month(), d.Day()
-
 	}
+
+	d := time.Date(year, time.June, 1, 0, 0, 0, 0, loc)
+	switch d.Weekday() {
+	case 0:
+		d = d.AddDate(0, 0, 8)
+	case 1:
+		d = d.AddDate(0, 0, 8-int(d.Weekday()))
+	default:
+		d = d.AddDate(0, 0, (8-int(d.Weekday()))+7)
+	}
+
+	return d.Month(), d.Day()
 }
 
 // Australian Labour Day
@@ -181,56 +181,55 @@ func calculateAULabourDay(year int, loc *time.Location) (time.Month, int) {
 	if loc.String() == "Australia/West" || loc.String() == "Australia/Perth" {
 		d := time.Date(year, time.March, 1, 0, 0, 0, 0, loc)
 
-		wd := d.Weekday()
-		if wd == 0 {
+		switch d.Weekday() {
+		case 0:
 			d = d.AddDate(0, 0, 1)
-		} else if wd == 1 {
-		} else {
+		case 1:
+		default:
 			d = d.AddDate(0, 0, 8-int(d.Weekday()))
 		}
 
 		return d.Month(), d.Day()
+	}
 
-	} else if loc.String() == "Australia/Melbourne" || loc.String() == "Australia/Tasmania" {
+	if loc.String() == "Australia/Melbourne" || loc.String() == "Australia/Tasmania" {
 		d := time.Date(year, time.March, 1, 0, 0, 0, 0, loc)
 
-		wd := d.Weekday()
-		if wd == 0 {
+		switch d.Weekday() {
+		case 0:
 			d = d.AddDate(0, 0, 8)
-		} else if wd == 1 {
+		case 1:
 			d = d.AddDate(0, 0, 8-int(d.Weekday()))
-		} else {
+		default:
 			d = d.AddDate(0, 0, (8-int(d.Weekday()))+7)
 		}
 
 		return d.Month(), d.Day()
-
-	} else if loc.String() == "Australia/Brisbane" || loc.String() == "Australia/Darwin" {
-		d := time.Date(year, time.May, 1, 0, 0, 0, 0, loc)
-
-		wd := d.Weekday()
-		if wd == 0 {
-			d = d.AddDate(0, 0, 1)
-		} else if wd == 1 {
-		} else {
-			d = d.AddDate(0, 0, 8-int(d.Weekday()))
-		}
-
-		return d.Month(), d.Day()
-
-	} else {
-		d := time.Date(year, time.October, 1, 0, 0, 0, 0, loc)
-
-		wd := d.Weekday()
-		if wd == 0 {
-			d = d.AddDate(0, 0, 1)
-		} else if wd == 1 {
-		} else {
-			d = d.AddDate(0, 0, 8-int(d.Weekday()))
-		}
-
-		return d.Month(), d.Day()
-
 	}
 
+	if loc.String() == "Australia/Brisbane" || loc.String() == "Australia/Darwin" {
+		d := time.Date(year, time.May, 1, 0, 0, 0, 0, loc)
+
+		switch d.Weekday() {
+		case 0:
+			d = d.AddDate(0, 0, 1)
+		case 1:
+		default:
+			d = d.AddDate(0, 0, 8-int(d.Weekday()))
+		}
+
+		return d.Month(), d.Day()
+	}
+
+	d := time.Date(year, time.October, 1, 0, 0, 0, 0, loc)
+
+	switch d.Weekday() {
+	case 0:
+		d = d.AddDate(0, 0, 1)
+	case 1:
+	default:
+		d = d.AddDate(0, 0, 8-int(d.Weekday()))
+	}
+
+	return d.Month(), d.Day()
 }

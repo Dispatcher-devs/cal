@@ -6,7 +6,7 @@ import (
 )
 
 func TestAddEcbHolidays(t *testing.T) {
-	// The following is all of the national holidays observed by the ECB for the year 2017
+	// The following is all of the national holidays observed by the ecb for the year 2017
 	type date struct {
 		day   int
 		month time.Month
@@ -40,8 +40,8 @@ func TestAddEcbHolidays(t *testing.T) {
 
 	for name, holiday := range holidays {
 		t.Run(name, func(t *testing.T) {
-			c := NewCalendar()
-			AddEcbHolidays(c)
+			c := newCalendar()
+			AddECBHolidays(c)
 			i := time.Date(2017, holiday.month, holiday.day, 0, 0, 0, 0, time.UTC)
 
 			if !c.IsHoliday(i) {

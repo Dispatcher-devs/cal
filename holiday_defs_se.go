@@ -9,43 +9,43 @@ import "time"
 // Days with the [2] notation, meaning days with reduced working hours
 // haven't been added, as this is not regulated by law.
 var (
-	SENyarsdagen           = NewYear
-	SETrettondedagJul      = NewHoliday(time.January, 6)
-	SELangfredagen         = GoodFriday
-	SEPaskdagen            = NewHolidayFunc(calculatePaskdagen)
-	SEAnnandagPask         = EasterMonday
-	SEForstaMaj            = NewHoliday(time.May, 1)
-	SEKristiHimmelfardsdag = NewHolidayFunc(calculateKristiHimmelfardsdag)
-	SEPingstdagen          = NewHolidayFunc(calculatePingstdagen)
-	SENationaldagen        = NewHoliday(time.June, 6)
-	SEMidsommarafton       = NewHolidayFunc(calculateMidsommarafton)
-	SEMidsommardagen       = NewHolidayFunc(calculateMidsommardagen)
-	SEAllaHelgonsDag       = NewHolidayFunc(calculateAllaHelgonsDag)
-	SEJulafton             = NewHoliday(time.December, 24)
-	SEJuldagen             = Christmas
-	SEAnnandagJul          = Christmas2
-	SENewYearsEve          = NewHoliday(time.December, 31)
+	seNyarsdagen           = newYear
+	seTrettondedagJul      = NewHoliday(time.January, 6)
+	seLangfredagen         = goodFriday
+	sePaskdagen            = NewHolidayFunc(calculatePaskdagen)
+	seAnnandagPask         = easterMonday
+	seForstaMaj            = NewHoliday(time.May, 1)
+	seKristiHimmelfardsdag = NewHolidayFunc(calculateKristiHimmelfardsdag)
+	sePingstdagen          = NewHolidayFunc(calculatePingstdagen)
+	seNationaldagen        = NewHoliday(time.June, 6)
+	seMidsommarafton       = NewHolidayFunc(calculateMidsommarafton)
+	seMidsommardagen       = NewHolidayFunc(calculateMidsommardagen)
+	seAllaHelgonsDag       = NewHolidayFunc(calculateAllaHelgonsDag)
+	seJulafton             = NewHoliday(time.December, 24)
+	seJuldagen             = christmas
+	seAnnandagJul          = christmas2
+	seNewYearsEve          = NewHoliday(time.December, 31)
 )
 
-// AddSwedishHolidays adds all Swedish holidays to the Calendar
-func AddSwedishHolidays(c *Calendar) {
+// addSwedishHolidays adds all Swedish holidays to the Calendar
+func addSwedishHolidays(c *Calendar) {
 	c.AddHoliday(
-		SENyarsdagen,
-		SETrettondedagJul,
-		SELangfredagen,
-		SEPaskdagen,
-		SEAnnandagPask,
-		SEForstaMaj,
-		SEKristiHimmelfardsdag,
-		SEPingstdagen,
-		SENationaldagen,
-		SEMidsommarafton,
-		SEMidsommardagen,
-		SEAllaHelgonsDag,
-		SEJulafton,
-		SEJuldagen,
-		SEAnnandagJul,
-		SENewYearsEve,
+		seNyarsdagen,
+		seTrettondedagJul,
+		seLangfredagen,
+		sePaskdagen,
+		seAnnandagPask,
+		seForstaMaj,
+		seKristiHimmelfardsdag,
+		sePingstdagen,
+		seNationaldagen,
+		seMidsommarafton,
+		seMidsommardagen,
+		seAllaHelgonsDag,
+		seJulafton,
+		seJuldagen,
+		seAnnandagJul,
+		seNewYearsEve,
 	)
 }
 

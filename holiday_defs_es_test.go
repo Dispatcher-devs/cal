@@ -6,11 +6,12 @@ import (
 )
 
 func TestSpainHolidays(t *testing.T) {
-	c := NewCalendar()
-	c.Observed = ObservedExact
-	AddSpainHolidays(c)
+	c, err := newCalendarFromCountryCode("ES")
+	if err != nil {
+		t.Fatal(err)
+	}
 
-	tests := []testStruct{
+	assertHolidays(t, c, []testStruct{
 		{time.Date(2019, 1, 1, 12, 0, 0, 0, time.UTC), true, "ESAñoNuevo"},
 		{time.Date(2019, 1, 6, 12, 0, 0, 0, time.UTC), true, "ESReyes"},
 		{time.Date(2019, 5, 1, 12, 0, 0, 0, time.UTC), true, "ESFiestaDelTrabajo"},
@@ -20,12 +21,5 @@ func TestSpainHolidays(t *testing.T) {
 		{time.Date(2019, 12, 6, 12, 0, 0, 0, time.UTC), true, "ESConstitucion"},
 		{time.Date(2019, 12, 8, 12, 0, 0, 0, time.UTC), true, "ESInmaculadaConcepcion"},
 		{time.Date(2019, 12, 25, 12, 0, 0, 0, time.UTC), true, "ESNavidad"},
-	}
-
-	for _, test := range tests {
-		got := c.IsHoliday(test.t)
-		if got != test.want {
-			t.Errorf("got: %t for %s; want: %t (%s)", got, test.name, test.want, test.t)
-		}
-	}
+	})
 }

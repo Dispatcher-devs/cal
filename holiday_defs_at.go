@@ -6,36 +6,36 @@ import "time"
 
 // Holidays in Austria
 var (
-	ATNeujahr            = NewYear
-	ATHeiligeDreiKoenige = NewHoliday(time.January, 6)
-	ATOstermontag        = EasterMonday
-	ATTagderArbeit       = NewHoliday(time.May, 1)
-	ATChristiHimmelfahrt = NewHolidayFunc(calculateHimmelfahrt)
-	ATPfingstmontag      = NewHolidayFunc(calculatePfingstMontag)
-	ATFronleichnam       = NewHolidayFunc(calculateFronleichnam)
-	ATMariaHimmelfahrt   = NewHoliday(time.August, 15)
-	ATNationalfeiertag   = NewHoliday(time.October, 26)
-	ATAllerheiligen      = NewHoliday(time.November, 1)
-	ATMariaEmpfaengnis   = NewHoliday(time.December, 8)
-	ATChristtag          = Christmas
-	ATStefanitag         = Christmas2
+	atNeujahr            = newYear
+	atHeiligeDreiKoenige = NewHoliday(time.January, 6)
+	atOstermontag        = easterMonday
+	atTagderArbeit       = NewHoliday(time.May, 1)
+	atChristiHimmelfahrt = NewHolidayFunc(calculateHimmelfahrt)
+	atPfingstmontag      = NewHolidayFunc(calculatePfingstMontag)
+	atFronleichnam       = NewHolidayFunc(calculateFronleichnam)
+	atMariaHimmelfahrt   = NewHoliday(time.August, 15)
+	atNationalfeiertag   = NewHoliday(time.October, 26)
+	atAllerheiligen      = NewHoliday(time.November, 1)
+	atMariaEmpfaengnis   = NewHoliday(time.December, 8)
+	atChristtag          = christmas
+	atStefanitag         = christmas2
 )
 
-// AddAustrianHolidays adds all Austrian holidays to the Calendar
-func AddAustrianHolidays(c *Calendar) {
+// addAustrianHolidays adds all Austrian holidays to the Calendar
+func addAustrianHolidays(c *Calendar) {
 	c.AddHoliday(
-		ATNeujahr,
-		ATHeiligeDreiKoenige,
-		ATOstermontag,
-		ATTagderArbeit,
-		ATChristiHimmelfahrt,
-		ATPfingstmontag,
-		ATFronleichnam,
-		ATMariaHimmelfahrt,
-		ATNationalfeiertag,
-		ATAllerheiligen,
-		ATMariaEmpfaengnis,
-		ATChristtag,
-		ATStefanitag,
+		atNeujahr,
+		atHeiligeDreiKoenige,
+		atOstermontag,
+		atTagderArbeit,
+		atChristiHimmelfahrt,
+		atPfingstmontag,
+		atFronleichnam,
+		atMariaHimmelfahrt,
+		atNationalfeiertag,
+		atAllerheiligen,
+		atMariaEmpfaengnis,
+		atChristtag,
+		atStefanitag,
 	)
 }

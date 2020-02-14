@@ -6,112 +6,23 @@ import (
 )
 
 func TestAddBritishHolidays(t *testing.T) {
-	// The following is all of the national holidays in GB for the year 2017
-	type date struct {
-		day   int
-		month time.Month
-	}
-	holidays := map[string]date{
-		"new_year": {
-			day:   2,
-			month: time.January,
-		},
-		"good_friday": {
-			day:   14,
-			month: time.April,
-		},
-		"easter_monday": {
-			day:   17,
-			month: time.April,
-		},
-		"early_may": {
-			day:   1,
-			month: time.May,
-		},
-		"spring": {
-			day:   29,
-			month: time.May,
-		},
-		"summer": {
-			day:   28,
-			month: time.August,
-		},
-		"christmas": {
-			day:   25,
-			month: time.December,
-		},
-		"boxing": {
-			day:   26,
-			month: time.December,
-		},
+	c, err := newCalendarFromCountryCode("GB")
+	if err != nil {
+		t.Fatal(err)
 	}
 
-	for name, holiday := range holidays {
-		t.Run(name, func(t *testing.T) {
-			c := NewCalendar()
-			AddBritishHolidays(c)
-			i := time.Date(2017, holiday.month, holiday.day, 0, 0, 0, 0, time.UTC)
-
-			if !c.IsHoliday(i) {
-				t.Errorf("Expected %q to be a holiday but wasn't", i)
-			}
-			if c.IsWorkday(i) {
-				t.Errorf("Did not expect %q to be a holiday", i)
-			}
-		})
-	}
-}
-
-func TestCalculateNewYearsHoliday(t *testing.T) {
-	c := NewCalendar()
-	AddBritishHolidays(c)
-
-	i := time.Date(2011, time.January, 3, 0, 0, 0, 0, time.UTC)
-
-	if !c.IsHoliday(i) {
-		t.Errorf("Expected %q to be a holiday but wasn't", i)
-	}
-	if c.IsWorkday(i) {
-		t.Errorf("Did not expect %q to be a workday", i)
-	}
-}
-
-func TestEarlyMay(t *testing.T) {
-	type date struct {
-		day   int
-		month time.Month
-		year  int
-	}
-	holidays := map[string]date{
-		"early_may_2019": {
-			day:   6,
-			month: time.May,
-			year:  2019,
-		},
-		"early_may_2020": {
-			day:   8,
-			month: time.May,
-			year:  2020,
-		},
-		"early_may_2021": {
-			day:   3,
-			month: time.May,
-			year:  2021,
-		},
-	}
-
-	for name, holiday := range holidays {
-		t.Run(name, func(t *testing.T) {
-			c := NewCalendar()
-			AddBritishHolidays(c)
-			i := time.Date(holiday.year, holiday.month, holiday.day, 0, 0, 0, 0, time.UTC)
-
-			if !c.IsHoliday(i) {
-				t.Errorf("Expected %q to be a holiday but wasn't", i)
-			}
-			if c.IsWorkday(i) {
-				t.Errorf("Did not expect %q to be a workday", i)
-			}
-		})
-	}
+	assertHolidays(t, c, []testStruct{
+		{time.Date(2017, time.January, 2, 12, 0, 0, 0, time.UTC), true, "New Year"},
+		{time.Date(2017, time.April, 14, 12, 0, 0, 0, time.UTC), true, "Good Friday"},
+		{time.Date(2017, time.April, 17, 12, 0, 0, 0, time.UTC), true, "Easter Monday"},
+		{time.Date(2017, time.May, 1, 12, 0, 0, 0, time.UTC), true, "Early May"},
+		{time.Date(2017, time.May, 29, 12, 0, 0, 0, time.UTC), true, "Spring"},
+		{time.Date(2017, time.August, 28, 12, 0, 0, 0, time.UTC), true, "Summer"},
+		{time.Date(2017, time.December, 25, 12, 0, 0, 0, time.UTC), true, "Christmas"},
+		{time.Date(2017, time.December, 26, 12, 0, 0, 0, time.UTC), true, "Boxing Day"},
+		{time.Date(2019, time.May, 6, 12, 0, 0, 0, time.UTC), true, "Early May"},
+		{time.Date(2020, time.May, 8, 12, 0, 0, 0, time.UTC), true, "Early May"},
+		{time.Date(2021, time.May, 3, 12, 0, 0, 0, time.UTC), true, "Early May"},
+		{time.Date(2011, time.January, 3, 12, 0, 0, 0, time.UTC), true, "New Year"},
+	})
 }

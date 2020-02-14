@@ -8,31 +8,31 @@ import (
 
 // Holidays in Australia
 var (
-	NZNewYear         = NewHolidayFunc(calculateNewYearOceania)
-	NZGoodFriday      = GoodFriday
-	NZChristmasDay    = NewHolidayFunc(calculateOcenaniaChristmasDay)
-	NZBoxingDays      = NewHolidayFunc(calculateOcenaniaBoxingDay)
-	NZEasterMonday    = EasterMonday
-	NZAnzacDay        = NewHolidayFunc(calculateNZAnzacDay)
-	NZQueensBirthday  = NewHolidayFunc(calculateQueensBirthday)
-	NZLabourDay       = NewHolidayFunc(calculateLabourDay)
-	NZDayAfterNewYear = NewHolidayFunc(calculateDayAfterNewYear)
-	NZWanagiDay       = NewHolidayFunc(calculateWarangiDay)
+	nzNewYear         = NewHolidayFunc(calculateNewYearOceania)
+	nzGoodFriday      = goodFriday
+	nzChristmasDay    = NewHolidayFunc(calculateOcenaniaChristmasDay)
+	nzBoxingDays      = NewHolidayFunc(calculateOcenaniaBoxingDay)
+	nzEasterMonday    = easterMonday
+	nzAnzacDay        = NewHolidayFunc(calculateNZAnzacDay)
+	nzQueensBirthday  = NewHolidayFunc(calculateQueensBirthday)
+	nzLabourDay       = NewHolidayFunc(calculateLabourDay)
+	nzDayAfterNewYear = NewHolidayFunc(calculateDayAfterNewYear)
+	nzWanagiDay       = NewHolidayFunc(calculateWarangiDay)
 )
 
-// AddNewZealandHoliday adds all New Zeland holidays
-func AddNewZealandHoliday(c *Calendar) {
+// addNewZealandHoliday adds all New Zeland holidays
+func addNewZealandHoliday(c *Calendar) {
 	c.AddHoliday(
-		NZNewYear,
-		NZDayAfterNewYear,
-		NZGoodFriday,
-		NZEasterMonday,
-		NZAnzacDay,
-		NZChristmasDay,
-		NZBoxingDays,
-		NZQueensBirthday,
-		NZLabourDay,
-		NZWanagiDay,
+		nzNewYear,
+		nzDayAfterNewYear,
+		nzGoodFriday,
+		nzEasterMonday,
+		nzAnzacDay,
+		nzChristmasDay,
+		nzBoxingDays,
+		nzQueensBirthday,
+		nzLabourDay,
+		nzWanagiDay,
 	)
 }
 

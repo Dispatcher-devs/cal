@@ -6,66 +6,21 @@ import (
 )
 
 func TestAddUSHolidays(t *testing.T) {
-	// The following is all of the national holidays in US for the year 2017
-	type date struct {
-		day   int
-		month time.Month
-	}
-	holidays := map[string]date{
-		"new_year": {
-			day:   1,
-			month: time.January,
-		},
-		"mlk": {
-			day:   16,
-			month: time.January,
-		},
-		"presidents": {
-			day:   20,
-			month: time.February,
-		},
-		"memorial": {
-			day:   29,
-			month: time.May,
-		},
-		"independence": {
-			day:   4,
-			month: time.July,
-		},
-		"labor": {
-			day:   4,
-			month: time.September,
-		},
-		"columbus": {
-			day:   9,
-			month: time.October,
-		},
-		"veterans": {
-			day:   11,
-			month: time.November,
-		},
-		"thanksgiving": {
-			day:   23,
-			month: time.November,
-		},
-		"christmas": {
-			day:   25,
-			month: time.December,
-		},
+	c, err := newCalendarFromCountryCode("US")
+	if err != nil {
+		t.Fatal(err)
 	}
 
-	for name, holiday := range holidays {
-		t.Run(name, func(t *testing.T) {
-			c := NewCalendar()
-			AddUsHolidays(c)
-			i := time.Date(2017, holiday.month, holiday.day, 0, 0, 0, 0, time.UTC)
-
-			if !c.IsHoliday(i) {
-				t.Errorf("Expected %q to be a holiday but wasn't", i)
-			}
-			if c.IsWorkday(i) {
-				t.Errorf("Did not expect %q to be a holiday", i)
-			}
-		})
-	}
+	assertHolidays(t, c, []testStruct{
+		{time.Date(2017, time.January, 1, 12, 0, 0, 0, time.UTC), true, "New Year"},
+		{time.Date(2017, time.January, 16, 12, 0, 0, 0, time.UTC), true, "MLK"},
+		{time.Date(2017, time.February, 20, 12, 0, 0, 0, time.UTC), true, "Presidents"},
+		{time.Date(2017, time.May, 29, 12, 0, 0, 0, time.UTC), true, "Memorial"},
+		{time.Date(2017, time.July, 4, 12, 0, 0, 0, time.UTC), true, "Independence"},
+		{time.Date(2017, time.September, 4, 12, 0, 0, 0, time.UTC), true, "Labor"},
+		{time.Date(2017, time.October, 9, 12, 0, 0, 0, time.UTC), true, "Columbus"},
+		{time.Date(2017, time.November, 11, 12, 0, 0, 0, time.UTC), true, "Veterans"},
+		{time.Date(2017, time.November, 23, 12, 0, 0, 0, time.UTC), true, "Thanksgiving"},
+		{time.Date(2017, time.December, 25, 12, 0, 0, 0, time.UTC), true, "Christmas"},
+	})
 }

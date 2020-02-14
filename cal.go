@@ -3,7 +3,9 @@
 package cal
 
 import (
+	"fmt"
 	"math"
+	"strings"
 	"time"
 )
 
@@ -43,9 +45,9 @@ func IsWeekdayN(date time.Time, day time.Weekday, n int) bool {
 			break
 		}
 	}
+
 	return lastCount == n && last.Month() == date.Month() &&
 		last.Day() == date.Day()
-
 }
 
 // MonthStart reports the starting day of the month in t. The time portion is
@@ -106,8 +108,9 @@ type Calendar struct {
 
 // NewCalendar creates a new Calendar with no holidays defined
 // and work days of Monday through Friday.
-func NewCalendar() *Calendar {
+func newCalendar() *Calendar {
 	c := &Calendar{}
+
 	for i := range c.holidays {
 		c.holidays[i] = make([]Holiday, 0, 2)
 	}
@@ -117,6 +120,86 @@ func NewCalendar() *Calendar {
 	c.workday[time.Thursday] = true
 	c.workday[time.Friday] = true
 	return c
+}
+
+// newCalendarFromCountryCode returns the holiday calendar associated to the
+// country designated by the given uppercase ISO 3166-1 alpha-2 country code.
+func newCalendarFromCountryCode(code string) (*Calendar, error) {
+	c := newCalendar()
+
+	// As a special case, allow creating an empty calendar using the
+	// unused/reserved code ZZ.
+	if code == "ZZ" {
+		return c, nil
+	}
+
+	if obs, ok := map[string]ObservedRule{
+		// TODO: Complete this list when the knowledge is there.
+		"CA": ObservedNearest,
+		"GB": ObservedNearest,
+		"US": ObservedNearest,
+	}[code]; ok {
+		c.Observed = obs
+	}
+
+	// TODO: Consistency on func names.
+	fn, ok := map[string]func(*Calendar){
+		"AT": addAustrianHolidays,
+		"AU": addAustralianHolidays,
+		"BE": addBelgiumHolidays,
+		"CA": addCanadianHolidays,
+		"DE": addGermanHolidays,
+		"DK": addDanishHolidays,
+		"ES": addSpainHolidays,
+		"FR": addFranceHolidays,
+		"GB": addBritishHolidays,
+		"IT": addItalianHolidays,
+		"NL": addDutchHolidays,
+		"NO": addNorwegianHolidays,
+		"NZ": addNewZealandHoliday,
+		"PL": addPolandHolidays,
+		"SE": addSwedishHolidays,
+		"US": addUSHolidays,
+	}[code]
+	if !ok {
+		return nil, fmt.Errorf("no calendar exists for country %s", code)
+	}
+
+	fn(c)
+
+	return c, nil
+}
+
+// NewLocalCalendar creates a Calendar from an ISO-3166-1 Alpha 2 or ISO-3166-2.
+// To obtain a valid but empty calendar you can use the "ZZ" country code.
+func NewLocalCalendar(code string) (*Calendar, error) {
+	parts := strings.SplitN(code, "-", 2)
+	if len(parts) < 1 {
+		return nil, fmt.Errorf("%s is not a valid ISO-3166-1 Alpha 2 or ISO-3166-2 code", code)
+	}
+
+	c, err := newCalendarFromCountryCode(parts[0])
+	if err != nil {
+		return nil, err
+	}
+	if len(parts) < 2 {
+		return c, nil
+	}
+
+	fn, ok := map[string]func(*Calendar, string) error{
+		"CA": addCanadaProvinceHolidays,
+		"DE": addGermanyStateHolidays,
+		"FR": addFranceDepartmentHolidays,
+	}[parts[0]]
+	if !ok {
+		return c, nil
+	}
+
+	if err := fn(c, code); err != nil {
+		return nil, err
+	}
+
+	return c, nil
 }
 
 // AddHoliday adds a holiday to the calendar's list.
@@ -167,20 +250,29 @@ func (c *Calendar) IsWorkday(date time.Time) bool {
 		return true
 	}
 
-	if (c.Observed == ObservedMonday || c.Observed == ObservedMondayTuesday) && day == time.Monday {
+	if (c.Observed == ObservedMonday || c.Observed == ObservedMondayTuesday) &&
+		day == time.Monday {
 		sun := date.AddDate(0, 0, -1)
 		sat := date.AddDate(0, 0, -2)
 		return !c.IsHoliday(sat) && !c.IsHoliday(sun)
-	} else if c.Observed == ObservedMondayTuesday && day == time.Tuesday {
+	}
+
+	if c.Observed == ObservedMondayTuesday && day == time.Tuesday {
 		mon := date.AddDate(0, 0, -1)
 		sun := date.AddDate(0, 0, -2)
 		sat := date.AddDate(0, 0, -3)
-		return !(c.IsHoliday(sat) && c.IsHoliday(sun)) && !(c.IsHoliday(sat) && c.IsHoliday(mon)) && !(c.IsHoliday(sun) && c.IsHoliday(mon))
-	} else if c.Observed == ObservedNearest {
+		return !(c.IsHoliday(sat) && c.IsHoliday(sun)) &&
+			!(c.IsHoliday(sat) && c.IsHoliday(mon)) &&
+			!(c.IsHoliday(sun) && c.IsHoliday(mon))
+	}
+
+	if c.Observed == ObservedNearest {
 		if day == time.Friday {
 			sat := date.AddDate(0, 0, 1)
 			return !c.IsHoliday(sat)
-		} else if day == time.Monday {
+		}
+
+		if day == time.Monday {
 			sun := date.AddDate(0, 0, -1)
 			return !c.IsHoliday(sun)
 		}
@@ -326,9 +418,9 @@ func (c *Calendar) AddSkipNonWorkdays(start time.Time, d time.Duration) time.Tim
 			s = s.Add(day)
 		}
 
-		if d >= day {
+		if d >= day { // nolint:gocritic
 			s = s.Add(day)
-			d = d - day
+			d -= day
 		} else if d > 0 {
 			s = s.Add(d)
 			d = 0
@@ -348,9 +440,9 @@ func (c *Calendar) SubSkipNonWorkdays(start time.Time, d time.Duration) time.Tim
 			s = s.Add(day)
 		}
 
-		if d >= day*-1 {
+		if d >= day*-1 { // nolint:gocritic
 			s = s.Add(day)
-			d = d + day
+			d += day
 		} else if d > 0 {
 			s = s.Add(-d)
 			d = 0

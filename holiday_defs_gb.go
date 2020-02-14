@@ -4,27 +4,27 @@ import "time"
 
 // British holidays
 var (
-	GBNewYear       = NewHolidayFunc(calculateNewYearsHoliday)
-	GBGoodFriday    = GoodFriday
-	GBEasterMonday  = EasterMonday
-	GBEarlyMay      = makeGBEarlyMay()
-	GBSpringHoliday = NewHolidayFloat(time.May, time.Monday, -1)
-	GBSummerHoliday = NewHolidayFloat(time.August, time.Monday, -1)
-	GBChristmasDay  = Christmas
-	GBBoxingDay     = Christmas2
+	gbNewYear       = NewHolidayFunc(calculateNewYearsHoliday)
+	gbGoodFriday    = goodFriday
+	gbEasterMonday  = easterMonday
+	gbEarlyMay      = makeGBEarlyMay()
+	gbSpringHoliday = NewHolidayFloat(time.May, time.Monday, -1)
+	gbSummerHoliday = NewHolidayFloat(time.August, time.Monday, -1)
+	gbChristmasDay  = christmas
+	gbBoxingDay     = christmas2
 )
 
-// AddBritishHolidays adds all British holidays to the Calender
-func AddBritishHolidays(c *Calendar) {
+// addBritishHolidays adds all British holidays to the Calender
+func addBritishHolidays(c *Calendar) {
 	c.AddHoliday(
-		GBNewYear,
-		GBGoodFriday,
-		GBEasterMonday,
-		GBEarlyMay,
-		GBSpringHoliday,
-		GBSummerHoliday,
-		GBChristmasDay,
-		GBBoxingDay,
+		gbNewYear,
+		gbGoodFriday,
+		gbEasterMonday,
+		gbEarlyMay,
+		gbSpringHoliday,
+		gbSummerHoliday,
+		gbChristmasDay,
+		gbBoxingDay,
 	)
 }
 
