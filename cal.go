@@ -127,6 +127,12 @@ func newCalendar() *Calendar {
 func newCalendarFromCountryCode(code string) (*Calendar, error) {
 	c := newCalendar()
 
+	// As a special case, allow creating an empty calendar using the
+	// unused/reserved code ZZ.
+	if code == "ZZ" {
+		return c, nil
+	}
+
 	if obs, ok := map[string]ObservedRule{
 		// TODO: Complete this list when the knowledge is there.
 		"CA": ObservedNearest,
@@ -165,6 +171,7 @@ func newCalendarFromCountryCode(code string) (*Calendar, error) {
 }
 
 // NewLocalCalendar creates a Calendar from an ISO-3166-1 Alpha 2 or ISO-3166-2.
+// To obtain a valid but empty calendar you can use the "ZZ" country code.
 func NewLocalCalendar(code string) (*Calendar, error) {
 	parts := strings.SplitN(code, "-", 2)
 	if len(parts) < 1 {

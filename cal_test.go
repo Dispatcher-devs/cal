@@ -801,11 +801,15 @@ func TestCalendar_WorkdaysNrInRangeAustralia(t *testing.T) {
 }
 
 func TestNewCalendarFromCountryCode(t *testing.T) {
-	if _, err := newCalendarFromCountryCode("ZZ"); err == nil {
-		t.Error("expected error for invalid country code ZZ")
+	cal, err := newCalendarFromCountryCode("ZZ")
+	if err != nil {
+		t.Error(err)
+	}
+	if cal.IsHoliday(time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)) {
+		t.Error("did not expected a holiday")
 	}
 
-	cal, err := newCalendarFromCountryCode("FR")
+	cal, err = newCalendarFromCountryCode("FR")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -817,7 +821,7 @@ func TestNewCalendarFromCountryCode(t *testing.T) {
 
 func TestNewLocalCalendar(t *testing.T) {
 	bad := []string{
-		"", "-", "F", "FR-", "FR-BAD", "ZZ", "\t",
+		"", "-", "F", "FR-", "FR-BAD", "\t",
 	}
 
 	for _, v := range bad {
