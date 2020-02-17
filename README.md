@@ -16,7 +16,7 @@ package main
 import (
 	"time"
 
-	"github.com/dispatcher-devs/cal"
+	"github.com/dispatcher-devs/cal/v2"
 )
 
 func main() {
