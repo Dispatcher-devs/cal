@@ -168,6 +168,35 @@ func NewLocalCalendar(code string) (*Calendar, error) {
 	return c, nil
 }
 
+// GetHolidays returns the list of all holidays defined in the calendar between start and end
+func (c Calendar) GetHolidays(start, end time.Time) []struct {
+	Date  time.Time
+	Label string
+} {
+	var ret []struct {
+		Date  time.Time
+		Label string
+	}
+
+	// Knowingly Quadratic
+	for v := truncate(start); v.Before(end); v = v.AddDate(0, 0, 1) {
+		date, label, ok := c.getHoliday(v)
+		if ok {
+			ret = append(ret, struct {
+				Date  time.Time
+				Label string
+			}{date, label})
+		}
+	}
+
+	return ret
+}
+
+// truncate truncates a Date to 00h00m00s
+func truncate(t time.Time) time.Time {
+	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+}
+
 // addHoliday adds a holiday to the calendar's list.
 func (c *Calendar) addHoliday(h ...holiday) {
 	for _, hd := range h {
@@ -183,18 +212,32 @@ func (c *Calendar) SetWorkday(day time.Weekday, workday bool) {
 // IsHoliday reports whether a given date is a holiday. It does not account
 // for the observation of holidays on alternate days.
 func (c *Calendar) IsHoliday(date time.Time) bool {
+	_, _, ok := c.getHoliday(date)
+	return ok
+}
+
+func (c *Calendar) getHoliday(date time.Time) (time.Time, string, bool) {
 	idx := date.Month()
+	label := func(h holiday, date time.Time) string {
+		if h.Label == "" {
+			return date.Format("2006-01-02")
+		}
+		return h.Label
+	}
+
 	for i := range c.holidays[idx] {
 		if c.holidays[idx][i].matches(date) {
-			return true
+			return truncate(date), label(c.holidays[idx][i], date), true
 		}
 	}
+
 	for i := range c.holidays[0] {
 		if c.holidays[0][i].matches(date) {
-			return true
+			return truncate(date), label(c.holidays[0][i], date), true
 		}
 	}
-	return false
+
+	return time.Time{}, "", false
 }
 
 // IsWorkday reports whether a given date is a work day (business day).

@@ -756,3 +756,36 @@ func TestNewLocalCalendar(t *testing.T) {
 		}
 	}
 }
+
+func TestGetHolidays(t *testing.T) {
+	cal, err := NewLocalCalendar("FR")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	start := time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)
+	end := time.Date(2020, 12, 31, 0, 0, 0, 0, time.UTC)
+
+	actual := cal.GetHolidays(start, end)
+
+	expected := []struct {
+		Date  time.Time
+		Label string
+	}{
+		{time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC), "Nouvel an"},
+		{time.Date(2020, 4, 13, 0, 0, 0, 0, time.UTC), "Lundi de pâques"},
+		{time.Date(2020, 5, 1, 0, 0, 0, 0, time.UTC), "Fête du travail"},
+		{time.Date(2020, 5, 8, 0, 0, 0, 0, time.UTC), "Armistice 1945"},
+		{time.Date(2020, 5, 21, 0, 0, 0, 0, time.UTC), "Jeudi de l'ascension"},
+		{time.Date(2020, 6, 1, 0, 0, 0, 0, time.UTC), "Lundi de pentecôte"},
+		{time.Date(2020, 7, 14, 0, 0, 0, 0, time.UTC), "Fête nationale"},
+		{time.Date(2020, 8, 15, 0, 0, 0, 0, time.UTC), "Assomption"},
+		{time.Date(2020, 11, 1, 0, 0, 0, 0, time.UTC), "Toussaint"},
+		{time.Date(2020, 11, 11, 0, 0, 0, 0, time.UTC), "Armistice 1918"},
+		{time.Date(2020, 12, 25, 0, 0, 0, 0, time.UTC), "Noël"},
+	}
+
+	if !reflect.DeepEqual(expected, actual) {
+		t.Error("did not get the expected holidays")
+	}
+}
