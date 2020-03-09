@@ -100,7 +100,7 @@ type WorkdayFn func(date time.Time) bool
 
 // Calendar represents a yearly calendar with a list of holidays.
 type Calendar struct {
-	holidays    [13][]Holiday // 0 for offset based holidays, 1-12 for month based
+	holidays    [13][]holiday // 0 for offset based holidays, 1-12 for month based
 	workday     [7]bool       // flags to indicate a day of the week is a workday
 	WorkdayFunc WorkdayFn     // optional function to override workday flags
 	Observed    ObservedRule
@@ -112,7 +112,7 @@ func newCalendar() *Calendar {
 	c := &Calendar{}
 
 	for i := range c.holidays {
-		c.holidays[i] = make([]Holiday, 0, 2)
+		c.holidays[i] = make([]holiday, 0, 2)
 	}
 	c.workday[time.Monday] = true
 	c.workday[time.Tuesday] = true
@@ -202,8 +202,8 @@ func NewLocalCalendar(code string) (*Calendar, error) {
 	return c, nil
 }
 
-// AddHoliday adds a holiday to the calendar's list.
-func (c *Calendar) AddHoliday(h ...Holiday) {
+// addHoliday adds a holiday to the calendar's list.
+func (c *Calendar) addHoliday(h ...holiday) {
 	for _, hd := range h {
 		c.holidays[hd.Month] = append(c.holidays[hd.Month], hd)
 	}

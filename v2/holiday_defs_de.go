@@ -10,30 +10,30 @@ import (
 // Holidays in Germany
 var (
 	deNeujahr                  = newYear.SetLabel("Neujahr")
-	deHeiligeDreiKoenige       = NewHoliday(time.January, 6).SetLabel("Heilige Drei Koenige")
-	deInternationalerFrauentag = NewHoliday(time.March, 8).SetLabel("International Frauentag")
+	deHeiligeDreiKoenige       = newHoliday(time.January, 6).SetLabel("Heilige Drei Koenige")
+	deInternationalerFrauentag = newHoliday(time.March, 8).SetLabel("International Frauentag")
 	deKarFreitag               = goodFriday.SetLabel("Kar Freitag")
-	deOstersonntag             = NewHolidayFunc(calculateOstersonntag).SetLabel("Ostersonntag")
+	deOstersonntag             = newHolidayFunc(calculateOstersonntag).SetLabel("Ostersonntag")
 	deOstermontag              = easterMonday.SetLabel("Ostermontag")
-	deTagderArbeit             = NewHoliday(time.May, 1).SetLabel("Tag der Arbeit")
-	deChristiHimmelfahrt       = NewHolidayFunc(calculateHimmelfahrt).SetLabel("ChristiHimmelFahrt")
-	dePfingstsonntag           = NewHolidayFunc(calculatePfingstSonntag).SetLabel("Pfingstsonntag")
-	dePfingstmontag            = NewHolidayFunc(calculatePfingstMontag).SetLabel("Pfingstmontag")
-	deFronleichnam             = NewHolidayFunc(calculateFronleichnam).SetLabel("Fronleichnam")
-	deMariaHimmelfahrt         = NewHoliday(time.August, 15).SetLabel("Maria Himmelfahrt")
-	deWeltkindertag            = NewHoliday(time.September, 20).SetLabel("Weltkindertag")
-	deTagderDeutschenEinheit   = NewHoliday(time.October, 3).SetLabel("Tag der Deutschen Einheit")
-	deReformationstag          = NewHoliday(time.October, 31).SetLabel("Reformationstag")
-	deReformationstag2017      = NewHolidayExact(time.October, 31, 2017).SetLabel("Reformationstag")
-	deAllerheiligen            = NewHoliday(time.November, 1).SetLabel("AllerHeiligen")
-	deBußUndBettag             = NewHolidayFunc(calculateBußUndBettag).SetLabel("Buß- Und Bettag")
+	deTagderArbeit             = newHoliday(time.May, 1).SetLabel("Tag der Arbeit")
+	deChristiHimmelfahrt       = newHolidayFunc(calculateHimmelfahrt).SetLabel("ChristiHimmelFahrt")
+	dePfingstsonntag           = newHolidayFunc(calculatePfingstSonntag).SetLabel("Pfingstsonntag")
+	dePfingstmontag            = newHolidayFunc(calculatePfingstMontag).SetLabel("Pfingstmontag")
+	deFronleichnam             = newHolidayFunc(calculateFronleichnam).SetLabel("Fronleichnam")
+	deMariaHimmelfahrt         = newHoliday(time.August, 15).SetLabel("Maria Himmelfahrt")
+	deWeltkindertag            = newHoliday(time.September, 20).SetLabel("Weltkindertag")
+	deTagderDeutschenEinheit   = newHoliday(time.October, 3).SetLabel("Tag der Deutschen Einheit")
+	deReformationstag          = newHoliday(time.October, 31).SetLabel("Reformationstag")
+	deReformationstag2017      = newHolidayExact(time.October, 31, 2017).SetLabel("Reformationstag")
+	deAllerheiligen            = newHoliday(time.November, 1).SetLabel("AllerHeiligen")
+	deBußUndBettag             = newHolidayFunc(calculateBußUndBettag).SetLabel("Buß- Und Bettag")
 	deErsterWeihnachtstag      = christmas.SetLabel("Erster Weihnachtstag")
 	deZweiterWeihnachtstag     = christmas2.SetLabel("Zweiter Weihnachtstag")
 )
 
 // addGermanHolidays adds all German holidays to the Calendar
 func addGermanHolidays(c *Calendar) {
-	c.AddHoliday(
+	c.addHoliday(
 		deNeujahr,
 		deKarFreitag,
 		deOstermontag,
@@ -50,25 +50,25 @@ func addGermanHolidays(c *Calendar) {
 func addGermanyStateHolidays(c *Calendar, state string) error { // nolint:funlen
 	switch state {
 	case "DE-BB": // Brandenburg
-		c.AddHoliday(
+		c.addHoliday(
 			deOstersonntag,
 			dePfingstsonntag,
 			deReformationstag,
 		)
 	case "DE-BE": // Berlin
-		c.AddHoliday(
+		c.addHoliday(
 			deInternationalerFrauentag,
 			deReformationstag2017,
 		)
 	case "DE-BW": // Baden-Württemberg
-		c.AddHoliday(
+		c.addHoliday(
 			deHeiligeDreiKoenige,
 			deFronleichnam,
 			deAllerheiligen,
 			deReformationstag2017,
 		)
 	case "DE-BY": // Bayern
-		c.AddHoliday(
+		c.addHoliday(
 			deHeiligeDreiKoenige,
 			deFronleichnam,
 			deMariaHimmelfahrt,
@@ -76,53 +76,53 @@ func addGermanyStateHolidays(c *Calendar, state string) error { // nolint:funlen
 			deReformationstag2017,
 		)
 	case "DE-HB": // Bremen
-		c.AddHoliday(deReformationstag)
+		c.addHoliday(deReformationstag)
 	case "DE-HE": // Hessen
-		c.AddHoliday(
+		c.addHoliday(
 			deOstersonntag,
 			dePfingstsonntag,
 			deFronleichnam,
 			deReformationstag2017,
 		)
 	case "DE-HH": // Hamburg
-		c.AddHoliday(deReformationstag)
+		c.addHoliday(deReformationstag)
 	case "DE-MV": // Mecklenburg-Vorpommern
-		c.AddHoliday(deReformationstag)
+		c.addHoliday(deReformationstag)
 	case "DE-NI": // Niedersachsen
-		c.AddHoliday(deReformationstag)
+		c.addHoliday(deReformationstag)
 	case "DE-NW": // Nordrhein-Westfalen
-		c.AddHoliday(
+		c.addHoliday(
 			deFronleichnam,
 			deAllerheiligen,
 			deReformationstag2017,
 		)
 	case "DE-RP": // Rheinland-Pfalz
-		c.AddHoliday(
+		c.addHoliday(
 			deFronleichnam,
 			deAllerheiligen,
 			deReformationstag2017,
 		)
 	case "DE-SN", "DE-SA": // Sachsen (keep wrong "SA" code for compatibility)
-		c.AddHoliday(
+		c.addHoliday(
 			deReformationstag,
 			deBußUndBettag,
 		)
 	case "DE-SH": // Schleswig-Holstein
-		c.AddHoliday(deReformationstag)
+		c.addHoliday(deReformationstag)
 	case "DE-SL": // Saarland
-		c.AddHoliday(
+		c.addHoliday(
 			deFronleichnam,
 			deMariaHimmelfahrt,
 			deAllerheiligen,
 			deReformationstag2017,
 		)
 	case "DE-ST": // Sachen-Anhalt
-		c.AddHoliday(
+		c.addHoliday(
 			deHeiligeDreiKoenige,
 			deReformationstag,
 		)
 	case "DE-TH": // Thüringen
-		c.AddHoliday(
+		c.addHoliday(
 			deWeltkindertag,
 			deReformationstag,
 		)

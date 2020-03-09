@@ -7,8 +7,8 @@ var (
 	nlNieuwjaar       = newYear.SetLabel("Nieuwjaar")
 	nlGoedeVrijdag    = goodFriday.SetLabel("GoedeVrijdag")
 	nlPaasMaandag     = easterMonday.SetLabel("Paas maandag")
-	nlKoningsDag      = NewHolidayFunc(calculateKoningsDag).SetLabel("Konings dag")
-	nlBevrijdingsDag  = NewHoliday(time.May, 5).SetLabel("Bevrijdings Dag")
+	nlKoningsDag      = newHolidayFunc(calculateKoningsDag).SetLabel("Konings dag")
+	nlBevrijdingsDag  = newHoliday(time.May, 5).SetLabel("Bevrijdings Dag")
 	nlHemelvaart      = deChristiHimmelfahrt.SetLabel("Hemelvaart")
 	nlPinksterMaandag = dePfingstmontag.SetLabel("Pinkster maandag")
 	nlEersteKerstdag  = christmas.SetLabel("Eerste kerstdag")
@@ -17,7 +17,7 @@ var (
 
 // addDutchHolidays adds all Dutch holidays to the Calendar
 func addDutchHolidays(c *Calendar) {
-	c.AddHoliday(
+	c.addHoliday(
 		nlNieuwjaar,
 		nlGoedeVrijdag,
 		nlPaasMaandag,

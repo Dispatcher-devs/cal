@@ -21,30 +21,30 @@ const (
 	ObservedMondayTuesday
 )
 
-// HolidayFn calculates the occurrence of a holiday for the given year.
+// holidayFn calculates the occurrence of a holiday for the given year.
 // This is useful for holidays like Easter that depend on complex rules.
-type HolidayFn func(year int, loc *time.Location) (month time.Month, day int)
+type holidayFn func(year int, loc *time.Location) (month time.Month, day int)
 
-// HolidayFactory creates a holiday for the given year letting you use the
+// holidayFactory creates a holiday for the given year letting you use the
 // regular Holiday/Cal facilities to define holidays that had yearly variations.
-type HolidayFactory func(year int, loc *time.Location) Holiday
+type holidayFactory func(year int, loc *time.Location) holiday
 
 // Holiday holds information about the yearly occurrence of a holiday.
 //
-// A valid Holiday consists of one of the following:
+// A valid holiday consists of one of the following:
 //   - Month and Day (such as March 14 for Pi Day)
 //   - Month, Weekday, and Offset (such as the second Monday of October for Columbus Day)
 //   - Offset (such as the 183rd day of the year for the start of the second half)
 //   - Month, Day, and Year (in case you want to specify holidays exactly for each year)
 //   - Func (to calculate the holiday)
-type Holiday struct {
+type holiday struct {
 	Month   time.Month
 	Weekday time.Weekday
 	Day     int
 	Offset  int
 	Year    int
-	Func    HolidayFn
-	Factory HolidayFactory
+	Func    holidayFn
+	Factory holidayFactory
 	Label   string
 
 	// last values used to calculate month and day with Func
@@ -52,43 +52,43 @@ type Holiday struct {
 	lastLoc  *time.Location
 }
 
-func (h Holiday) SetLabel(label string) Holiday {
+func (h holiday) SetLabel(label string) holiday {
 	ret := h
 	ret.Label = label
 	return ret
 }
 
-// NewHoliday creates a new Holiday instance for an exact day of a month.
-func NewHoliday(month time.Month, day int) Holiday {
-	return Holiday{Month: month, Day: day}
+// newHoliday creates a new Holiday instance for an exact day of a month.
+func newHoliday(month time.Month, day int) holiday {
+	return holiday{Month: month, Day: day}
 }
 
-// NewHolidayExact creates a new Holiday instance for an exact day of a month and year.
-func NewHolidayExact(month time.Month, day int, year int) Holiday {
-	return Holiday{Month: month, Day: day, Year: year}
+// newHolidayExact creates a new Holiday instance for an exact day of a month and year.
+func newHolidayExact(month time.Month, day int, year int) holiday {
+	return holiday{Month: month, Day: day, Year: year}
 }
 
-// NewHolidayFloat creates a new Holiday instance for an offset-based day of
+// newHolidayFloat creates a new Holiday instance for an offset-based day of
 // a month.
-func NewHolidayFloat(month time.Month, weekday time.Weekday, offset int) Holiday {
-	return Holiday{Month: month, Weekday: weekday, Offset: offset}
+func newHolidayFloat(month time.Month, weekday time.Weekday, offset int) holiday {
+	return holiday{Month: month, Weekday: weekday, Offset: offset}
 }
 
-// NewHolidayFunc creates a new Holiday instance that uses a function to
+// newHolidayFunc creates a new Holiday instance that uses a function to
 // calculate the day and month.
-func NewHolidayFunc(fn HolidayFn) Holiday {
-	return Holiday{Func: fn}
+func newHolidayFunc(fn holidayFn) holiday {
+	return holiday{Func: fn}
 }
 
-// NewHolidayFactory creates a new holiday instance that uses a function to
+// newHolidayFactory creates a new holiday instance that uses a function to
 // create the holiday for a given year.
-func NewHolidayFactory(fn HolidayFactory) Holiday {
-	return Holiday{Factory: fn}
+func newHolidayFactory(fn holidayFactory) holiday {
+	return holiday{Factory: fn}
 }
 
 // matches determines whether the given date is the one referred to by the
 // Holiday.
-func (h *Holiday) matches(date time.Time) bool {
+func (h *holiday) matches(date time.Time) bool {
 	if h.Factory != nil {
 		generated := h.Factory(date.Year(), date.Location())
 		h.lastYear = date.Year()

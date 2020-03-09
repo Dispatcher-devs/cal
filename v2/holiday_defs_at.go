@@ -7,23 +7,23 @@ import "time"
 // Holidays in Austria
 var (
 	atNeujahr            = newYear.SetLabel("Neujahr")
-	atHeiligeDreiKoenige = NewHoliday(time.January, 6).SetLabel("Heilige Drei Koenige")
+	atHeiligeDreiKoenige = newHoliday(time.January, 6).SetLabel("Heilige Drei Koenige")
 	atOstermontag        = easterMonday.SetLabel("Ostermontag")
-	atTagderArbeit       = NewHoliday(time.May, 1).SetLabel("Tag der Arbeit")
-	atChristiHimmelfahrt = NewHolidayFunc(calculateHimmelfahrt).SetLabel("Christi Himmelfahrt")
-	atPfingstmontag      = NewHolidayFunc(calculatePfingstMontag).SetLabel("Pgingstmontag")
-	atFronleichnam       = NewHolidayFunc(calculateFronleichnam).SetLabel("Fronleichnam")
-	atMariaHimmelfahrt   = NewHoliday(time.August, 15).SetLabel("Maria Himmelfahrt")
-	atNationalfeiertag   = NewHoliday(time.October, 26).SetLabel("Nationalfeiertag")
-	atAllerheiligen      = NewHoliday(time.November, 1).SetLabel("Allerheiligen")
-	atMariaEmpfaengnis   = NewHoliday(time.December, 8).SetLabel("Maria Emfaengnis")
+	atTagderArbeit       = newHoliday(time.May, 1).SetLabel("Tag der Arbeit")
+	atChristiHimmelfahrt = newHolidayFunc(calculateHimmelfahrt).SetLabel("Christi Himmelfahrt")
+	atPfingstmontag      = newHolidayFunc(calculatePfingstMontag).SetLabel("Pgingstmontag")
+	atFronleichnam       = newHolidayFunc(calculateFronleichnam).SetLabel("Fronleichnam")
+	atMariaHimmelfahrt   = newHoliday(time.August, 15).SetLabel("Maria Himmelfahrt")
+	atNationalfeiertag   = newHoliday(time.October, 26).SetLabel("Nationalfeiertag")
+	atAllerheiligen      = newHoliday(time.November, 1).SetLabel("Allerheiligen")
+	atMariaEmpfaengnis   = newHoliday(time.December, 8).SetLabel("Maria Emfaengnis")
 	atChristtag          = christmas.SetLabel("Christtag")
 	atStefanitag         = christmas2.SetLabel("Stefanitag")
 )
 
 // addAustrianHolidays adds all Austrian holidays to the Calendar
 func addAustrianHolidays(c *Calendar) {
-	c.AddHoliday(
+	c.addHoliday(
 		atNeujahr,
 		atHeiligeDreiKoenige,
 		atOstermontag,

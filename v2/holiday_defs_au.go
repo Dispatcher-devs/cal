@@ -8,20 +8,20 @@ import (
 
 // Holidays in Australia
 var (
-	auNewYear       = NewHolidayFunc(calculateNewYearOceania).SetLabel("New year")
-	auAustralianDay = NewHoliday(time.January, 26).SetLabel("Australian day")
+	auNewYear       = newHolidayFunc(calculateNewYearOceania).SetLabel("New year")
+	auAustralianDay = newHoliday(time.January, 26).SetLabel("Australian day")
 	auGoodFriday    = goodFriday.SetLabel("Good friday")
-	auChristmasDay  = NewHolidayFunc(calculateOcenaniaChristmasDay).SetLabel("Christmas")
+	auChristmasDay  = newHolidayFunc(calculateOcenaniaChristmasDay).SetLabel("Christmas")
 	auBoxingDays    = christmas2.SetLabel("Boxing day")
 	auEasterMonday  = easterMonday.SetLabel("Easter monday")
-	auAnzacDay      = NewHolidayFunc(calculateAnzacDay).SetLabel("Anzac day")
-	auQueenBirthDay = NewHolidayFunc(calculateQueenBirthDay).SetLabel("Queen Birthday")
-	auLabourDay     = NewHolidayFunc(calculateAULabourDay).SetLabel("Labour day")
+	auAnzacDay      = newHolidayFunc(calculateAnzacDay).SetLabel("Anzac day")
+	auQueenBirthDay = newHolidayFunc(calculateQueenBirthDay).SetLabel("Queen Birthday")
+	auLabourDay     = newHolidayFunc(calculateAULabourDay).SetLabel("Labour day")
 )
 
 // addAustralianHolidays adds all Australian holidays
 func addAustralianHolidays(c *Calendar) {
-	c.AddHoliday(
+	c.addHoliday(
 		auNewYear,
 		auAustralianDay,
 		auGoodFriday,

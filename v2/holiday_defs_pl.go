@@ -7,23 +7,23 @@ import (
 // Poland holidays
 var (
 	plNewYear                     = newYear
-	plThreeKings                  = NewHoliday(time.January, 6)
+	plThreeKings                  = newHoliday(time.January, 6)
 	plEasterMonday                = easterMonday
-	plEasterSunday                = NewHolidayFunc(calculateEasterSunday)
-	plLabourDay                   = NewHoliday(time.May, 1)
-	plNationalDay                 = NewHoliday(time.May, 3)
-	plPentecostDay                = NewHolidayFunc(calculatePentecostDay)
-	plCorpusChristi               = NewHolidayFunc(calculateCorpusChristiDay)
-	plAssumptionBlessedVirginMary = NewHoliday(time.August, 15)
-	plAllSaints                   = NewHoliday(time.November, 1)
-	plNationalIndependenceDay     = NewHoliday(time.November, 11)
+	plEasterSunday                = newHolidayFunc(calculateEasterSunday)
+	plLabourDay                   = newHoliday(time.May, 1)
+	plNationalDay                 = newHoliday(time.May, 3)
+	plPentecostDay                = newHolidayFunc(calculatePentecostDay)
+	plCorpusChristi               = newHolidayFunc(calculateCorpusChristiDay)
+	plAssumptionBlessedVirginMary = newHoliday(time.August, 15)
+	plAllSaints                   = newHoliday(time.November, 1)
+	plNationalIndependenceDay     = newHoliday(time.November, 11)
 	plChristmasDayOne             = christmas
 	plChristmasDayTwo             = christmas2
 )
 
 // addPolandHolidays adds all Poland holidays to the Calendar
 func addPolandHolidays(c *Calendar) {
-	c.AddHoliday(
+	c.addHoliday(
 		plNewYear,
 		plThreeKings,
 		plEasterMonday,

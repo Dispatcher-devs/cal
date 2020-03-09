@@ -139,7 +139,7 @@ func TestWorkday(t *testing.T) {
 	c := newCalendar()
 	c.SetWorkday(time.Monday, false)
 	c.SetWorkday(time.Saturday, true)
-	c.AddHoliday(Holiday{Month: time.June, Day: 12})
+	c.addHoliday(holiday{Month: time.June, Day: 12})
 	tests := []struct {
 		t    time.Time
 		want bool
@@ -170,7 +170,7 @@ func TestWorkdayFunc(t *testing.T) {
 			date.Weekday() == time.Wednesday ||
 			(date.Month() == time.March && (date.Day() == 9 || date.Day() == 10))
 	}
-	c.AddHoliday(Holiday{Month: time.March, Day: 6})
+	c.addHoliday(holiday{Month: time.March, Day: 6})
 	tests := []struct {
 		t    time.Time
 		want bool
@@ -198,13 +198,13 @@ func TestWorkdayFunc(t *testing.T) {
 
 func TestHoliday(t *testing.T) {
 	c := newCalendar()
-	c.AddHoliday(
+	c.addHoliday(
 		usMemorial,
 		usIndependence,
 		usColumbus,
 	)
-	c.AddHoliday(Holiday{Offset: 100})
-	c.AddHoliday(Holiday{Day: 24, Month: time.November, Year: 2016})
+	c.addHoliday(holiday{Offset: 100})
+	c.addHoliday(holiday{Day: 24, Month: time.November, Year: 2016})
 
 	tz, err := time.LoadLocation("America/New_York")
 	if err != nil {
@@ -241,7 +241,7 @@ func TestHoliday(t *testing.T) {
 func TestWorkdayNearest(t *testing.T) {
 	c := newCalendar()
 	c.Observed = ObservedNearest
-	c.AddHoliday(
+	c.addHoliday(
 		usNewYear,
 		usIndependence,
 		usChristmas,
@@ -271,12 +271,12 @@ func TestWorkdayNearest(t *testing.T) {
 func TestWorkdayExact(t *testing.T) {
 	c := newCalendar()
 	c.Observed = ObservedExact
-	c.AddHoliday(
+	c.addHoliday(
 		usNewYear,
 		usIndependence,
 		usChristmas,
 	)
-	c.AddHoliday(Holiday{Day: 24, Month: time.November, Year: 2016})
+	c.addHoliday(holiday{Day: 24, Month: time.November, Year: 2016})
 
 	tests := []struct {
 		t    time.Time
@@ -304,7 +304,7 @@ func TestWorkdayExact(t *testing.T) {
 func TestWorkdayMonday(t *testing.T) {
 	c := newCalendar()
 	c.Observed = ObservedMonday
-	c.AddHoliday(
+	c.addHoliday(
 		usNewYear,
 		usIndependence,
 		usChristmas,
@@ -335,7 +335,7 @@ func TestWorkdayMonday(t *testing.T) {
 func TestWorkdayMondayTuesday(t *testing.T) {
 	c := newCalendar()
 	c.Observed = ObservedMondayTuesday
-	c.AddHoliday(
+	c.addHoliday(
 		gbChristmasDay,
 		gbBoxingDay,
 	)
@@ -392,7 +392,7 @@ func TestWorkdayMondayTuesday(t *testing.T) {
 
 func TestWorkdays(t *testing.T) {
 	c := newCalendar()
-	c.AddHoliday(usNewYear, usMLK)
+	c.addHoliday(usNewYear, usMLK)
 
 	tests := []struct {
 		y    int
@@ -416,7 +416,7 @@ func TestWorkdays(t *testing.T) {
 
 func TestWorkdaysRemain(t *testing.T) {
 	c := newCalendar()
-	c.AddHoliday(usNewYear, usMLK)
+	c.addHoliday(usNewYear, usMLK)
 
 	tests := []struct {
 		t    time.Time
@@ -460,7 +460,7 @@ func TestWorkdaysRemainCustom(t *testing.T) {
 
 func TestWorkdayN(t *testing.T) {
 	c := newCalendar()
-	c.AddHoliday(usNewYear, usMLK)
+	c.addHoliday(usNewYear, usMLK)
 
 	tests := []struct {
 		y    int
@@ -488,7 +488,7 @@ func TestWorkdayN(t *testing.T) {
 func TestWorkdaysFrom(t *testing.T) {
 	c := newCalendar()
 	c.Observed = ObservedNearest
-	c.AddHoliday(usNewYear, usMLK)
+	c.addHoliday(usNewYear, usMLK)
 
 	tests := []struct {
 		d    time.Time
@@ -517,7 +517,7 @@ func TestWorkdaysFrom(t *testing.T) {
 func TestCountWorkdays(t *testing.T) {
 	c := newCalendar()
 	c.Observed = ObservedExact
-	c.AddHoliday(usNewYear)
+	c.addHoliday(usNewYear)
 
 	/*
 	      Dezember 2015
