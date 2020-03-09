@@ -4,20 +4,20 @@ import "time"
 
 // Holidays in the Netherlands
 var (
-	nlNieuwjaar       = newYear
-	nlGoedeVrijdag    = goodFriday
-	nlPaasMaandag     = easterMonday
-	nlKoningsDag      = NewHolidayFunc(calculateKoningsDag)
-	nlBevrijdingsDag  = NewHoliday(time.May, 5)
-	nlHemelvaart      = deChristiHimmelfahrt
-	nlPinksterMaandag = dePfingstmontag
-	nlEersteKerstdag  = christmas
-	nlTweedeKerstdag  = christmas2
+	nlNieuwjaar       = newYear.setLabel("Nieuwjaar")
+	nlGoedeVrijdag    = goodFriday.setLabel("GoedeVrijdag")
+	nlPaasMaandag     = easterMonday.setLabel("Paas maandag")
+	nlKoningsDag      = newHolidayFunc(calculateKoningsDag).setLabel("Konings dag")
+	nlBevrijdingsDag  = newHoliday(time.May, 5).setLabel("Bevrijdings Dag")
+	nlHemelvaart      = deChristiHimmelfahrt.setLabel("Hemelvaart")
+	nlPinksterMaandag = dePfingstmontag.setLabel("Pinkster maandag")
+	nlEersteKerstdag  = christmas.setLabel("Eerste kerstdag")
+	nlTweedeKerstdag  = christmas2.setLabel("Tweede kerstdag")
 )
 
 // addDutchHolidays adds all Dutch holidays to the Calendar
 func addDutchHolidays(c *Calendar) {
-	c.AddHoliday(
+	c.addHoliday(
 		nlNieuwjaar,
 		nlGoedeVrijdag,
 		nlPaasMaandag,

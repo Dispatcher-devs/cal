@@ -7,25 +7,25 @@ import "time"
 // Holidays (official and traditional) in Denmark
 // Reference https://da.wikipedia.org/wiki/Helligdag#Danske_helligdage
 var (
-	dkNytaarsdag           = newYear
-	dkSkaertorsdag         = NewHolidayFunc(calculateSkaertorsdag)
-	dkLangfredag           = goodFriday
-	dkPaaskedag            = NewHolidayFunc(calculatePaaskedag)
-	dkAndenPaaskedag       = easterMonday
-	dkStoreBededag         = NewHolidayFunc(calculateStoreBededag)
-	dkKristiHimmelfartsdag = NewHolidayFunc(calculateKristiHimmelfartsdag)
-	dkPinsedag             = NewHolidayFunc(calculatePinsedag)
-	dkAndenPinsedag        = NewHolidayFunc(calculateAndenPinsedag)
-	dkGrundlovsdag         = NewHoliday(time.June, 5)
-	dkJuleaften            = NewHoliday(time.December, 24)
-	dkJuledag              = christmas
-	dkAndenJuledag         = christmas2
-	dkNytaarsaften         = NewHoliday(time.December, 31)
+	dkNytaarsdag           = newYear.setLabel("Nytaarsdag")
+	dkSkaertorsdag         = newHolidayFunc(calculateSkaertorsdag).setLabel("Skaertorsdag")
+	dkLangfredag           = goodFriday.setLabel("Langfredag")
+	dkPaaskedag            = newHolidayFunc(calculatePaaskedag).setLabel("Paaskedag")
+	dkAndenPaaskedag       = easterMonday.setLabel("Anden Paaskedag")
+	dkStoreBededag         = newHolidayFunc(calculateStoreBededag).setLabel("Store Bededag")
+	dkKristiHimmelfartsdag = newHolidayFunc(calculateKristiHimmelfartsdag).setLabel("Kristi Himmelfartsdag")
+	dkPinsedag             = newHolidayFunc(calculatePinsedag).setLabel("Pinsedag")
+	dkAndenPinsedag        = newHolidayFunc(calculateAndenPinsedag).setLabel("Anden Pinsedag")
+	dkGrundlovsdag         = newHoliday(time.June, 5).setLabel("Grundlovsdag")
+	dkJuleaften            = newHoliday(time.December, 24).setLabel("Juleaften")
+	dkJuledag              = christmas.setLabel("Juledag")
+	dkAndenJuledag         = christmas2.setLabel("Anden Juledag")
+	dkNytaarsaften         = newHoliday(time.December, 31).setLabel("Nytaarsaften")
 )
 
 // addDanishHolidays adds all Danish holidays to the Calendar
 func addDanishHolidays(c *Calendar) {
-	c.AddHoliday(
+	c.addHoliday(
 		dkNytaarsdag,
 		dkSkaertorsdag,
 		dkLangfredag,
@@ -43,7 +43,7 @@ func addDanishHolidays(c *Calendar) {
 // AddDanishTraditions adds Grundlovsdag (Constitution Day), Christmas
 // Eve, and New Years Eve which are not official holidays.
 func AddDanishTraditions(c *Calendar) {
-	c.AddHoliday(
+	c.addHoliday(
 		dkGrundlovsdag,
 		dkJuleaften,
 		dkNytaarsaften,

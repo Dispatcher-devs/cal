@@ -8,21 +8,21 @@ import (
 
 // Holidays in Australia
 var (
-	nzNewYear         = NewHolidayFunc(calculateNewYearOceania)
-	nzGoodFriday      = goodFriday
-	nzChristmasDay    = NewHolidayFunc(calculateOcenaniaChristmasDay)
-	nzBoxingDays      = NewHolidayFunc(calculateOcenaniaBoxingDay)
-	nzEasterMonday    = easterMonday
-	nzAnzacDay        = NewHolidayFunc(calculateNZAnzacDay)
-	nzQueensBirthday  = NewHolidayFunc(calculateQueensBirthday)
-	nzLabourDay       = NewHolidayFunc(calculateLabourDay)
-	nzDayAfterNewYear = NewHolidayFunc(calculateDayAfterNewYear)
-	nzWanagiDay       = NewHolidayFunc(calculateWarangiDay)
+	nzNewYear         = newHolidayFunc(calculateNewYearOceania).setLabel("New year")
+	nzGoodFriday      = goodFriday.setLabel("Good friday")
+	nzChristmasDay    = newHolidayFunc(calculateOcenaniaChristmasDay).setLabel("Christmas day")
+	nzBoxingDays      = newHolidayFunc(calculateOcenaniaBoxingDay).setLabel("Boxing day")
+	nzEasterMonday    = easterMonday.setLabel("Easter monday")
+	nzAnzacDay        = newHolidayFunc(calculateNZAnzacDay).setLabel("Anzac day")
+	nzQueensBirthday  = newHolidayFunc(calculateQueensBirthday).setLabel("Queen's birthday")
+	nzLabourDay       = newHolidayFunc(calculateLabourDay).setLabel("Labout day")
+	nzDayAfterNewYear = newHolidayFunc(calculateDayAfterNewYear).setLabel("Day after new year")
+	nzWanagiDay       = newHolidayFunc(calculateWarangiDay).setLabel("Wanagi day")
 )
 
 // addNewZealandHoliday adds all New Zeland holidays
 func addNewZealandHoliday(c *Calendar) {
-	c.AddHoliday(
+	c.addHoliday(
 		nzNewYear,
 		nzDayAfterNewYear,
 		nzGoodFriday,

@@ -4,21 +4,21 @@ import "time"
 
 // Holidays in Belgium
 var (
-	beNieuwjaar                = newYear
-	bePaasmaandag              = easterMonday
-	beDagVanDeArbeid           = ecbLabourDay
-	beOnzeLieveHeerHemelvaart  = NewHolidayFunc(calculateOnzeLieveHeerHemelvaart)
-	bePinkstermaandag          = NewHolidayFunc(calculatePinkstermaandag)
-	beNationaleFeestdag        = NewHoliday(time.July, 21)
-	beOnzeLieveVrouwHemelvaart = NewHoliday(time.August, 15)
-	beAllerheiligen            = NewHoliday(time.November, 1)
-	beWapenstilstand           = NewHoliday(time.November, 11)
-	beKerstmis                 = christmas
+	beNieuwjaar                = newYear.setLabel("Nieuwjaar")
+	bePaasmaandag              = easterMonday.setLabel("Paasmaandag")
+	beDagVanDeArbeid           = ecbLabourDay.setLabel("Dag van de Arbeid")
+	beOnzeLieveHeerHemelvaart  = newHolidayFunc(calculateOnzeLieveHeerHemelvaart).setLabel("Onze Lieve Heer Hemelvaart")
+	bePinkstermaandag          = newHolidayFunc(calculatePinkstermaandag).setLabel("Pinkstermaandag")
+	beNationaleFeestdag        = newHoliday(time.July, 21).setLabel("Nationale Feestdag")
+	beOnzeLieveVrouwHemelvaart = newHoliday(time.August, 15).setLabel("Onze Lieve Vrouw Hemelvaart")
+	beAllerheiligen            = newHoliday(time.November, 1).setLabel("Allerheiligen")
+	beWapenstilstand           = newHoliday(time.November, 11).setLabel("Wepenstilstand")
+	beKerstmis                 = christmas.setLabel("Kerstmis")
 )
 
 // addBelgiumHolidays adds all Belgium holidays to the Calendar
 func addBelgiumHolidays(c *Calendar) {
-	c.AddHoliday(
+	c.addHoliday(
 		beNieuwjaar,
 		bePaasmaandag,
 		beDagVanDeArbeid,

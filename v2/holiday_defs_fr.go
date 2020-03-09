@@ -8,30 +8,30 @@ import (
 
 // Holidays in France
 var (
-	frNouvelAn          = newYear
-	frLundiDePâques     = easterMonday
-	frFêteDuTravail     = ecbLabourDay
-	frArmistice1945     = NewHoliday(time.May, 8)
-	frJeudiDeLAscension = NewHolidayFunc(calculateJeudiDeLAscension)
-	frLundiDePentecôte  = NewHolidayFunc(calculateLundiDePentecôte)
-	frFêteNationale     = NewHoliday(time.July, 14)
-	frAssomption        = NewHoliday(time.August, 15)
-	frToussaint         = NewHoliday(time.November, 1)
-	frArmistice1918     = NewHoliday(time.November, 11)
-	frNoël              = christmas
+	frNouvelAn          = newYear.setLabel("Nouvel an")
+	frLundiDePâques     = easterMonday.setLabel("Lundi de pâques")
+	frFêteDuTravail     = ecbLabourDay.setLabel("Fête du travail")
+	frArmistice1945     = newHoliday(time.May, 8).setLabel("Armistice 1945")
+	frJeudiDeLAscension = newHolidayFunc(calculateJeudiDeLAscension).setLabel("Jeudi de l'ascension")
+	frLundiDePentecôte  = newHolidayFunc(calculateLundiDePentecôte).setLabel("Lundi de pentecôte")
+	frFêteNationale     = newHoliday(time.July, 14).setLabel("Fête nationale")
+	frAssomption        = newHoliday(time.August, 15).setLabel("Assomption")
+	frToussaint         = newHoliday(time.November, 1).setLabel("Toussaint")
+	frArmistice1918     = newHoliday(time.November, 11).setLabel("Armistice 1918")
+	frNoël              = christmas.setLabel("Noël")
 
 	// Two more days for the Alsace-Moselle area.
 	// https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=LEGISCTA000006178008&cidTexte=LEGITEXT000006072050
-	frSaintÉtienne  = NewHoliday(time.December, 26)
-	frVendrediSaint = goodFriday
+	frSaintÉtienne  = newHoliday(time.December, 26).setLabel("Saint Étienne")
+	frVendrediSaint = goodFriday.setLabel("Vendredi saint")
 
 	// The end of slavery is observed at different dates for different DOM-TOMs.
-	frGuadeloupeAbolition      = NewHoliday(time.May, 27)
-	frMartiniqueAbolition      = NewHoliday(time.May, 22)
-	frMayotteAbolition         = NewHoliday(time.April, 27)
-	frRéunionAbolition         = NewHoliday(time.December, 20)
-	frSaintBarthélemyAbolition = NewHoliday(time.October, 9)
-	frSaintMartinAbolition     = NewHolidayFunc(calculateSaintMartinAbolition)
+	frGuadeloupeAbolition      = newHoliday(time.May, 27).setLabel("Abolition")
+	frMartiniqueAbolition      = newHoliday(time.May, 22).setLabel("Abolition")
+	frMayotteAbolition         = newHoliday(time.April, 27).setLabel("Abolition")
+	frRéunionAbolition         = newHoliday(time.December, 20).setLabel("Abolition")
+	frSaintBarthélemyAbolition = newHoliday(time.October, 9).setLabel("Abolition")
+	frSaintMartinAbolition     = newHolidayFunc(calculateSaintMartinAbolition).setLabel("Abolition")
 )
 
 func calculateSaintMartinAbolition(year int, loc *time.Location) (time.Month, int) {
@@ -47,7 +47,7 @@ func calculateSaintMartinAbolition(year int, loc *time.Location) (time.Month, in
 
 // addFranceHolidays adds all France holidays to the Calendar
 func addFranceHolidays(c *Calendar) {
-	c.AddHoliday(
+	c.addHoliday(
 		frNouvelAn,
 		frLundiDePâques,
 		frFêteDuTravail,
@@ -69,22 +69,22 @@ func addFranceDepartmentHolidays(c *Calendar, code string) error {
 	case "FR-CP", "FR-GF", "FR-NC", "FR-PF", "FR-PM", "FR-TF", "FR-WF":
 		return nil
 	case "FR-GP":
-		c.AddHoliday(frGuadeloupeAbolition)
+		c.addHoliday(frGuadeloupeAbolition)
 		return nil
 	case "FR-MQ":
-		c.AddHoliday(frMartiniqueAbolition)
+		c.addHoliday(frMartiniqueAbolition)
 		return nil
 	case "FR-RE":
-		c.AddHoliday(frRéunionAbolition)
+		c.addHoliday(frRéunionAbolition)
 		return nil
 	case "FR-YT":
-		c.AddHoliday(frMayotteAbolition)
+		c.addHoliday(frMayotteAbolition)
 		return nil
 	case "FR-BL":
-		c.AddHoliday(frSaintBarthélemyAbolition)
+		c.addHoliday(frSaintBarthélemyAbolition)
 		return nil
 	case "FR-MF":
-		c.AddHoliday(frSaintMartinAbolition)
+		c.addHoliday(frSaintMartinAbolition)
 		return nil
 	}
 
@@ -103,7 +103,7 @@ func addFranceDepartmentHolidays(c *Calendar, code string) error {
 
 	// {Bas,Haut}-Rhin, Moselle
 	if dep == 67 || dep == 68 || dep == 57 {
-		c.AddHoliday(
+		c.addHoliday(
 			frSaintÉtienne,
 			frVendrediSaint,
 		)

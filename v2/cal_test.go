@@ -61,85 +61,11 @@ func TestWeekdayN(t *testing.T) {
 	}
 }
 
-func TestMonthStart(t *testing.T) {
-	tests := []struct {
-		t    time.Time
-		want time.Time
-	}{
-		{time.Date(2016, 1, 1, 0, 0, 0, 0, time.UTC), time.Date(2016, 1, 1, 0, 0, 0, 0, time.UTC)},
-		{time.Date(2016, 2, 15, 12, 0, 0, 0, time.UTC), time.Date(2016, 2, 1, 12, 0, 0, 0, time.UTC)},
-		{time.Date(2016, 3, 31, 23, 59, 59, 999999999, time.UTC), time.Date(2016, 3, 1, 23, 59, 59, 999999999, time.UTC)},
-	}
-
-	for _, test := range tests {
-		got := MonthStart(test.t)
-		if got != test.want {
-			t.Errorf("got: %s; want: %s (%s)", got, test.want, test.t)
-		}
-	}
-}
-
-func TestMonthEnd(t *testing.T) {
-	tests := []struct {
-		t    time.Time
-		want time.Time
-	}{
-		{time.Date(2016, 1, 1, 0, 0, 0, 0, time.UTC), time.Date(2016, 1, 31, 0, 0, 0, 0, time.UTC)},
-		{time.Date(2016, 2, 15, 12, 0, 0, 0, time.UTC), time.Date(2016, 2, 29, 12, 0, 0, 0, time.UTC)},
-		{time.Date(2016, 3, 31, 23, 59, 59, 999999999, time.UTC), time.Date(2016, 3, 31, 23, 59, 59, 999999999, time.UTC)},
-	}
-
-	for _, test := range tests {
-		got := MonthEnd(test.t)
-		if got != test.want {
-			t.Errorf("got: %s; want: %s (%s)", got, test.want, test.t)
-		}
-	}
-}
-
-func TestJulianDayNumber(t *testing.T) {
-	tests := []struct {
-		t    time.Time
-		want int
-	}{
-		{time.Date(1970, 1, 1, 0, 0, 0, 0, time.UTC), 2440587},
-		{time.Date(2000, 1, 1, 15, 0, 0, 0, time.UTC), 2451545},
-		{time.Date(2016, 2, 29, 12, 0, 0, 0, time.UTC), 2457448},
-		{time.Date(2016, 3, 31, 23, 59, 59, 999999999, time.UTC), 2457479},
-	}
-
-	for _, test := range tests {
-		got := JulianDayNumber(test.t)
-		if got != test.want {
-			t.Errorf("got: %d; want: %d (%s)", got, test.want, test.t)
-		}
-	}
-}
-
-func TestJulianDate(t *testing.T) {
-	tests := []struct {
-		t    time.Time
-		want float32
-	}{
-		{time.Date(1970, 1, 1, 0, 0, 0, 0, time.UTC), 2440587.5},
-		{time.Date(2000, 1, 1, 15, 0, 0, 0, time.UTC), 2451545.125},
-		{time.Date(2016, 2, 29, 12, 0, 0, 0, time.UTC), 2457448.0},
-		{time.Date(2016, 3, 31, 23, 59, 59, 999999999, time.UTC), 2457479.5},
-	}
-
-	for _, test := range tests {
-		got := JulianDate(test.t)
-		if got != test.want {
-			t.Errorf("got: %f; want: %f (%s)", got, test.want, test.t)
-		}
-	}
-}
-
 func TestWorkday(t *testing.T) {
 	c := newCalendar()
 	c.SetWorkday(time.Monday, false)
 	c.SetWorkday(time.Saturday, true)
-	c.AddHoliday(Holiday{Month: time.June, Day: 12})
+	c.addHoliday(holiday{month: time.June, day: 12})
 	tests := []struct {
 		t    time.Time
 		want bool
@@ -170,7 +96,7 @@ func TestWorkdayFunc(t *testing.T) {
 			date.Weekday() == time.Wednesday ||
 			(date.Month() == time.March && (date.Day() == 9 || date.Day() == 10))
 	}
-	c.AddHoliday(Holiday{Month: time.March, Day: 6})
+	c.addHoliday(holiday{month: time.March, day: 6})
 	tests := []struct {
 		t    time.Time
 		want bool
@@ -198,13 +124,13 @@ func TestWorkdayFunc(t *testing.T) {
 
 func TestHoliday(t *testing.T) {
 	c := newCalendar()
-	c.AddHoliday(
+	c.addHoliday(
 		usMemorial,
 		usIndependence,
 		usColumbus,
 	)
-	c.AddHoliday(Holiday{Offset: 100})
-	c.AddHoliday(Holiday{Day: 24, Month: time.November, Year: 2016})
+	c.addHoliday(holiday{offset: 100})
+	c.addHoliday(holiday{day: 24, month: time.November, year: 2016})
 
 	tz, err := time.LoadLocation("America/New_York")
 	if err != nil {
@@ -241,7 +167,7 @@ func TestHoliday(t *testing.T) {
 func TestWorkdayNearest(t *testing.T) {
 	c := newCalendar()
 	c.Observed = ObservedNearest
-	c.AddHoliday(
+	c.addHoliday(
 		usNewYear,
 		usIndependence,
 		usChristmas,
@@ -271,12 +197,12 @@ func TestWorkdayNearest(t *testing.T) {
 func TestWorkdayExact(t *testing.T) {
 	c := newCalendar()
 	c.Observed = ObservedExact
-	c.AddHoliday(
+	c.addHoliday(
 		usNewYear,
 		usIndependence,
 		usChristmas,
 	)
-	c.AddHoliday(Holiday{Day: 24, Month: time.November, Year: 2016})
+	c.addHoliday(holiday{day: 24, month: time.November, year: 2016})
 
 	tests := []struct {
 		t    time.Time
@@ -304,7 +230,7 @@ func TestWorkdayExact(t *testing.T) {
 func TestWorkdayMonday(t *testing.T) {
 	c := newCalendar()
 	c.Observed = ObservedMonday
-	c.AddHoliday(
+	c.addHoliday(
 		usNewYear,
 		usIndependence,
 		usChristmas,
@@ -335,7 +261,7 @@ func TestWorkdayMonday(t *testing.T) {
 func TestWorkdayMondayTuesday(t *testing.T) {
 	c := newCalendar()
 	c.Observed = ObservedMondayTuesday
-	c.AddHoliday(
+	c.addHoliday(
 		gbChristmasDay,
 		gbBoxingDay,
 	)
@@ -392,7 +318,7 @@ func TestWorkdayMondayTuesday(t *testing.T) {
 
 func TestWorkdays(t *testing.T) {
 	c := newCalendar()
-	c.AddHoliday(usNewYear, usMLK)
+	c.addHoliday(usNewYear, usMLK)
 
 	tests := []struct {
 		y    int
@@ -416,7 +342,7 @@ func TestWorkdays(t *testing.T) {
 
 func TestWorkdaysRemain(t *testing.T) {
 	c := newCalendar()
-	c.AddHoliday(usNewYear, usMLK)
+	c.addHoliday(usNewYear, usMLK)
 
 	tests := []struct {
 		t    time.Time
@@ -460,7 +386,7 @@ func TestWorkdaysRemainCustom(t *testing.T) {
 
 func TestWorkdayN(t *testing.T) {
 	c := newCalendar()
-	c.AddHoliday(usNewYear, usMLK)
+	c.addHoliday(usNewYear, usMLK)
 
 	tests := []struct {
 		y    int
@@ -488,7 +414,7 @@ func TestWorkdayN(t *testing.T) {
 func TestWorkdaysFrom(t *testing.T) {
 	c := newCalendar()
 	c.Observed = ObservedNearest
-	c.AddHoliday(usNewYear, usMLK)
+	c.addHoliday(usNewYear, usMLK)
 
 	tests := []struct {
 		d    time.Time
@@ -517,7 +443,7 @@ func TestWorkdaysFrom(t *testing.T) {
 func TestCountWorkdays(t *testing.T) {
 	c := newCalendar()
 	c.Observed = ObservedExact
-	c.AddHoliday(usNewYear)
+	c.addHoliday(usNewYear)
 
 	/*
 	      Dezember 2015
@@ -828,5 +754,38 @@ func TestNewLocalCalendar(t *testing.T) {
 		if _, err := NewLocalCalendar(v); err == nil {
 			t.Errorf("expected error for invalid country code '%s'", v)
 		}
+	}
+}
+
+func TestGetHolidays(t *testing.T) {
+	cal, err := NewLocalCalendar("FR")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	start := time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)
+	end := time.Date(2020, 12, 31, 0, 0, 0, 0, time.UTC)
+
+	actual := cal.GetHolidays(start, end)
+
+	expected := []struct {
+		Date  time.Time
+		Label string
+	}{
+		{time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC), "Nouvel an"},
+		{time.Date(2020, 4, 13, 0, 0, 0, 0, time.UTC), "Lundi de pâques"},
+		{time.Date(2020, 5, 1, 0, 0, 0, 0, time.UTC), "Fête du travail"},
+		{time.Date(2020, 5, 8, 0, 0, 0, 0, time.UTC), "Armistice 1945"},
+		{time.Date(2020, 5, 21, 0, 0, 0, 0, time.UTC), "Jeudi de l'ascension"},
+		{time.Date(2020, 6, 1, 0, 0, 0, 0, time.UTC), "Lundi de pentecôte"},
+		{time.Date(2020, 7, 14, 0, 0, 0, 0, time.UTC), "Fête nationale"},
+		{time.Date(2020, 8, 15, 0, 0, 0, 0, time.UTC), "Assomption"},
+		{time.Date(2020, 11, 1, 0, 0, 0, 0, time.UTC), "Toussaint"},
+		{time.Date(2020, 11, 11, 0, 0, 0, 0, time.UTC), "Armistice 1918"},
+		{time.Date(2020, 12, 25, 0, 0, 0, 0, time.UTC), "Noël"},
+	}
+
+	if !reflect.DeepEqual(expected, actual) {
+		t.Error("did not get the expected holidays")
 	}
 }

@@ -9,27 +9,27 @@ import "time"
 // Days with the [2] notation, meaning days with reduced working hours
 // haven't been added, as this is not regulated by law.
 var (
-	seNyarsdagen           = newYear
-	seTrettondedagJul      = NewHoliday(time.January, 6)
-	seLangfredagen         = goodFriday
-	sePaskdagen            = NewHolidayFunc(calculatePaskdagen)
-	seAnnandagPask         = easterMonday
-	seForstaMaj            = NewHoliday(time.May, 1)
-	seKristiHimmelfardsdag = NewHolidayFunc(calculateKristiHimmelfardsdag)
-	sePingstdagen          = NewHolidayFunc(calculatePingstdagen)
-	seNationaldagen        = NewHoliday(time.June, 6)
-	seMidsommarafton       = NewHolidayFunc(calculateMidsommarafton)
-	seMidsommardagen       = NewHolidayFunc(calculateMidsommardagen)
-	seAllaHelgonsDag       = NewHolidayFunc(calculateAllaHelgonsDag)
-	seJulafton             = NewHoliday(time.December, 24)
-	seJuldagen             = christmas
-	seAnnandagJul          = christmas2
-	seNewYearsEve          = NewHoliday(time.December, 31)
+	seNyarsdagen           = newYear.setLabel("Nyarsdagen")
+	seTrettondedagJul      = newHoliday(time.January, 6).setLabel("Trettondedag Jul")
+	seLangfredagen         = goodFriday.setLabel("Langfredagen")
+	sePaskdagen            = newHolidayFunc(calculatePaskdagen).setLabel("Paskdagen")
+	seAnnandagPask         = easterMonday.setLabel("Annandag Pask")
+	seForstaMaj            = newHoliday(time.May, 1).setLabel("Forsta Maj")
+	seKristiHimmelfardsdag = newHolidayFunc(calculateKristiHimmelfardsdag).setLabel("Kristi Himmelfardsdag")
+	sePingstdagen          = newHolidayFunc(calculatePingstdagen).setLabel("Pingstdagen")
+	seNationaldagen        = newHoliday(time.June, 6).setLabel("Nationaldagen")
+	seMidsommarafton       = newHolidayFunc(calculateMidsommarafton).setLabel("Midsommarafton")
+	seMidsommardagen       = newHolidayFunc(calculateMidsommardagen).setLabel("Midsommardagen")
+	seAllaHelgonsDag       = newHolidayFunc(calculateAllaHelgonsDag).setLabel("Alla helgons dag")
+	seJulafton             = newHoliday(time.December, 24).setLabel("Julafton")
+	seJuldagen             = christmas.setLabel("Juldagen")
+	seAnnandagJul          = christmas2.setLabel("Annandag jul")
+	seNewYearsEve          = newHoliday(time.December, 31)
 )
 
 // addSwedishHolidays adds all Swedish holidays to the Calendar
 func addSwedishHolidays(c *Calendar) {
-	c.AddHoliday(
+	c.addHoliday(
 		seNyarsdagen,
 		seTrettondedagJul,
 		seLangfredagen,

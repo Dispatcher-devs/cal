@@ -1,5 +1,12 @@
+// Package cal provides extensions to the time package for handling holidays
+// and work days (business days).
+//
+// Work days are defined as Monday through Friday on dates that are not
+// holidays or the alternate observation dates for holidays.
+//
+// As in the time package, all calculations assume a Gregorian calendar.
+//
 // (c) 2014 Rick Arnold. Licensed under the BSD license (see LICENSE).
-
 package cal
 
 import (
@@ -50,47 +57,6 @@ func IsWeekdayN(date time.Time, day time.Weekday, n int) bool {
 		last.Day() == date.Day()
 }
 
-// MonthStart reports the starting day of the month in t. The time portion is
-// unchanged.
-func MonthStart(t time.Time) time.Time {
-	return time.Date(t.Year(), t.Month(), 1, t.Hour(), t.Minute(), t.Second(),
-		t.Nanosecond(), t.Location())
-}
-
-// MonthEnd reports the ending day of the month in t. The time portion is
-// unchanged.
-func MonthEnd(t time.Time) time.Time {
-	return time.Date(t.Year(), t.Month()+1, 0, t.Hour(), t.Minute(),
-		t.Second(), t.Nanosecond(), t.Location())
-}
-
-// JulianDayNumber reports the Julian Day Number for t. Note that Julian days
-// start at 12:00 UTC.
-func JulianDayNumber(t time.Time) int {
-	// algorithm from http://www.tondering.dk/claus/cal/julperiod.php#formula
-	utc := t.UTC()
-	a := (14 - int(utc.Month())) / 12
-	y := utc.Year() + 4800 - a
-	m := int(utc.Month()) + 12*a - 3
-
-	jdn := utc.Day() + (153*m+2)/5 + 365*y + y/4 - y/100 + y/400 - 32045
-	if utc.Hour() < 12 {
-		jdn--
-	}
-	return jdn
-}
-
-// JulianDate reports the Julian Date (which includes time as a fraction) for t.
-func JulianDate(t time.Time) float32 {
-	utc := t.UTC()
-	jdn := JulianDayNumber(t)
-	if utc.Hour() < 12 {
-		jdn++
-	}
-	return float32(jdn) + (float32(utc.Hour())-12.0)/24.0 +
-		float32(utc.Minute())/1440.0 + float32(utc.Second())/86400.0
-}
-
 // WorkdayFn reports whether the given date is a workday.
 // This is useful for situations where work days change throughout the year.
 //
@@ -100,7 +66,7 @@ type WorkdayFn func(date time.Time) bool
 
 // Calendar represents a yearly calendar with a list of holidays.
 type Calendar struct {
-	holidays    [13][]Holiday // 0 for offset based holidays, 1-12 for month based
+	holidays    [13][]holiday // 0 for offset based holidays, 1-12 for month based
 	workday     [7]bool       // flags to indicate a day of the week is a workday
 	WorkdayFunc WorkdayFn     // optional function to override workday flags
 	Observed    ObservedRule
@@ -112,7 +78,7 @@ func newCalendar() *Calendar {
 	c := &Calendar{}
 
 	for i := range c.holidays {
-		c.holidays[i] = make([]Holiday, 0, 2)
+		c.holidays[i] = make([]holiday, 0, 2)
 	}
 	c.workday[time.Monday] = true
 	c.workday[time.Tuesday] = true
@@ -202,10 +168,39 @@ func NewLocalCalendar(code string) (*Calendar, error) {
 	return c, nil
 }
 
-// AddHoliday adds a holiday to the calendar's list.
-func (c *Calendar) AddHoliday(h ...Holiday) {
+// GetHolidays returns the list of all holidays defined in the calendar between start and end
+func (c Calendar) GetHolidays(start, end time.Time) []struct {
+	Date  time.Time
+	Label string
+} {
+	var ret []struct {
+		Date  time.Time
+		Label string
+	}
+
+	// Knowingly Quadratic
+	for v := truncate(start); v.Before(end); v = v.AddDate(0, 0, 1) {
+		date, label, ok := c.getHoliday(v)
+		if ok {
+			ret = append(ret, struct {
+				Date  time.Time
+				Label string
+			}{date, label})
+		}
+	}
+
+	return ret
+}
+
+// truncate truncates a Date to 00h00m00s
+func truncate(t time.Time) time.Time {
+	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+}
+
+// addHoliday adds a holiday to the calendar's list.
+func (c *Calendar) addHoliday(h ...holiday) {
 	for _, hd := range h {
-		c.holidays[hd.Month] = append(c.holidays[hd.Month], hd)
+		c.holidays[hd.month] = append(c.holidays[hd.month], hd)
 	}
 }
 
@@ -217,18 +212,32 @@ func (c *Calendar) SetWorkday(day time.Weekday, workday bool) {
 // IsHoliday reports whether a given date is a holiday. It does not account
 // for the observation of holidays on alternate days.
 func (c *Calendar) IsHoliday(date time.Time) bool {
+	_, _, ok := c.getHoliday(date)
+	return ok
+}
+
+func (c *Calendar) getHoliday(date time.Time) (time.Time, string, bool) {
 	idx := date.Month()
+	label := func(h holiday, date time.Time) string {
+		if h.label == "" {
+			return date.Format("2006-01-02")
+		}
+		return h.label
+	}
+
 	for i := range c.holidays[idx] {
 		if c.holidays[idx][i].matches(date) {
-			return true
+			return truncate(date), label(c.holidays[idx][i], date), true
 		}
 	}
+
 	for i := range c.holidays[0] {
 		if c.holidays[0][i].matches(date) {
-			return true
+			return truncate(date), label(c.holidays[0][i], date), true
 		}
 	}
-	return false
+
+	return time.Time{}, "", false
 }
 
 // IsWorkday reports whether a given date is a work day (business day).
