@@ -4,15 +4,15 @@ import "time"
 
 // Holidays in the Netherlands
 var (
-	nlNieuwjaar       = newYear
-	nlGoedeVrijdag    = goodFriday
-	nlPaasMaandag     = easterMonday
-	nlKoningsDag      = NewHolidayFunc(calculateKoningsDag)
-	nlBevrijdingsDag  = NewHoliday(time.May, 5)
-	nlHemelvaart      = deChristiHimmelfahrt
-	nlPinksterMaandag = dePfingstmontag
-	nlEersteKerstdag  = christmas
-	nlTweedeKerstdag  = christmas2
+	nlNieuwjaar       = newYear.SetLabel("Nieuwjaar")
+	nlGoedeVrijdag    = goodFriday.SetLabel("GoedeVrijdag")
+	nlPaasMaandag     = easterMonday.SetLabel("Paas maandag")
+	nlKoningsDag      = NewHolidayFunc(calculateKoningsDag).SetLabel("Konings dag")
+	nlBevrijdingsDag  = NewHoliday(time.May, 5).SetLabel("Bevrijdings Dag")
+	nlHemelvaart      = deChristiHimmelfahrt.SetLabel("Hemelvaart")
+	nlPinksterMaandag = dePfingstmontag.SetLabel("Pinkster maandag")
+	nlEersteKerstdag  = christmas.SetLabel("Eerste kerstdag")
+	nlTweedeKerstdag  = christmas2.SetLabel("Tweede kerstdag")
 )
 
 // addDutchHolidays adds all Dutch holidays to the Calendar

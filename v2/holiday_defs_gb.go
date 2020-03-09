@@ -4,14 +4,14 @@ import "time"
 
 // British holidays
 var (
-	gbNewYear       = NewHolidayFunc(calculateNewYearsHoliday)
-	gbGoodFriday    = goodFriday
-	gbEasterMonday  = easterMonday
-	gbEarlyMay      = makeGBEarlyMay()
-	gbSpringHoliday = NewHolidayFloat(time.May, time.Monday, -1)
-	gbSummerHoliday = NewHolidayFloat(time.August, time.Monday, -1)
-	gbChristmasDay  = christmas
-	gbBoxingDay     = christmas2
+	gbNewYear       = NewHolidayFunc(calculateNewYearsHoliday).SetLabel("New year")
+	gbGoodFriday    = goodFriday.SetLabel("Good friday")
+	gbEasterMonday  = easterMonday.SetLabel("Easter monday")
+	gbEarlyMay      = makeGBEarlyMay().SetLabel("Early may")
+	gbSpringHoliday = NewHolidayFloat(time.May, time.Monday, -1).SetLabel("Spring holiday")
+	gbSummerHoliday = NewHolidayFloat(time.August, time.Monday, -1).SetLabel("Summer holiday")
+	gbChristmasDay  = christmas.SetLabel("Christmas day")
+	gbBoxingDay     = christmas2.SetLabel("Boxing day")
 )
 
 // addBritishHolidays adds all British holidays to the Calender

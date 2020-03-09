@@ -8,15 +8,15 @@ import (
 
 // Holidays in Australia
 var (
-	auNewYear       = NewHolidayFunc(calculateNewYearOceania)
-	auAustralianDay = NewHoliday(time.January, 26)
-	auGoodFriday    = goodFriday
-	auChristmasDay  = NewHolidayFunc(calculateOcenaniaChristmasDay)
-	auBoxingDays    = christmas2
-	auEasterMonday  = easterMonday
-	auAnzacDay      = NewHolidayFunc(calculateAnzacDay)
-	auQueenBirthDay = NewHolidayFunc(calculateQueenBirthDay)
-	auLabourDay     = NewHolidayFunc(calculateAULabourDay)
+	auNewYear       = NewHolidayFunc(calculateNewYearOceania).SetLabel("New year")
+	auAustralianDay = NewHoliday(time.January, 26).SetLabel("Australian day")
+	auGoodFriday    = goodFriday.SetLabel("Good friday")
+	auChristmasDay  = NewHolidayFunc(calculateOcenaniaChristmasDay).SetLabel("Christmas")
+	auBoxingDays    = christmas2.SetLabel("Boxing day")
+	auEasterMonday  = easterMonday.SetLabel("Easter monday")
+	auAnzacDay      = NewHolidayFunc(calculateAnzacDay).SetLabel("Anzac day")
+	auQueenBirthDay = NewHolidayFunc(calculateQueenBirthDay).SetLabel("Queen Birthday")
+	auLabourDay     = NewHolidayFunc(calculateAULabourDay).SetLabel("Labour day")
 )
 
 // addAustralianHolidays adds all Australian holidays

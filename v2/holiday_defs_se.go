@@ -9,21 +9,21 @@ import "time"
 // Days with the [2] notation, meaning days with reduced working hours
 // haven't been added, as this is not regulated by law.
 var (
-	seNyarsdagen           = newYear
-	seTrettondedagJul      = NewHoliday(time.January, 6)
-	seLangfredagen         = goodFriday
-	sePaskdagen            = NewHolidayFunc(calculatePaskdagen)
-	seAnnandagPask         = easterMonday
-	seForstaMaj            = NewHoliday(time.May, 1)
-	seKristiHimmelfardsdag = NewHolidayFunc(calculateKristiHimmelfardsdag)
-	sePingstdagen          = NewHolidayFunc(calculatePingstdagen)
-	seNationaldagen        = NewHoliday(time.June, 6)
-	seMidsommarafton       = NewHolidayFunc(calculateMidsommarafton)
-	seMidsommardagen       = NewHolidayFunc(calculateMidsommardagen)
-	seAllaHelgonsDag       = NewHolidayFunc(calculateAllaHelgonsDag)
-	seJulafton             = NewHoliday(time.December, 24)
-	seJuldagen             = christmas
-	seAnnandagJul          = christmas2
+	seNyarsdagen           = newYear.SetLabel("Nyarsdagen")
+	seTrettondedagJul      = NewHoliday(time.January, 6).SetLabel("Trettondedag Jul")
+	seLangfredagen         = goodFriday.SetLabel("Langfredagen")
+	sePaskdagen            = NewHolidayFunc(calculatePaskdagen).SetLabel("Paskdagen")
+	seAnnandagPask         = easterMonday.SetLabel("Annandag Pask")
+	seForstaMaj            = NewHoliday(time.May, 1).SetLabel("Forsta Maj")
+	seKristiHimmelfardsdag = NewHolidayFunc(calculateKristiHimmelfardsdag).SetLabel("Kristi Himmelfardsdag")
+	sePingstdagen          = NewHolidayFunc(calculatePingstdagen).SetLabel("Pingstdagen")
+	seNationaldagen        = NewHoliday(time.June, 6).SetLabel("Nationaldagen")
+	seMidsommarafton       = NewHolidayFunc(calculateMidsommarafton).SetLabel("Midsommarafton")
+	seMidsommardagen       = NewHolidayFunc(calculateMidsommardagen).SetLabel("Midsommardagen")
+	seAllaHelgonsDag       = NewHolidayFunc(calculateAllaHelgonsDag).SetLabel("Alla helgons dag")
+	seJulafton             = NewHoliday(time.December, 24).SetLabel("Julafton")
+	seJuldagen             = christmas.SetLabel("Juldagen")
+	seAnnandagJul          = christmas2.SetLabel("Annandag jul")
 	seNewYearsEve          = NewHoliday(time.December, 31)
 )
 

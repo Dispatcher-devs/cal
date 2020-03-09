@@ -45,10 +45,17 @@ type Holiday struct {
 	Year    int
 	Func    HolidayFn
 	Factory HolidayFactory
+	Label   string
 
 	// last values used to calculate month and day with Func
 	lastYear int
 	lastLoc  *time.Location
+}
+
+func (h Holiday) SetLabel(label string) Holiday {
+	ret := h
+	ret.Label = label
+	return ret
 }
 
 // NewHoliday creates a new Holiday instance for an exact day of a month.

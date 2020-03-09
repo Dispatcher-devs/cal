@@ -8,30 +8,30 @@ import (
 
 // Holidays in France
 var (
-	frNouvelAn          = newYear
-	frLundiDePâques     = easterMonday
-	frFêteDuTravail     = ecbLabourDay
-	frArmistice1945     = NewHoliday(time.May, 8)
-	frJeudiDeLAscension = NewHolidayFunc(calculateJeudiDeLAscension)
-	frLundiDePentecôte  = NewHolidayFunc(calculateLundiDePentecôte)
-	frFêteNationale     = NewHoliday(time.July, 14)
-	frAssomption        = NewHoliday(time.August, 15)
-	frToussaint         = NewHoliday(time.November, 1)
-	frArmistice1918     = NewHoliday(time.November, 11)
-	frNoël              = christmas
+	frNouvelAn          = newYear.SetLabel("Nouvel an")
+	frLundiDePâques     = easterMonday.SetLabel("Lundi de pâques")
+	frFêteDuTravail     = ecbLabourDay.SetLabel("Fête du travail")
+	frArmistice1945     = NewHoliday(time.May, 8).SetLabel("Armistice 1945")
+	frJeudiDeLAscension = NewHolidayFunc(calculateJeudiDeLAscension).SetLabel("Jeudi de l'ascension")
+	frLundiDePentecôte  = NewHolidayFunc(calculateLundiDePentecôte).SetLabel("Lundi de pentecôte")
+	frFêteNationale     = NewHoliday(time.July, 14).SetLabel("Fête nationale")
+	frAssomption        = NewHoliday(time.August, 15).SetLabel("Assomption")
+	frToussaint         = NewHoliday(time.November, 1).SetLabel("Toussaint")
+	frArmistice1918     = NewHoliday(time.November, 11).SetLabel("Armistice 1918")
+	frNoël              = christmas.SetLabel("Noël")
 
 	// Two more days for the Alsace-Moselle area.
 	// https://www.legifrance.gouv.fr/affichCode.do?idSectionTA=LEGISCTA000006178008&cidTexte=LEGITEXT000006072050
-	frSaintÉtienne  = NewHoliday(time.December, 26)
-	frVendrediSaint = goodFriday
+	frSaintÉtienne  = NewHoliday(time.December, 26).SetLabel("Saint Étienne")
+	frVendrediSaint = goodFriday.SetLabel("Vendredi saint")
 
 	// The end of slavery is observed at different dates for different DOM-TOMs.
-	frGuadeloupeAbolition      = NewHoliday(time.May, 27)
-	frMartiniqueAbolition      = NewHoliday(time.May, 22)
-	frMayotteAbolition         = NewHoliday(time.April, 27)
-	frRéunionAbolition         = NewHoliday(time.December, 20)
-	frSaintBarthélemyAbolition = NewHoliday(time.October, 9)
-	frSaintMartinAbolition     = NewHolidayFunc(calculateSaintMartinAbolition)
+	frGuadeloupeAbolition      = NewHoliday(time.May, 27).SetLabel("Abolition")
+	frMartiniqueAbolition      = NewHoliday(time.May, 22).SetLabel("Abolition")
+	frMayotteAbolition         = NewHoliday(time.April, 27).SetLabel("Abolition")
+	frRéunionAbolition         = NewHoliday(time.December, 20).SetLabel("Abolition")
+	frSaintBarthélemyAbolition = NewHoliday(time.October, 9).SetLabel("Abolition")
+	frSaintMartinAbolition     = NewHolidayFunc(calculateSaintMartinAbolition).SetLabel("Abolition")
 )
 
 func calculateSaintMartinAbolition(year int, loc *time.Location) (time.Month, int) {

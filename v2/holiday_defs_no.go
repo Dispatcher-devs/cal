@@ -7,21 +7,21 @@ import "time"
 // Holidays in Norway
 // Reference https://no.wikipedia.org/wiki/Helligdager_i_Norge
 var (
-	noFoersteNyttaarsdag   = newYear
-	noSkjaertorsdag        = NewHolidayFunc(calculateSkaertorsdag)
-	noLangfredag           = goodFriday
-	noFoerstePaaskedag     = NewHolidayFunc(calculatePaskdagen)
-	noAndrePaaskedag       = easterMonday
-	noArbeiderenesdag      = NewHoliday(time.May, 1)
-	noGrunnlovsdag         = NewHoliday(time.May, 17)
-	noKristihimmelfartsdag = NewHolidayFunc(calculateKristiHimmelfardsdag)
-	noFoerstePinsedag      = NewHolidayFunc(calculatePingstdagen)
-	noAndrePinsedag        = NewHolidayFunc(calculateAndenPinsedag)
-	noFoersteJuledag       = christmas
-	noAndreJuledag         = christmas2
+	noFoersteNyttaarsdag   = newYear.SetLabel("Foerste nyttaarsdag")
+	noSkjaertorsdag        = NewHolidayFunc(calculateSkaertorsdag).SetLabel("Skjaertorsdag")
+	noLangfredag           = goodFriday.SetLabel("Langfredag")
+	noFoerstePaaskedag     = NewHolidayFunc(calculatePaskdagen).SetLabel("Foerste paaskedag")
+	noAndrePaaskedag       = easterMonday.SetLabel("Andre Paaskedag")
+	noArbeiderenesdag      = NewHoliday(time.May, 1).SetLabel("Arbeiderenesdag")
+	noGrunnlovsdag         = NewHoliday(time.May, 17).SetLabel("Grunnlovsdag")
+	noKristihimmelfartsdag = NewHolidayFunc(calculateKristiHimmelfardsdag).SetLabel("Kristihimmelfartsdag")
+	noFoerstePinsedag      = NewHolidayFunc(calculatePingstdagen).SetLabel("Foerste pinsedag")
+	noAndrePinsedag        = NewHolidayFunc(calculateAndenPinsedag).SetLabel("Andre pinsedag")
+	noFoersteJuledag       = christmas.SetLabel("Foerste juledag")
+	noAndreJuledag         = christmas2.SetLabel("Andre juledag")
 	// Half days
-	noJulaften      = NewHoliday(time.December, 24)
-	noNyttaarsaften = NewHoliday(time.December, 31)
+	noJulaften      = NewHoliday(time.December, 24).SetLabel("Julaften")
+	noNyttaarsaften = NewHoliday(time.December, 31).SetLabel("Nyttaarsaften")
 )
 
 // addNorwegianHolidays adds all Norwegian holidays to Calendar

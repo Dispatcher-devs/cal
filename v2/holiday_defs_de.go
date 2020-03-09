@@ -9,26 +9,26 @@ import (
 
 // Holidays in Germany
 var (
-	deNeujahr                  = newYear
-	deHeiligeDreiKoenige       = NewHoliday(time.January, 6)
-	deInternationalerFrauentag = NewHoliday(time.March, 8)
-	deKarFreitag               = goodFriday
-	deOstersonntag             = NewHolidayFunc(calculateOstersonntag)
-	deOstermontag              = easterMonday
-	deTagderArbeit             = NewHoliday(time.May, 1)
-	deChristiHimmelfahrt       = NewHolidayFunc(calculateHimmelfahrt)
-	dePfingstsonntag           = NewHolidayFunc(calculatePfingstSonntag)
-	dePfingstmontag            = NewHolidayFunc(calculatePfingstMontag)
-	deFronleichnam             = NewHolidayFunc(calculateFronleichnam)
-	deMariaHimmelfahrt         = NewHoliday(time.August, 15)
-	deWeltkindertag            = NewHoliday(time.September, 20)
-	deTagderDeutschenEinheit   = NewHoliday(time.October, 3)
-	deReformationstag          = NewHoliday(time.October, 31)
-	deReformationstag2017      = NewHolidayExact(time.October, 31, 2017)
-	deAllerheiligen            = NewHoliday(time.November, 1)
-	deBußUndBettag             = NewHolidayFunc(calculateBußUndBettag)
-	deErsterWeihnachtstag      = christmas
-	deZweiterWeihnachtstag     = christmas2
+	deNeujahr                  = newYear.SetLabel("Neujahr")
+	deHeiligeDreiKoenige       = NewHoliday(time.January, 6).SetLabel("Heilige Drei Koenige")
+	deInternationalerFrauentag = NewHoliday(time.March, 8).SetLabel("International Frauentag")
+	deKarFreitag               = goodFriday.SetLabel("Kar Freitag")
+	deOstersonntag             = NewHolidayFunc(calculateOstersonntag).SetLabel("Ostersonntag")
+	deOstermontag              = easterMonday.SetLabel("Ostermontag")
+	deTagderArbeit             = NewHoliday(time.May, 1).SetLabel("Tag der Arbeit")
+	deChristiHimmelfahrt       = NewHolidayFunc(calculateHimmelfahrt).SetLabel("ChristiHimmelFahrt")
+	dePfingstsonntag           = NewHolidayFunc(calculatePfingstSonntag).SetLabel("Pfingstsonntag")
+	dePfingstmontag            = NewHolidayFunc(calculatePfingstMontag).SetLabel("Pfingstmontag")
+	deFronleichnam             = NewHolidayFunc(calculateFronleichnam).SetLabel("Fronleichnam")
+	deMariaHimmelfahrt         = NewHoliday(time.August, 15).SetLabel("Maria Himmelfahrt")
+	deWeltkindertag            = NewHoliday(time.September, 20).SetLabel("Weltkindertag")
+	deTagderDeutschenEinheit   = NewHoliday(time.October, 3).SetLabel("Tag der Deutschen Einheit")
+	deReformationstag          = NewHoliday(time.October, 31).SetLabel("Reformationstag")
+	deReformationstag2017      = NewHolidayExact(time.October, 31, 2017).SetLabel("Reformationstag")
+	deAllerheiligen            = NewHoliday(time.November, 1).SetLabel("AllerHeiligen")
+	deBußUndBettag             = NewHolidayFunc(calculateBußUndBettag).SetLabel("Buß- Und Bettag")
+	deErsterWeihnachtstag      = christmas.SetLabel("Erster Weihnachtstag")
+	deZweiterWeihnachtstag     = christmas2.SetLabel("Zweiter Weihnachtstag")
 )
 
 // addGermanHolidays adds all German holidays to the Calendar

@@ -7,20 +7,20 @@ import "time"
 // Holidays (official and traditional) in Denmark
 // Reference https://da.wikipedia.org/wiki/Helligdag#Danske_helligdage
 var (
-	dkNytaarsdag           = newYear
-	dkSkaertorsdag         = NewHolidayFunc(calculateSkaertorsdag)
-	dkLangfredag           = goodFriday
-	dkPaaskedag            = NewHolidayFunc(calculatePaaskedag)
-	dkAndenPaaskedag       = easterMonday
-	dkStoreBededag         = NewHolidayFunc(calculateStoreBededag)
-	dkKristiHimmelfartsdag = NewHolidayFunc(calculateKristiHimmelfartsdag)
-	dkPinsedag             = NewHolidayFunc(calculatePinsedag)
-	dkAndenPinsedag        = NewHolidayFunc(calculateAndenPinsedag)
-	dkGrundlovsdag         = NewHoliday(time.June, 5)
-	dkJuleaften            = NewHoliday(time.December, 24)
-	dkJuledag              = christmas
-	dkAndenJuledag         = christmas2
-	dkNytaarsaften         = NewHoliday(time.December, 31)
+	dkNytaarsdag           = newYear.SetLabel("Nytaarsdag")
+	dkSkaertorsdag         = NewHolidayFunc(calculateSkaertorsdag).SetLabel("Skaertorsdag")
+	dkLangfredag           = goodFriday.SetLabel("Langfredag")
+	dkPaaskedag            = NewHolidayFunc(calculatePaaskedag).SetLabel("Paaskedag")
+	dkAndenPaaskedag       = easterMonday.SetLabel("Anden Paaskedag")
+	dkStoreBededag         = NewHolidayFunc(calculateStoreBededag).SetLabel("Store Bededag")
+	dkKristiHimmelfartsdag = NewHolidayFunc(calculateKristiHimmelfartsdag).SetLabel("Kristi Himmelfartsdag")
+	dkPinsedag             = NewHolidayFunc(calculatePinsedag).SetLabel("Pinsedag")
+	dkAndenPinsedag        = NewHolidayFunc(calculateAndenPinsedag).SetLabel("Anden Pinsedag")
+	dkGrundlovsdag         = NewHoliday(time.June, 5).SetLabel("Grundlovsdag")
+	dkJuleaften            = NewHoliday(time.December, 24).SetLabel("Juleaften")
+	dkJuledag              = christmas.SetLabel("Juledag")
+	dkAndenJuledag         = christmas2.SetLabel("Anden Juledag")
+	dkNytaarsaften         = NewHoliday(time.December, 31).SetLabel("Nytaarsaften")
 )
 
 // addDanishHolidays adds all Danish holidays to the Calendar
