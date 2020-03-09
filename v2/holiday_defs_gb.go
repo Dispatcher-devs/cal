@@ -4,14 +4,14 @@ import "time"
 
 // British holidays
 var (
-	gbNewYear       = newHolidayFunc(calculateNewYearsHoliday).SetLabel("New year")
-	gbGoodFriday    = goodFriday.SetLabel("Good friday")
-	gbEasterMonday  = easterMonday.SetLabel("Easter monday")
-	gbEarlyMay      = makeGBEarlyMay().SetLabel("Early may")
-	gbSpringHoliday = newHolidayFloat(time.May, time.Monday, -1).SetLabel("Spring holiday")
-	gbSummerHoliday = newHolidayFloat(time.August, time.Monday, -1).SetLabel("Summer holiday")
-	gbChristmasDay  = christmas.SetLabel("Christmas day")
-	gbBoxingDay     = christmas2.SetLabel("Boxing day")
+	gbNewYear       = newHolidayFunc(calculateNewYearsHoliday).setLabel("New year")
+	gbGoodFriday    = goodFriday.setLabel("Good friday")
+	gbEasterMonday  = easterMonday.setLabel("Easter monday")
+	gbEarlyMay      = makeGBEarlyMay().setLabel("Early may")
+	gbSpringHoliday = newHolidayFloat(time.May, time.Monday, -1).setLabel("Spring holiday")
+	gbSummerHoliday = newHolidayFloat(time.August, time.Monday, -1).setLabel("Summer holiday")
+	gbChristmasDay  = christmas.setLabel("Christmas day")
+	gbBoxingDay     = christmas2.setLabel("Boxing day")
 )
 
 // addBritishHolidays adds all British holidays to the Calender
@@ -45,7 +45,7 @@ func calculateNewYearsHoliday(year int, loc *time.Location) (time.Month, int) {
 // replaced by VE day on Fri 8th May
 func makeGBEarlyMay() holiday {
 	hol := newHolidayFloat(time.May, time.Monday, 1)
-	hol.Func = func(year int, loc *time.Location) (month time.Month, day int) {
+	hol.fn = func(year int, loc *time.Location) (month time.Month, day int) {
 		if year == 2020 {
 			// In 2020 force VE day
 			return time.May, 8

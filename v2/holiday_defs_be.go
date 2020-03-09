@@ -4,16 +4,16 @@ import "time"
 
 // Holidays in Belgium
 var (
-	beNieuwjaar                = newYear.SetLabel("Nieuwjaar")
-	bePaasmaandag              = easterMonday.SetLabel("Paasmaandag")
-	beDagVanDeArbeid           = ecbLabourDay.SetLabel("Dag van de Arbeid")
-	beOnzeLieveHeerHemelvaart  = newHolidayFunc(calculateOnzeLieveHeerHemelvaart).SetLabel("Onze Lieve Heer Hemelvaart")
-	bePinkstermaandag          = newHolidayFunc(calculatePinkstermaandag).SetLabel("Pinkstermaandag")
-	beNationaleFeestdag        = newHoliday(time.July, 21).SetLabel("Nationale Feestdag")
-	beOnzeLieveVrouwHemelvaart = newHoliday(time.August, 15).SetLabel("Onze Lieve Vrouw Hemelvaart")
-	beAllerheiligen            = newHoliday(time.November, 1).SetLabel("Allerheiligen")
-	beWapenstilstand           = newHoliday(time.November, 11).SetLabel("Wepenstilstand")
-	beKerstmis                 = christmas.SetLabel("Kerstmis")
+	beNieuwjaar                = newYear.setLabel("Nieuwjaar")
+	bePaasmaandag              = easterMonday.setLabel("Paasmaandag")
+	beDagVanDeArbeid           = ecbLabourDay.setLabel("Dag van de Arbeid")
+	beOnzeLieveHeerHemelvaart  = newHolidayFunc(calculateOnzeLieveHeerHemelvaart).setLabel("Onze Lieve Heer Hemelvaart")
+	bePinkstermaandag          = newHolidayFunc(calculatePinkstermaandag).setLabel("Pinkstermaandag")
+	beNationaleFeestdag        = newHoliday(time.July, 21).setLabel("Nationale Feestdag")
+	beOnzeLieveVrouwHemelvaart = newHoliday(time.August, 15).setLabel("Onze Lieve Vrouw Hemelvaart")
+	beAllerheiligen            = newHoliday(time.November, 1).setLabel("Allerheiligen")
+	beWapenstilstand           = newHoliday(time.November, 11).setLabel("Wepenstilstand")
+	beKerstmis                 = christmas.setLabel("Kerstmis")
 )
 
 // addBelgiumHolidays adds all Belgium holidays to the Calendar

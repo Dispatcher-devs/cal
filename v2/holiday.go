@@ -38,85 +38,85 @@ type holidayFactory func(year int, loc *time.Location) holiday
 //   - Month, Day, and Year (in case you want to specify holidays exactly for each year)
 //   - Func (to calculate the holiday)
 type holiday struct {
-	Month   time.Month
-	Weekday time.Weekday
-	Day     int
-	Offset  int
-	Year    int
-	Func    holidayFn
-	Factory holidayFactory
-	Label   string
+	month   time.Month
+	weekday time.Weekday
+	day     int
+	offset  int
+	year    int
+	fn      holidayFn
+	factory holidayFactory
+	label   string
 
 	// last values used to calculate month and day with Func
 	lastYear int
 	lastLoc  *time.Location
 }
 
-func (h holiday) SetLabel(label string) holiday {
+func (h holiday) setLabel(label string) holiday {
 	ret := h
-	ret.Label = label
+	ret.label = label
 	return ret
 }
 
 // newHoliday creates a new Holiday instance for an exact day of a month.
 func newHoliday(month time.Month, day int) holiday {
-	return holiday{Month: month, Day: day}
+	return holiday{month: month, day: day}
 }
 
 // newHolidayExact creates a new Holiday instance for an exact day of a month and year.
 func newHolidayExact(month time.Month, day int, year int) holiday {
-	return holiday{Month: month, Day: day, Year: year}
+	return holiday{month: month, day: day, year: year}
 }
 
 // newHolidayFloat creates a new Holiday instance for an offset-based day of
 // a month.
 func newHolidayFloat(month time.Month, weekday time.Weekday, offset int) holiday {
-	return holiday{Month: month, Weekday: weekday, Offset: offset}
+	return holiday{month: month, weekday: weekday, offset: offset}
 }
 
 // newHolidayFunc creates a new Holiday instance that uses a function to
 // calculate the day and month.
 func newHolidayFunc(fn holidayFn) holiday {
-	return holiday{Func: fn}
+	return holiday{fn: fn}
 }
 
 // newHolidayFactory creates a new holiday instance that uses a function to
 // create the holiday for a given year.
 func newHolidayFactory(fn holidayFactory) holiday {
-	return holiday{Factory: fn}
+	return holiday{factory: fn}
 }
 
 // matches determines whether the given date is the one referred to by the
 // Holiday.
 func (h *holiday) matches(date time.Time) bool {
-	if h.Factory != nil {
-		generated := h.Factory(date.Year(), date.Location())
+	if h.factory != nil {
+		generated := h.factory(date.Year(), date.Location())
 		h.lastYear = date.Year()
 		h.lastLoc = date.Location()
 		return generated.matches(date)
 	}
 
-	if h.Func != nil && (date.Year() != h.lastYear || date.Location() != h.lastLoc) {
-		h.Month, h.Day = h.Func(date.Year(), date.Location())
+	if h.fn != nil && (date.Year() != h.lastYear || date.Location() != h.lastLoc) {
+		h.month, h.day = h.fn(date.Year(), date.Location())
 		h.lastYear = date.Year()
 		h.lastLoc = date.Location()
 	}
 
-	if h.Month > 0 {
-		if date.Month() != h.Month {
+	if h.month > 0 {
+		if date.Month() != h.month {
 			return false
 		}
-		if h.Year > 0 && date.Year() != h.Year {
+		if h.year > 0 && date.Year() != h.year {
 			return false
 		}
-		if h.Day > 0 {
-			return date.Day() == h.Day
+		if h.day > 0 {
+			return date.Day() == h.day
 		}
-		if h.Weekday > 0 && h.Offset != 0 {
-			return IsWeekdayN(date, h.Weekday, h.Offset)
+		if h.weekday > 0 && h.offset != 0 {
+			return IsWeekdayN(date, h.weekday, h.offset)
 		}
-	} else if h.Offset > 0 {
-		return date.YearDay() == h.Offset
+	} else if h.offset > 0 {
+		return date.YearDay() == h.offset
 	}
 
 	return false

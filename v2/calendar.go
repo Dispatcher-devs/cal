@@ -200,7 +200,7 @@ func truncate(t time.Time) time.Time {
 // addHoliday adds a holiday to the calendar's list.
 func (c *Calendar) addHoliday(h ...holiday) {
 	for _, hd := range h {
-		c.holidays[hd.Month] = append(c.holidays[hd.Month], hd)
+		c.holidays[hd.month] = append(c.holidays[hd.month], hd)
 	}
 }
 
@@ -219,10 +219,10 @@ func (c *Calendar) IsHoliday(date time.Time) bool {
 func (c *Calendar) getHoliday(date time.Time) (time.Time, string, bool) {
 	idx := date.Month()
 	label := func(h holiday, date time.Time) string {
-		if h.Label == "" {
+		if h.label == "" {
 			return date.Format("2006-01-02")
 		}
-		return h.Label
+		return h.label
 	}
 
 	for i := range c.holidays[idx] {

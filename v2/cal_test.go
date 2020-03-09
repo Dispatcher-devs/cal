@@ -65,7 +65,7 @@ func TestWorkday(t *testing.T) {
 	c := newCalendar()
 	c.SetWorkday(time.Monday, false)
 	c.SetWorkday(time.Saturday, true)
-	c.addHoliday(holiday{Month: time.June, Day: 12})
+	c.addHoliday(holiday{month: time.June, day: 12})
 	tests := []struct {
 		t    time.Time
 		want bool
@@ -96,7 +96,7 @@ func TestWorkdayFunc(t *testing.T) {
 			date.Weekday() == time.Wednesday ||
 			(date.Month() == time.March && (date.Day() == 9 || date.Day() == 10))
 	}
-	c.addHoliday(holiday{Month: time.March, Day: 6})
+	c.addHoliday(holiday{month: time.March, day: 6})
 	tests := []struct {
 		t    time.Time
 		want bool
@@ -129,8 +129,8 @@ func TestHoliday(t *testing.T) {
 		usIndependence,
 		usColumbus,
 	)
-	c.addHoliday(holiday{Offset: 100})
-	c.addHoliday(holiday{Day: 24, Month: time.November, Year: 2016})
+	c.addHoliday(holiday{offset: 100})
+	c.addHoliday(holiday{day: 24, month: time.November, year: 2016})
 
 	tz, err := time.LoadLocation("America/New_York")
 	if err != nil {
@@ -202,7 +202,7 @@ func TestWorkdayExact(t *testing.T) {
 		usIndependence,
 		usChristmas,
 	)
-	c.addHoliday(holiday{Day: 24, Month: time.November, Year: 2016})
+	c.addHoliday(holiday{day: 24, month: time.November, year: 2016})
 
 	tests := []struct {
 		t    time.Time

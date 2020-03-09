@@ -11,53 +11,53 @@ import (
 // Wikipedia was chosen over timeanddate, an actual Canadian should go over the data.
 var (
 	// National holidays
-	caNewYear      = newYear.SetLabel("New year")
-	caGoodFriday   = goodFriday.SetLabel("Good friday")
-	caCanadaDay    = newHoliday(time.July, 1).SetLabel("Canada day")
-	caLabourDay    = newHolidayFloat(time.September, time.Monday, 1).SetLabel("Labour day")
-	caChristmasDay = christmas.SetLabel("Christmas day")
+	caNewYear      = newYear.setLabel("New year")
+	caGoodFriday   = goodFriday.setLabel("Good friday")
+	caCanadaDay    = newHoliday(time.July, 1).setLabel("Canada day")
+	caLabourDay    = newHolidayFloat(time.September, time.Monday, 1).setLabel("Labour day")
+	caChristmasDay = christmas.setLabel("Christmas day")
 
 	// Per-province holidays, some are on the same day but are not the same
 	// holidays, entries are duplicated for future-proofing.
 
 	// AB, BC (special case below), NB, ON, SK
-	caFamilyDay = newHolidayFloat(time.February, time.Monday, 3).SetLabel("Family day")
+	caFamilyDay = newHolidayFloat(time.February, time.Monday, 3).setLabel("Family day")
 
 	// Acts as QC National Patriot's Day and Victoria Day for all the rest except NL.
-	caVictoriaDay = newHolidayFloat(time.May, time.Monday, 3).SetLabel("Victoria day")
+	caVictoriaDay = newHolidayFloat(time.May, time.Monday, 3).setLabel("Victoria day")
 
 	// NT, YT
-	caAboriginalDay = newHoliday(time.June, 21).SetLabel("Aboriginal day")
+	caAboriginalDay = newHoliday(time.June, 21).setLabel("Aboriginal day")
 
 	// NL, QC, YT
-	caDiscoveryDay = newHoliday(time.June, 24).SetLabel("Discovery day")
+	caDiscoveryDay = newHoliday(time.June, 24).setLabel("Discovery day")
 
 	// Everyone except MB, ON, QC
-	caRemembranceDay = newHoliday(time.November, 11).SetLabel("Remembrance day")
+	caRemembranceDay = newHoliday(time.November, 11).setLabel("Remembrance day")
 
 	// AB, NB, NS, ON, PE
-	caBoxingDay = christmas2.SetLabel("Boxing day")
+	caBoxingDay = christmas2.setLabel("Boxing day")
 
 	// aka. Civic Holiday, Heritage Day, New Brunswick Day, Natal Day
 	// Everyone except QC
-	caCivicHoliday = newHolidayFloat(time.August, time.Monday, 1).SetLabel("Civic holiday")
+	caCivicHoliday = newHolidayFloat(time.August, time.Monday, 1).setLabel("Civic holiday")
 
 	// Everyone except NB, NL, PE
-	caThanksgiving = newHolidayFloat(time.October, time.Monday, 2).SetLabel("Thanksgiving")
+	caThanksgiving = newHolidayFloat(time.October, time.Monday, 2).setLabel("Thanksgiving")
 
-	caBCFamilyDay         = newHolidayFactory(calculateBritishColumbiaFamilyDay).SetLabel("Family day")
-	caMBLouisRielDay      = newHolidayFloat(time.February, time.Monday, 3).SetLabel("Louis Riel day")
-	caNLOrangemensDay     = newHoliday(time.July, 12).SetLabel("Orangemens Day")
-	caNLSaintGeorgesDay   = newHoliday(time.April, 23).SetLabel("Saint George's day")
-	caNLSaintPatricksDay  = newHoliday(time.March, 17).SetLabel("Saint Patrick's day")
-	caNSHeritageDay       = newHolidayFloat(time.February, time.Monday, 3).SetLabel("Heritage day")
-	caPEEasterMonday      = easterMonday.SetLabel("Easter monday")
-	caPEGoldCupParadeDay  = newHolidayFloat(time.August, time.Friday, 3).SetLabel("Gold Cup parade day")
-	caPEIslanderDay       = newHolidayFloat(time.February, time.Monday, 3).SetLabel("Islander day")
-	caQCNationalHoliday   = newHoliday(time.June, 24).SetLabel("National holiday")
-	caQCPatriotsDay       = caVictoriaDay.SetLabel("Patriot's day")
-	caYTDiscoveryDay      = newHolidayFloat(time.August, time.Monday, 3).SetLabel("Discovery day")
-	caYTSaintJeanBaptiste = caDiscoveryDay.SetLabel("Saint John the Baptist")
+	caBCFamilyDay         = newHolidayFactory(calculateBritishColumbiaFamilyDay).setLabel("Family day")
+	caMBLouisRielDay      = newHolidayFloat(time.February, time.Monday, 3).setLabel("Louis Riel day")
+	caNLOrangemensDay     = newHoliday(time.July, 12).setLabel("Orangemens Day")
+	caNLSaintGeorgesDay   = newHoliday(time.April, 23).setLabel("Saint George's day")
+	caNLSaintPatricksDay  = newHoliday(time.March, 17).setLabel("Saint Patrick's day")
+	caNSHeritageDay       = newHolidayFloat(time.February, time.Monday, 3).setLabel("Heritage day")
+	caPEEasterMonday      = easterMonday.setLabel("Easter monday")
+	caPEGoldCupParadeDay  = newHolidayFloat(time.August, time.Friday, 3).setLabel("Gold Cup parade day")
+	caPEIslanderDay       = newHolidayFloat(time.February, time.Monday, 3).setLabel("Islander day")
+	caQCNationalHoliday   = newHoliday(time.June, 24).setLabel("National holiday")
+	caQCPatriotsDay       = caVictoriaDay.setLabel("Patriot's day")
+	caYTDiscoveryDay      = newHolidayFloat(time.August, time.Monday, 3).setLabel("Discovery day")
+	caYTSaintJeanBaptiste = caDiscoveryDay.setLabel("Saint John the Baptist")
 )
 
 // addCanadianHolidays adds all Canadian holidays to the Calender

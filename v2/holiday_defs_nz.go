@@ -8,16 +8,16 @@ import (
 
 // Holidays in Australia
 var (
-	nzNewYear         = newHolidayFunc(calculateNewYearOceania).SetLabel("New year")
-	nzGoodFriday      = goodFriday.SetLabel("Good friday")
-	nzChristmasDay    = newHolidayFunc(calculateOcenaniaChristmasDay).SetLabel("Christmas day")
-	nzBoxingDays      = newHolidayFunc(calculateOcenaniaBoxingDay).SetLabel("Boxing day")
-	nzEasterMonday    = easterMonday.SetLabel("Easter monday")
-	nzAnzacDay        = newHolidayFunc(calculateNZAnzacDay).SetLabel("Anzac day")
-	nzQueensBirthday  = newHolidayFunc(calculateQueensBirthday).SetLabel("Queen's birthday")
-	nzLabourDay       = newHolidayFunc(calculateLabourDay).SetLabel("Labout day")
-	nzDayAfterNewYear = newHolidayFunc(calculateDayAfterNewYear).SetLabel("Day after new year")
-	nzWanagiDay       = newHolidayFunc(calculateWarangiDay).SetLabel("Wanagi day")
+	nzNewYear         = newHolidayFunc(calculateNewYearOceania).setLabel("New year")
+	nzGoodFriday      = goodFriday.setLabel("Good friday")
+	nzChristmasDay    = newHolidayFunc(calculateOcenaniaChristmasDay).setLabel("Christmas day")
+	nzBoxingDays      = newHolidayFunc(calculateOcenaniaBoxingDay).setLabel("Boxing day")
+	nzEasterMonday    = easterMonday.setLabel("Easter monday")
+	nzAnzacDay        = newHolidayFunc(calculateNZAnzacDay).setLabel("Anzac day")
+	nzQueensBirthday  = newHolidayFunc(calculateQueensBirthday).setLabel("Queen's birthday")
+	nzLabourDay       = newHolidayFunc(calculateLabourDay).setLabel("Labout day")
+	nzDayAfterNewYear = newHolidayFunc(calculateDayAfterNewYear).setLabel("Day after new year")
+	nzWanagiDay       = newHolidayFunc(calculateWarangiDay).setLabel("Wanagi day")
 )
 
 // addNewZealandHoliday adds all New Zeland holidays

@@ -4,17 +4,17 @@ import "time"
 
 // Italian holidays
 var (
-	itCapodanno             = newYear.SetLabel("Capodanno")
-	itEpifania              = newHoliday(time.January, 6).SetLabel("Epifania")
-	itPasquetta             = easterMonday.SetLabel("Pasquetta")
-	itFestaDellaLiberazione = newHoliday(time.April, 25).SetLabel("Festa della liberazione")
-	itFestaDelLavoro        = newHoliday(time.May, 1).SetLabel("Festa del lavoro")
-	itFestaDellaRepubblica  = newHoliday(time.June, 2).SetLabel("Festa della Repubblica")
-	itFerragosto            = newHoliday(time.August, 15).SetLabel("Ferragosto")
-	itTuttiISanti           = newHoliday(time.November, 1).SetLabel("Tutti i santi")
-	itImmacolata            = newHoliday(time.December, 8).SetLabel("Immacolata")
-	itNatale                = christmas.SetLabel("Natale")
-	itSantoStefano          = christmas2.SetLabel("Santo Stefano")
+	itCapodanno             = newYear.setLabel("Capodanno")
+	itEpifania              = newHoliday(time.January, 6).setLabel("Epifania")
+	itPasquetta             = easterMonday.setLabel("Pasquetta")
+	itFestaDellaLiberazione = newHoliday(time.April, 25).setLabel("Festa della liberazione")
+	itFestaDelLavoro        = newHoliday(time.May, 1).setLabel("Festa del lavoro")
+	itFestaDellaRepubblica  = newHoliday(time.June, 2).setLabel("Festa della Repubblica")
+	itFerragosto            = newHoliday(time.August, 15).setLabel("Ferragosto")
+	itTuttiISanti           = newHoliday(time.November, 1).setLabel("Tutti i santi")
+	itImmacolata            = newHoliday(time.December, 8).setLabel("Immacolata")
+	itNatale                = christmas.setLabel("Natale")
+	itSantoStefano          = christmas2.setLabel("Santo Stefano")
 )
 
 // addItalianHolidays adds all Italian holidays to the Calendar
