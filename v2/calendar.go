@@ -57,47 +57,6 @@ func IsWeekdayN(date time.Time, day time.Weekday, n int) bool {
 		last.Day() == date.Day()
 }
 
-// MonthStart reports the starting day of the month in t. The time portion is
-// unchanged.
-func MonthStart(t time.Time) time.Time {
-	return time.Date(t.Year(), t.Month(), 1, t.Hour(), t.Minute(), t.Second(),
-		t.Nanosecond(), t.Location())
-}
-
-// MonthEnd reports the ending day of the month in t. The time portion is
-// unchanged.
-func MonthEnd(t time.Time) time.Time {
-	return time.Date(t.Year(), t.Month()+1, 0, t.Hour(), t.Minute(),
-		t.Second(), t.Nanosecond(), t.Location())
-}
-
-// JulianDayNumber reports the Julian Day Number for t. Note that Julian days
-// start at 12:00 UTC.
-func JulianDayNumber(t time.Time) int {
-	// algorithm from http://www.tondering.dk/claus/cal/julperiod.php#formula
-	utc := t.UTC()
-	a := (14 - int(utc.Month())) / 12
-	y := utc.Year() + 4800 - a
-	m := int(utc.Month()) + 12*a - 3
-
-	jdn := utc.Day() + (153*m+2)/5 + 365*y + y/4 - y/100 + y/400 - 32045
-	if utc.Hour() < 12 {
-		jdn--
-	}
-	return jdn
-}
-
-// JulianDate reports the Julian Date (which includes time as a fraction) for t.
-func JulianDate(t time.Time) float32 {
-	utc := t.UTC()
-	jdn := JulianDayNumber(t)
-	if utc.Hour() < 12 {
-		jdn++
-	}
-	return float32(jdn) + (float32(utc.Hour())-12.0)/24.0 +
-		float32(utc.Minute())/1440.0 + float32(utc.Second())/86400.0
-}
-
 // WorkdayFn reports whether the given date is a workday.
 // This is useful for situations where work days change throughout the year.
 //
