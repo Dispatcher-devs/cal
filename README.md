@@ -1,3 +1,6 @@
+[![GoDoc](https://godoc.org/github.com/dispatcher-devs/cal/v2?status.svg)](https://pkg.go.dev/github.com/dispatcher-devs/cal/v2?tab=doc)
+[![GoReport](https://goreportcard.com/badge/github.com/dispatcher-devs/cal)](https://goreportcard.com/report/github.com/dispatcher-devs/cal)
+
 # cal: Go (golang) calendar library for dealing with holidays and work days
 This library augments the Go time package to provide easy handling of holidays
 and work days (business days).
