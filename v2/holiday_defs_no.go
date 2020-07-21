@@ -7,26 +7,26 @@ import "time"
 // Holidays in Norway
 // Reference https://no.wikipedia.org/wiki/Helligdager_i_Norge
 var (
-	noFoersteNyttaarsdag   = newYear.setLabel("Foerste nyttaarsdag")
-	noSkjaertorsdag        = newHolidayFunc(calculateSkaertorsdag).setLabel("Skjaertorsdag")
-	noLangfredag           = goodFriday.setLabel("Langfredag")
-	noFoerstePaaskedag     = newHolidayFunc(calculatePaskdagen).setLabel("Foerste paaskedag")
-	noAndrePaaskedag       = easterMonday.setLabel("Andre Paaskedag")
-	noArbeiderenesdag      = newHoliday(time.May, 1).setLabel("Arbeiderenesdag")
-	noGrunnlovsdag         = newHoliday(time.May, 17).setLabel("Grunnlovsdag")
-	noKristihimmelfartsdag = newHolidayFunc(calculateKristiHimmelfardsdag).setLabel("Kristihimmelfartsdag")
-	noFoerstePinsedag      = newHolidayFunc(calculatePingstdagen).setLabel("Foerste pinsedag")
-	noAndrePinsedag        = newHolidayFunc(calculateAndenPinsedag).setLabel("Andre pinsedag")
-	noFoersteJuledag       = christmas.setLabel("Foerste juledag")
-	noAndreJuledag         = christmas2.setLabel("Andre juledag")
+	noFoersteNyttaarsdag   = newYear.SetLabel("Foerste nyttaarsdag")
+	noSkjaertorsdag        = NewHolidayFunc(calculateSkaertorsdag).SetLabel("Skjaertorsdag")
+	noLangfredag           = goodFriday.SetLabel("Langfredag")
+	noFoerstePaaskedag     = NewHolidayFunc(calculatePaskdagen).SetLabel("Foerste paaskedag")
+	noAndrePaaskedag       = easterMonday.SetLabel("Andre Paaskedag")
+	noArbeiderenesdag      = NewHoliday(time.May, 1).SetLabel("Arbeiderenesdag")
+	noGrunnlovsdag         = NewHoliday(time.May, 17).SetLabel("Grunnlovsdag")
+	noKristihimmelfartsdag = NewHolidayFunc(calculateKristiHimmelfardsdag).SetLabel("Kristihimmelfartsdag")
+	noFoerstePinsedag      = NewHolidayFunc(calculatePingstdagen).SetLabel("Foerste pinsedag")
+	noAndrePinsedag        = NewHolidayFunc(calculateAndenPinsedag).SetLabel("Andre pinsedag")
+	noFoersteJuledag       = christmas.SetLabel("Foerste juledag")
+	noAndreJuledag         = christmas2.SetLabel("Andre juledag")
 	// Half days
-	noJulaften      = newHoliday(time.December, 24).setLabel("Julaften")
-	noNyttaarsaften = newHoliday(time.December, 31).setLabel("Nyttaarsaften")
+	noJulaften      = NewHoliday(time.December, 24).SetLabel("Julaften")
+	noNyttaarsaften = NewHoliday(time.December, 31).SetLabel("Nyttaarsaften")
 )
 
 // addNorwegianHolidays adds all Norwegian holidays to Calendar
 func addNorwegianHolidays(c *Calendar) {
-	c.addHoliday(
+	c.AddHoliday(
 		noFoersteNyttaarsdag,
 		noSkjaertorsdag,
 		noLangfredag,
@@ -44,7 +44,7 @@ func addNorwegianHolidays(c *Calendar) {
 
 // AddNorwegianHalfDays are note holidays, but often practiced as a half-business day.
 func AddNorwegianHalfDays(c *Calendar) {
-	c.addHoliday(
+	c.AddHoliday(
 		noJulaften,
 		noNyttaarsaften,
 	)

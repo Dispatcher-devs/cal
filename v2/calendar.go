@@ -66,7 +66,7 @@ type WorkdayFn func(date time.Time) bool
 
 // Calendar represents a yearly calendar with a list of holidays.
 type Calendar struct {
-	holidays    [13][]holiday // 0 for offset based holidays, 1-12 for month based
+	holidays    [13][]Holiday // 0 for offset based holidays, 1-12 for month based
 	workday     [7]bool       // flags to indicate a day of the week is a workday
 	WorkdayFunc WorkdayFn     // optional function to override workday flags
 	Observed    ObservedRule
@@ -74,11 +74,11 @@ type Calendar struct {
 
 // NewCalendar creates a new Calendar with no holidays defined
 // and work days of Monday through Friday.
-func newCalendar() *Calendar {
+func NewCalendar() *Calendar {
 	c := &Calendar{}
 
 	for i := range c.holidays {
-		c.holidays[i] = make([]holiday, 0, 2)
+		c.holidays[i] = make([]Holiday, 0, 2)
 	}
 	c.workday[time.Monday] = true
 	c.workday[time.Tuesday] = true
@@ -88,10 +88,10 @@ func newCalendar() *Calendar {
 	return c
 }
 
-// newCalendarFromCountryCode returns the holiday calendar associated to the
+// newCalendarFromCountryCode returns the Holiday calendar associated to the
 // country designated by the given uppercase ISO 3166-1 alpha-2 country code.
 func newCalendarFromCountryCode(code string) (*Calendar, error) {
-	c := newCalendar()
+	c := NewCalendar()
 
 	// As a special case, allow creating an empty calendar using the
 	// unused/reserved code ZZ.
@@ -180,7 +180,7 @@ func (c Calendar) GetHolidays(start, end time.Time) []struct {
 
 	// Knowingly Quadratic
 	for v := truncate(start); v.Before(end); v = v.AddDate(0, 0, 1) {
-		date, label, ok := c.getHoliday(v)
+		date, label, ok := c.GetHoliday(v)
 		if ok {
 			ret = append(ret, struct {
 				Date  time.Time
@@ -197,10 +197,10 @@ func truncate(t time.Time) time.Time {
 	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
 }
 
-// addHoliday adds a holiday to the calendar's list.
-func (c *Calendar) addHoliday(h ...holiday) {
+// AddHoliday adds a Holiday to the calendar's list.
+func (c *Calendar) AddHoliday(h ...Holiday) {
 	for _, hd := range h {
-		c.holidays[hd.month] = append(c.holidays[hd.month], hd)
+		c.holidays[hd.Month] = append(c.holidays[hd.Month], hd)
 	}
 }
 
@@ -209,30 +209,30 @@ func (c *Calendar) SetWorkday(day time.Weekday, workday bool) {
 	c.workday[day] = workday
 }
 
-// IsHoliday reports whether a given date is a holiday. It does not account
+// IsHoliday reports whether a given date is a Holiday. It does not account
 // for the observation of holidays on alternate days.
 func (c *Calendar) IsHoliday(date time.Time) bool {
-	_, _, ok := c.getHoliday(date)
+	_, _, ok := c.GetHoliday(date)
 	return ok
 }
 
-func (c *Calendar) getHoliday(date time.Time) (time.Time, string, bool) {
+func (c *Calendar) GetHoliday(date time.Time) (time.Time, string, bool) {
 	idx := date.Month()
-	label := func(h holiday, date time.Time) string {
-		if h.label == "" {
+	label := func(h Holiday, date time.Time) string {
+		if h.Label == "" {
 			return date.Format("2006-01-02")
 		}
-		return h.label
+		return h.Label
 	}
 
 	for i := range c.holidays[idx] {
-		if c.holidays[idx][i].matches(date) {
+		if c.holidays[idx][i].Matches(date) {
 			return truncate(date), label(c.holidays[idx][i], date), true
 		}
 	}
 
 	for i := range c.holidays[0] {
-		if c.holidays[0][i].matches(date) {
+		if c.holidays[0][i].Matches(date) {
 			return truncate(date), label(c.holidays[0][i], date), true
 		}
 	}

@@ -40,15 +40,15 @@ func TestAddEcbHolidays(t *testing.T) {
 
 	for name, holiday := range holidays {
 		t.Run(name, func(t *testing.T) {
-			c := newCalendar()
+			c := NewCalendar()
 			AddECBHolidays(c)
 			i := time.Date(2017, holiday.month, holiday.day, 0, 0, 0, 0, time.UTC)
 
 			if !c.IsHoliday(i) {
-				t.Errorf("Expected %q to be a holiday but wasn't", i)
+				t.Errorf("Expected %q to be a Holiday but wasn't", i)
 			}
 			if c.IsWorkday(i) {
-				t.Errorf("Did not expect %q to be a holiday", i)
+				t.Errorf("Did not expect %q to be a Holiday", i)
 			}
 		})
 	}

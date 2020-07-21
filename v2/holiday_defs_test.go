@@ -47,8 +47,8 @@ func TestCalculateEaster(t *testing.T) {
 }
 
 func TestCalculateGoodFriday(t *testing.T) {
-	c := newCalendar()
-	c.addHoliday(ecbGoodFriday)
+	c := NewCalendar()
+	c.AddHoliday(ecbGoodFriday)
 
 	tests := []struct {
 		t    time.Time
@@ -71,8 +71,8 @@ func TestCalculateGoodFriday(t *testing.T) {
 }
 
 func TestCalculateEasterMonday(t *testing.T) {
-	c := newCalendar()
-	c.addHoliday(ecbEasterMonday)
+	c := NewCalendar()
+	c.AddHoliday(ecbEasterMonday)
 
 	tests := []struct {
 		t    time.Time

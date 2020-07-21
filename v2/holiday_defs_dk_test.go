@@ -46,7 +46,7 @@ func TestDanishHolidays(t *testing.T) {
 }
 
 func TestDanishTraditions(t *testing.T) {
-	c := newCalendar()
+	c := NewCalendar()
 	c.Observed = ObservedExact
 	AddDanishTraditions(c)
 

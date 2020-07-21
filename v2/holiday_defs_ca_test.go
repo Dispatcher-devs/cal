@@ -83,7 +83,7 @@ func TestCanadianStateHolidays(t *testing.T) {
 		{
 			"QC",
 			[]testStruct{
-				{time.Date(2023, time.June, 24, 12, 0, 0, 0, time.UTC), true, "QC National holiday"},
+				{time.Date(2023, time.June, 24, 12, 0, 0, 0, time.UTC), true, "QC National Holiday"},
 				{time.Date(2020, time.August, 1, 12, 0, 0, 0, time.UTC), false, "QC no Civic Holiday"},
 				{time.Date(2020, time.May, 18, 12, 0, 0, 0, time.UTC), true, "QC Patriot's Day"},
 			},

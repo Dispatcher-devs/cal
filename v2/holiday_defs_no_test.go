@@ -44,7 +44,7 @@ func TestNorwegianHolidays(t *testing.T) {
 }
 
 func TestNorwegianHalfDays(t *testing.T) {
-	c := newCalendar()
+	c := NewCalendar()
 	c.Observed = ObservedExact
 	AddNorwegianHalfDays(c)
 

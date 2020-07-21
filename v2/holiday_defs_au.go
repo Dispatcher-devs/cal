@@ -8,20 +8,20 @@ import (
 
 // Holidays in Australia
 var (
-	auNewYear       = newHolidayFunc(calculateNewYearOceania).setLabel("New year")
-	auAustralianDay = newHoliday(time.January, 26).setLabel("Australian day")
-	auGoodFriday    = goodFriday.setLabel("Good friday")
-	auChristmasDay  = newHolidayFunc(calculateOcenaniaChristmasDay).setLabel("Christmas")
-	auBoxingDays    = christmas2.setLabel("Boxing day")
-	auEasterMonday  = easterMonday.setLabel("Easter monday")
-	auAnzacDay      = newHolidayFunc(calculateAnzacDay).setLabel("Anzac day")
-	auQueenBirthDay = newHolidayFunc(calculateQueenBirthDay).setLabel("Queen Birthday")
-	auLabourDay     = newHolidayFunc(calculateAULabourDay).setLabel("Labour day")
+	auNewYear       = NewHolidayFunc(calculateNewYearOceania).SetLabel("New year")
+	auAustralianDay = NewHoliday(time.January, 26).SetLabel("Australian day")
+	auGoodFriday    = goodFriday.SetLabel("Good friday")
+	auChristmasDay  = NewHolidayFunc(calculateOcenaniaChristmasDay).SetLabel("Christmas")
+	auBoxingDays    = christmas2.SetLabel("Boxing day")
+	auEasterMonday  = easterMonday.SetLabel("Easter monday")
+	auAnzacDay      = NewHolidayFunc(calculateAnzacDay).SetLabel("Anzac day")
+	auQueenBirthDay = NewHolidayFunc(calculateQueenBirthDay).SetLabel("Queen Birthday")
+	auLabourDay     = NewHolidayFunc(calculateAULabourDay).SetLabel("Labour day")
 )
 
 // addAustralianHolidays adds all Australian holidays
 func addAustralianHolidays(c *Calendar) {
-	c.addHoliday(
+	c.AddHoliday(
 		auNewYear,
 		auAustralianDay,
 		auGoodFriday,
@@ -39,7 +39,7 @@ func addAustralianHolidays(c *Calendar) {
 //  New Year's Day is on January 1 and is the first day of a new year in the Gregorian calendar,
 //  which is used in Australia and many other countries. Due to its geographical position close
 //  to the International Date Line, Australia is one of the first countries in the world to welcome the New Year.
-//  If it falls on a weekend an additional public holiday is held on the next available weekday.
+//  If it falls on a weekend an additional public Holiday is held on the next available weekday.
 //
 //  https://www.timeanddate.com/holidays/australia/new-year-day
 func calculateNewYearOceania(year int, loc *time.Location) (time.Month, int) {
@@ -68,8 +68,8 @@ func closestMonday(date time.Time) time.Time {
 // in all wars, conflicts, and peacekeeping operations"
 // Observed on 25 April each year. Unlike most other Australian public
 // holidays, If it falls on a weekend it is NOT moved to the next available
-// weekday, nor is there an additional public holiday held. However, if it
-// clashes with Easter, an additional public holiday is held for Easter.
+// weekday, nor is there an additional public Holiday held. However, if it
+// clashes with Easter, an additional public Holiday is held for Easter.
 //
 // https://en.wikipedia.org/wiki/Anzac_Day
 // https://www.timeanddate.com/holidays/australia/anzac-day
@@ -89,7 +89,7 @@ func calculateAnzacDay(year int, loc *time.Location) (time.Month, int) {
 // Christmas Day
 //
 // Christmas day is a public holidays in Australia,
-// if it fall on the weekend an additional public holiday is held on the next available weekday.
+// if it fall on the weekend an additional public Holiday is held on the next available weekday.
 //
 // https://www.timeanddate.com/holidays/australia/christmas-day-holiday
 //
@@ -106,7 +106,7 @@ func calculateOcenaniaChristmasDay(year int, loc *time.Location) (time.Month, in
 // Boxing Day
 //
 // Boxing day is a public holidays in Australia,
-// if it fall on the weekend an additional public holiday is held on the next available weekday.
+// if it fall on the weekend an additional public Holiday is held on the next available weekday.
 //
 // https://www.timeanddate.com/holidays/australia/boxing-day
 //
@@ -122,7 +122,7 @@ func calculateOcenaniaBoxingDay(year int, loc *time.Location) (time.Month, int) 
 
 // Queen's birth Day
 //
-// The Queen’s Birthday is a public holiday celebrated in most states and territories on the second Monday in June,
+// The Queen’s Birthday is a public Holiday celebrated in most states and territories on the second Monday in June,
 // making for a much-looked-forward-to June long weekend.
 // WA QLD different
 //

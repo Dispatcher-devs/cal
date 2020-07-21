@@ -8,11 +8,11 @@ import (
 
 // Common holidays
 var (
-	newYear      = newHoliday(time.January, 1)
-	goodFriday   = newHolidayFunc(calculateGoodFriday)
-	easterMonday = newHolidayFunc(calculateEasterMonday)
-	christmas    = newHoliday(time.December, 25)
-	christmas2   = newHoliday(time.December, 26)
+	newYear      = NewHoliday(time.January, 1)
+	goodFriday   = NewHolidayFunc(calculateGoodFriday)
+	easterMonday = NewHolidayFunc(calculateEasterMonday)
+	christmas    = NewHoliday(time.December, 25)
+	christmas2   = NewHoliday(time.December, 26)
 )
 
 func calculateEaster(year int, loc *time.Location) time.Time {

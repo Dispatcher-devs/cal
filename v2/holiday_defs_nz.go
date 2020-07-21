@@ -8,21 +8,21 @@ import (
 
 // Holidays in Australia
 var (
-	nzNewYear         = newHolidayFunc(calculateNewYearOceania).setLabel("New year")
-	nzGoodFriday      = goodFriday.setLabel("Good friday")
-	nzChristmasDay    = newHolidayFunc(calculateOcenaniaChristmasDay).setLabel("Christmas day")
-	nzBoxingDays      = newHolidayFunc(calculateOcenaniaBoxingDay).setLabel("Boxing day")
-	nzEasterMonday    = easterMonday.setLabel("Easter monday")
-	nzAnzacDay        = newHolidayFunc(calculateNZAnzacDay).setLabel("Anzac day")
-	nzQueensBirthday  = newHolidayFunc(calculateQueensBirthday).setLabel("Queen's birthday")
-	nzLabourDay       = newHolidayFunc(calculateLabourDay).setLabel("Labout day")
-	nzDayAfterNewYear = newHolidayFunc(calculateDayAfterNewYear).setLabel("Day after new year")
-	nzWanagiDay       = newHolidayFunc(calculateWarangiDay).setLabel("Wanagi day")
+	nzNewYear         = NewHolidayFunc(calculateNewYearOceania).SetLabel("New year")
+	nzGoodFriday      = goodFriday.SetLabel("Good friday")
+	nzChristmasDay    = NewHolidayFunc(calculateOcenaniaChristmasDay).SetLabel("Christmas day")
+	nzBoxingDays      = NewHolidayFunc(calculateOcenaniaBoxingDay).SetLabel("Boxing day")
+	nzEasterMonday    = easterMonday.SetLabel("Easter monday")
+	nzAnzacDay        = NewHolidayFunc(calculateNZAnzacDay).SetLabel("Anzac day")
+	nzQueensBirthday  = NewHolidayFunc(calculateQueensBirthday).SetLabel("Queen's birthday")
+	nzLabourDay       = NewHolidayFunc(calculateLabourDay).SetLabel("Labout day")
+	nzDayAfterNewYear = NewHolidayFunc(calculateDayAfterNewYear).SetLabel("Day after new year")
+	nzWanagiDay       = NewHolidayFunc(calculateWarangiDay).SetLabel("Wanagi day")
 )
 
 // addNewZealandHoliday adds all New Zeland holidays
 func addNewZealandHoliday(c *Calendar) {
-	c.addHoliday(
+	c.AddHoliday(
 		nzNewYear,
 		nzDayAfterNewYear,
 		nzGoodFriday,
@@ -88,7 +88,7 @@ func calculateNZAnzacDay(year int, loc *time.Location) (time.Month, int) {
 // other Realms’.Her representative in New Zealand, the governor general, has symbolic and ceremonial roles
 // and is not involved in the day-to-day running of the government, which is the domain of the prime minister.
 //
-// Her actual birthday is on April 21, but it's celebrated as a public holiday on the first Monday of June.
+// Her actual birthday is on April 21, but it's celebrated as a public Holiday on the first Monday of June.
 //
 // http://www.timeanddate.com/holidays/new-zealand/queen-birthday
 func calculateQueensBirthday(year int, loc *time.Location) (time.Month, int) {
@@ -114,8 +114,8 @@ func calculateQueensBirthday(year int, loc *time.Location) (time.Month, int) {
 // Government employees were given the day off to attend the parades and many businesses closed for at least part
 // of the day.
 //
-// The first official Labour Day public holiday in New Zealand was celebrated on the
-// second Wednesday in October in 1900. The holiday was moved to the fourth Monday of October in 1910
+// The first official Labour Day public Holiday in New Zealand was celebrated on the
+// second Wednesday in October in 1900. The Holiday was moved to the fourth Monday of October in 1910
 // has remained on this date since then.
 //
 // http://www.timeanddate.com/holidays/new-zealand/labour-day
@@ -152,10 +152,10 @@ func calculateLabourDay(year int, loc *time.Location) (time.Month, int) {
 // Waitangi Day.
 //
 // Waitangi Day (named after Waitangi, where the Treaty of Waitangi was first signed)
-// commemorates a significant day in the history of New Zealand. It is observed as a public holiday each
+// commemorates a significant day in the history of New Zealand. It is observed as a public Holiday each
 // year on 6 February to celebrate the signing of the Treaty of Waitangi, New Zealand's founding document,
 // on that date in 1840. In recent legislation, if 6 February falls on a Saturday or Sunday,
-// the Monday that immediately follows becomes a public holiday.
+// the Monday that immediately follows becomes a public Holiday.
 //
 // https://en.wikipedia.org/wiki/Waitangi_Day
 func calculateWarangiDay(year int, loc *time.Location) (time.Month, int) {

@@ -4,19 +4,19 @@ import "time"
 
 // British holidays
 var (
-	gbNewYear       = newHolidayFunc(calculateNewYearsHoliday).setLabel("New year")
-	gbGoodFriday    = goodFriday.setLabel("Good friday")
-	gbEasterMonday  = easterMonday.setLabel("Easter monday")
-	gbEarlyMay      = makeGBEarlyMay().setLabel("Early may")
-	gbSpringHoliday = newHolidayFloat(time.May, time.Monday, -1).setLabel("Spring holiday")
-	gbSummerHoliday = newHolidayFloat(time.August, time.Monday, -1).setLabel("Summer holiday")
-	gbChristmasDay  = christmas.setLabel("Christmas day")
-	gbBoxingDay     = christmas2.setLabel("Boxing day")
+	gbNewYear       = NewHolidayFunc(calculateNewYearsHoliday).SetLabel("New year")
+	gbGoodFriday    = goodFriday.SetLabel("Good friday")
+	gbEasterMonday  = easterMonday.SetLabel("Easter monday")
+	gbEarlyMay      = makeGBEarlyMay().SetLabel("Early may")
+	gbSpringHoliday = NewHolidayFloat(time.May, time.Monday, -1).SetLabel("Spring Holiday")
+	gbSummerHoliday = NewHolidayFloat(time.August, time.Monday, -1).SetLabel("Summer Holiday")
+	gbChristmasDay  = christmas.SetLabel("Christmas day")
+	gbBoxingDay     = christmas2.SetLabel("Boxing day")
 )
 
 // addBritishHolidays adds all British holidays to the Calender
 func addBritishHolidays(c *Calendar) {
-	c.addHoliday(
+	c.AddHoliday(
 		gbNewYear,
 		gbGoodFriday,
 		gbEasterMonday,
@@ -41,16 +41,16 @@ func calculateNewYearsHoliday(year int, loc *time.Location) (time.Month, int) {
 	return time.January, day.Day()
 }
 
-// Early May holiday in UK is usually 1st Monday in May, but in 2020 this is
+// Early May Holiday in UK is usually 1st Monday in May, but in 2020 this is
 // replaced by VE day on Fri 8th May
-func makeGBEarlyMay() holiday {
-	hol := newHolidayFloat(time.May, time.Monday, 1)
-	hol.fn = func(year int, loc *time.Location) (month time.Month, day int) {
+func makeGBEarlyMay() Holiday {
+	hol := NewHolidayFloat(time.May, time.Monday, 1)
+	hol.Fn = func(year int, loc *time.Location) (month time.Month, day int) {
 		if year == 2020 {
 			// In 2020 force VE day
 			return time.May, 8
 		}
-		// Else defer to floating holiday calculation
+		// Else defer to floating Holiday calculation
 		return time.May, 0
 	}
 	return hol

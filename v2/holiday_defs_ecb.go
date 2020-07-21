@@ -7,14 +7,14 @@ var (
 	ecbGoodFriday       = goodFriday
 	ecbEasterMonday     = easterMonday
 	ecbNewYearsDay      = newYear
-	ecbLabourDay        = newHoliday(time.May, 1)
+	ecbLabourDay        = NewHoliday(time.May, 1)
 	ecbChristmasDay     = christmas
 	ecbChristmasHoliday = christmas2
 )
 
 // AddECBHolidays adds all ECB Target2 holidays to the calendar
 func AddECBHolidays(c *Calendar) {
-	c.addHoliday(
+	c.AddHoliday(
 		ecbGoodFriday,
 		ecbEasterMonday,
 		ecbNewYearsDay,
